@@ -2,6 +2,7 @@ package com.rumaruka.gribtweaks;
 
 import com.mojang.brigadier.CommandDispatcher;
 import com.rumaruka.gribtweaks.common.command.GribTweaksWeather;
+import com.rumaruka.gribtweaks.common.event.GTEvents;
 import com.rumaruka.gribtweaks.config.GTConfig;
 
 import com.rumaruka.gribtweaks.data.PrimiriveBrushRecipeGen;
@@ -15,6 +16,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.ConfirmScreen;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.commands.CommandSourceStack;
+import net.minecraft.core.cauldron.CauldronInteraction;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -70,10 +72,12 @@ public class GribTweaks {
 
     @SubscribeEvent
     public  void setupCommon(FMLCommonSetupEvent event) {
+        GTEvents.registerCauldronInteractions();
         if (GTConfig.GENERAL.sandstormEnabled.get()) {
             MinecraftForge.EVENT_BUS.register(new SandstormHandler());
         }
     }
+
 
 
     private void doClientStuff(FMLClientSetupEvent event) {

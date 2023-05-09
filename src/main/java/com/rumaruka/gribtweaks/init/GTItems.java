@@ -30,9 +30,9 @@ public class GTItems {
     public static final RegistryObject<PrimitiveBrushItem> primitive = ITEMS.register("primitive", PrimitiveBrushItem::new);
     public static final RegistryObject<Item> sand_copper = ITEMS.register("sand_copper", ()->new Item(new Item.Properties()));
     public static final RegistryObject<Item> sand_trough = ITEMS.register("sand_trough", ()->new SandTroughItem(new Item.Properties()));
-    public static final RegistryObject<Item> sand_knife = ITEMS.register("sand_knife", ()->new SandTroughItem(new Item.Properties()));
-    public static final RegistryObject<Item> sand_bucket = ITEMS.register("sand_bucket", ()->new SandBucketItem(()->Fluids.EMPTY,new Item.Properties()));
-    public static final RegistryObject<Item> water_sand_bucket = ITEMS.register("water_sand_bucket", ()->new SandBucketItem(()->Fluids.WATER,new Item.Properties()));
+    public static final RegistryObject<Item> sand_knife = ITEMS.register("sand_knife", ()->new Item(new Item.Properties()));
+    public static final RegistryObject<Item> sand_bucket = ITEMS.register("sand_bucket", ()->new SandBucketItem(Fluids.EMPTY,new Item.Properties()));
+    public static final RegistryObject<Item> water_sand_bucket = ITEMS.register("water_sand_bucket", ()->new SandBucketItem(Fluids.WATER,new Item.Properties()));
 
 
 

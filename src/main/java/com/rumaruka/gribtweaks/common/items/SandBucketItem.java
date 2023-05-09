@@ -14,10 +14,7 @@ import net.minecraft.tags.FluidTags;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.DispensibleContainerItem;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.ItemUtils;
+import net.minecraft.world.item.*;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
@@ -38,6 +35,13 @@ import javax.annotation.Nullable;
 public class SandBucketItem extends Item implements DispensibleContainerItem {
     private final java.util.function.Supplier<? extends Fluid> fluidSupplier;
     private final Fluid content;
+
+    public SandBucketItem(Fluid p_40689_, Item.Properties p_40690_) {
+        super(p_40690_);
+        this.content = p_40689_;
+        this.fluidSupplier = net.minecraftforge.registries.ForgeRegistries.FLUIDS.getDelegateOrThrow(p_40689_);
+    }
+
 
     public SandBucketItem(java.util.function.Supplier<? extends Fluid> supplier, Item.Properties builder) {
         super(builder);
@@ -70,7 +74,8 @@ public class SandBucketItem extends Item implements DispensibleContainerItem {
                                 p_40704_.playSound(p_150709_, 1.0F, 1.0F);
                             });
                             p_40703_.gameEvent(p_40704_, GameEvent.FLUID_PICKUP, blockpos);
-                            ItemStack itemstack2 = ItemUtils.createFilledResult(itemstack, p_40704_, itemstack1);
+                            ItemStack itemstack2 = getFilledSuccessItem(itemstack,p_40704_);
+
                             if (!p_40703_.isClientSide) {
                                 CriteriaTriggers.FILLED_BUCKET.trigger((ServerPlayer) p_40704_, itemstack1);
                             }
@@ -103,6 +108,9 @@ public class SandBucketItem extends Item implements DispensibleContainerItem {
 
 
     public void checkExtraContent(@Nullable Player p_150711_, Level p_150712_, ItemStack p_150713_, BlockPos p_150714_) {
+    }
+    public static ItemStack getFilledSuccessItem(ItemStack p_40700_, Player p_40701_) {
+        return !p_40701_.getAbilities().instabuild ? new ItemStack(GTItems.water_sand_bucket.get()) : p_40700_;
     }
 
     public static ItemStack getEmptySuccessItem(ItemStack p_40700_, Player p_40701_) {
@@ -177,6 +185,7 @@ public class SandBucketItem extends Item implements DispensibleContainerItem {
             }
         }
     }
+
 
     @Deprecated //Forge: use the ItemStack sensitive version
     public boolean emptyContents(@Nullable Player p_150716_, Level p_150717_, BlockPos p_150718_, @Nullable BlockHitResult p_150719_) {
