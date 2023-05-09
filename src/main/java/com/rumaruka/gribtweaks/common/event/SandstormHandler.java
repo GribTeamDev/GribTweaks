@@ -75,23 +75,23 @@ public class SandstormHandler {
             }
 
             if (this.stormTime <= 0) {
-                if (DimensionHelper.getData(serverLevel).isStorming() || serverLevel.isRaining() || serverLevel.isThundering()) {
+                if (DimensionHelper.getData(serverLevel).isStorming()   ) {
                     this.stormTime = serverLevel.random.nextInt(4000) + 4000;
 
                 }
-                DimensionHelper.getData(serverLevel).setStorming(DimensionHelper.getData(serverLevel).isStorming() || serverLevel.isRaining() || serverLevel.isThundering());
+                DimensionHelper.getData(serverLevel).setStorming(DimensionHelper.getData(serverLevel).isStorming()   );
                 NetworkHandler.getInstance().sendToDimension(new WeatherPacket(this.stormTime), serverLevel, Level.OVERWORLD);
             } else {
                 this.stormTime--;
                 if (this.stormTime <= 0) {
-                    DimensionHelper.getData(serverLevel).setStorming(!DimensionHelper.getData(serverLevel).isStorming() || !serverLevel.isRaining() || !serverLevel.isThundering());
+                    DimensionHelper.getData(serverLevel).setStorming(!DimensionHelper.getData(serverLevel).isStorming());
                 }
             }
 
             worldInfo.setClearWeatherTime(cleanWeatherTime);
 
             this.prevStormStrength = this.stormStrength;
-            if (DimensionHelper.getData(serverLevel).isStorming() || serverLevel.isRaining() || serverLevel.isThundering()) {
+            if (DimensionHelper.getData(serverLevel).isStorming()   ) {
                 this.stormStrength += 2.0F / (float) (20 * GTConfig.GENERAL.sandstormTransitionTime.get());
             } else {
                 this.stormStrength -= 2.0F / (float) (20 * GTConfig.GENERAL.sandstormTransitionTime.get());

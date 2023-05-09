@@ -82,7 +82,7 @@ public class SandstormRender {
     public static void onPlayerTick(TickEvent.PlayerTickEvent event) {
         if (event.player.level instanceof ServerLevel serverLevel) {
 
-            if (DimensionHelper.getData(serverLevel).isStorming() ||  serverLevel.isRaining() || serverLevel.isThundering()) {
+            if (DimensionHelper.getData(serverLevel).isStorming()) {
                 active = true;
                 RandomSource random = event.player.getRandom();
                 for (int i = 0; i < 15; i++) {
