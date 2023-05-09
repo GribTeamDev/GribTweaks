@@ -1,0 +1,19 @@
+{
+  "type": "gateways:gate_recipe",
+  "group": "gateways",
+  "pattern": [
+    "   ",
+    " A ",
+    "   "
+  ],
+  "key": {
+
+	"A": {
+      "item": "gribtweaks:test_damage"
+    }
+  },
+  "result": {
+    "item": "gribtweaks:test"
+  },
+  "gateway": "gateways:test_gate"
+}

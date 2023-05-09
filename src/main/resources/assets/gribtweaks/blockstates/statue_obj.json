@@ -1,0 +1,6 @@
+{
+  "variants": {
+    "active=false": { "model": "gribtweaks:block/statue_obj" },
+    "active=true": { "model": "gribtweaks:block/statue_obj" }
+  }
+}

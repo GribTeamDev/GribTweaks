@@ -1,0 +1,13 @@
+{
+  "type": "gribtweaks:primitive_brush",
+  "ingredients": [
+    {
+      "item": "minecraft:gold_block"
+    }
+  ],
+  "results": [
+    {
+      "item": "create:polished_rose_quartz"
+    }
+  ]
+}
