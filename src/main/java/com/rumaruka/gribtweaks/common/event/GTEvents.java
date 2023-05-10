@@ -35,13 +35,12 @@ import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
-import java.util.stream.IntStream;
-
 @Mod.EventBusSubscriber
 public class GTEvents {
 
-    public static int ticks=0;
-    public static boolean isActive=false;
+    public static int ticks = 0;
+    public static boolean isActive = false;
+
     @SubscribeEvent
     public static void onInteraction(PlayerInteractEvent event) {
         Player player = event.getEntity();
@@ -80,14 +79,16 @@ public class GTEvents {
 
 
     }
+
     @SubscribeEvent
     public static void onLevelTick(TickEvent.ServerTickEvent event) {
-        if (isActive){
+        if (isActive) {
             ticks++;
         }
-       
+
 
     }
+
     @SubscribeEvent
     public static void onLevelTick(TickEvent.LevelTickEvent event) {
 
@@ -103,17 +104,15 @@ public class GTEvents {
 
 
                     if (world.getBlockState(pos).getBlock() == Blocks.DEAD_BUSH && world.getBlockState(pos.below()).getBlock() == Blocks.MUD) {
-                        isActive=true;
-                        if (ticks>=30*20){
+                        isActive = true;
+                        if (ticks >= 30 * 20) {
                             world.setBlockAndUpdate(pos, Blocks.OAK_SAPLING.defaultBlockState());
                             world.setBlockAndUpdate(pos.below(), Blocks.DIRT.defaultBlockState());
                             BoneMealItem.addGrowthParticles(world, pos, 25);
                             addMudParticles(world, pos.below(), 5);
-                            ticks=0;
-                            isActive=false;
+                            ticks = 0;
+                            isActive = false;
                         }
-
-
 
 
                     }

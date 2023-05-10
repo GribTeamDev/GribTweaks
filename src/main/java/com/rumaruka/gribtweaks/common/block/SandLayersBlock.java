@@ -2,12 +2,14 @@ package com.rumaruka.gribtweaks.common.block;
 
 import com.ncpbails.modestmining.block.ModBlocks;
 import com.rumaruka.gribtweaks.init.GTBlocks;
+import com.rumaruka.gribtweaks.init.GTItems;
 import com.rumaruka.gribtweaks.util.RandomUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -48,6 +50,7 @@ public class SandLayersBlock extends Block {
 
     @Override
     public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult result) {
+        Inventory inventory = player.getInventory();
         if (!world.isClientSide()){
             if (state.getValue(LAYERS)==8){
                 if (RandomUtil.percentChance(0.77)) {
@@ -61,6 +64,40 @@ public class SandLayersBlock extends Block {
 
 
             }
+
+
+                if (state.getValue(LAYERS)==2){//15%
+                    if (RandomUtil.percentChance(0.15)){
+                        inventory.add(new ItemStack(GTItems.sand_trough.get()));
+                        world.removeBlock(pos, true);
+                    }
+                }
+                if (state.getValue(LAYERS)==3){//25%
+                    if (RandomUtil.percentChance(0.25)){
+                        inventory.add(new ItemStack(GTItems.sand_trough.get()));
+                        world.removeBlock(pos, true);
+                    }
+                }
+                if (state.getValue(LAYERS)==4){//35%
+                    if (RandomUtil.percentChance(0.35)){
+                        inventory.add(new ItemStack(GTItems.sand_trough.get()));
+                        world.removeBlock(pos, true);
+                    }
+                }
+                if (state.getValue(LAYERS)==5){//50%
+                    if (RandomUtil.percentChance(0.5)){
+                        inventory.add(new ItemStack(GTItems.sand_trough.get()));
+                        world.removeBlock(pos, true);
+                    }
+                }
+
+                if (state.getValue(LAYERS)>=7){//75%
+                    if (RandomUtil.percentChance(0.75)){
+                        inventory.add(new ItemStack(GTItems.sand_trough.get()));
+                        world.removeBlock(pos, true);
+                    }
+                }
+
 
         }
         return InteractionResult.CONSUME;
