@@ -1,11 +1,10 @@
 package com.rumaruka.gribtweaks.client;
 
-import com.ncpbails.modestmining.block.entity.ModBlockEntities;
 import com.rumaruka.gribtweaks.GribTweaks;
 import com.rumaruka.gribtweaks.client.render.StatueTESR;
 import com.rumaruka.gribtweaks.init.GTItems;
 import com.rumaruka.gribtweaks.init.GTTiles;
-import com.rumaruka.gribtweaks.common.items.TestItem;
+import com.rumaruka.gribtweaks.common.items.HopeCatalystItem;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
@@ -55,8 +54,8 @@ public class GTClient {
     public static void tooltip(ItemTooltipEvent e) {
         currentTooltipItem = e.getItemStack();
         tooltipTick = PlaceboClient.ticks;
-        if (e.getItemStack().getItem() == GTItems.TEST.get()) {
-            Gateway gate = TestItem.getGate(e.getItemStack());
+        if (e.getItemStack().getItem() == GTItems.HOPE_CATALYST.get()) {
+            Gateway gate = HopeCatalystItem.getGate(e.getItemStack());
             List<Component> tooltips = e.getToolTip();
             if (gate == null) {
                 tooltips.add(Component.literal("Errored Gate Pearl, file a bug report detailing how you obtained this."));
@@ -136,7 +135,7 @@ public class GTClient {
     }
 
     public static void scroll(ScreenEvent.MouseScrolled.Pre e) {
-        if (currentTooltipItem!=null&&currentTooltipItem.getItem() == GTItems.TEST.get() && tooltipTick == PlaceboClient.ticks && Screen.hasShiftDown()) {
+        if (currentTooltipItem!=null&&(currentTooltipItem.getItem() == GTItems.HOPE_CATALYST.get()) && tooltipTick == PlaceboClient.ticks && Screen.hasShiftDown()) {
             waveIdx += e.getScrollDelta() < 0 ? 1 : -1;
             e.setCanceled(true);
         } else {
@@ -145,7 +144,7 @@ public class GTClient {
     }
 
     public static void scroll2(InputEvent.MouseScrollingEvent e) {
-         if (currentTooltipItem!=null&&currentTooltipItem.getItem() == GTItems.TEST.get() && tooltipTick == PlaceboClient.ticks && Screen.hasShiftDown()) {
+         if (currentTooltipItem!=null&&(currentTooltipItem.getItem() == GTItems.HOPE_CATALYST.get()) && tooltipTick == PlaceboClient.ticks && Screen.hasShiftDown()) {
             waveIdx += e.getScrollDelta() < 0 ? 1 : -1;
             e.setCanceled(true);
         } else {

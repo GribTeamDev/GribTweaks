@@ -62,7 +62,7 @@ public class GateWayEvents {
         if (Minecraft.getInstance().level != null) {
             BlockState state = Minecraft.getInstance().level.getBlockState(blockPos);
             if (state.getBlock() == GTBlocks.statue_obj.get()) {
-                if (stack.getItem() == GTItems.TEST.get()) {
+                if (stack.getItem() == GTItems.HOPE_CATALYST.get()) {
                     isCatalystRightClick = true;
                 }
             }

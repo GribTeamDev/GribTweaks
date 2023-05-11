@@ -2,6 +2,7 @@ package com.rumaruka.gribtweaks.common.event;
 
 
 import com.rumaruka.gribtweaks.common.items.SandBucketItem;
+import com.rumaruka.gribtweaks.init.GTBlocks;
 import com.rumaruka.gribtweaks.init.GTItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -15,11 +16,10 @@ import net.minecraft.stats.Stats;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.BoneMealItem;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.ItemUtils;
+import net.minecraft.world.item.*;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.Level;
@@ -65,7 +65,7 @@ public class GTEvents {
     }
 
     @SubscribeEvent
-    public static void onPlayerInteract(PlayerInteractEvent.RightClickBlock event) {
+    public static void onPlayerInteractSandBucket(PlayerInteractEvent.RightClickBlock event) {
         Level world = event.getLevel();
         BlockPos pos = event.getPos();
         Player player = event.getEntity();
@@ -75,6 +75,22 @@ public class GTEvents {
             world.setBlockAndUpdate(pos, Blocks.MUD.defaultBlockState());
             player.setItemInHand(event.getHand(), new ItemStack(GTItems.sand_bucket.get()));
             world.playSound(null, pos, SoundEvents.BUCKET_EMPTY, SoundSource.BLOCKS, 1.0F, 1.0F);
+        }
+
+
+    }
+
+    @SubscribeEvent
+    public static void onPlayerInteractDeadBush(PlayerInteractEvent.RightClickBlock event) {
+        Level world = event.getLevel();
+        BlockPos pos = event.getPos();
+        Player player = event.getEntity();
+        Inventory inventory = player.getInventory();
+
+        if (world.getBlockState(pos).getBlock() == Blocks.DEAD_BUSH) {
+            world.setBlockAndUpdate(pos, GTBlocks.breake_bush.get().defaultBlockState());
+            ItemEntity itemEntity = new ItemEntity(world, pos.getX(), pos.getY(), pos.getZ(), new ItemStack(Items.STICK, 3));
+            world.addFreshEntity(itemEntity);
         }
 
 
@@ -103,7 +119,7 @@ public class GTEvents {
                     BlockPos pos = rayTraceResult.getBlockPos();
 
 
-                    if (world.getBlockState(pos).getBlock() == Blocks.DEAD_BUSH && world.getBlockState(pos.below()).getBlock() == Blocks.MUD) {
+                    if (world.getBlockState(pos).getBlock() == GTBlocks.breake_bush.get() && world.getBlockState(pos.below()).getBlock() == Blocks.MUD) {
                         isActive = true;
                         if (ticks >= 30 * 20) {
                             world.setBlockAndUpdate(pos, Blocks.OAK_SAPLING.defaultBlockState());
@@ -165,12 +181,22 @@ public class GTEvents {
         }
     }
 
+
     public static void registerCauldronInteractions() {
         // empty water cauldron
         CauldronInteraction.WATER.put(GTItems.sand_bucket.get(), GTEvents::emptyWaterCauldron);
+        //Compost
+        CauldronInteraction.WATER.put(GTItems.sand_bucket.get(), GTEvents::emptyCompost);
+        CauldronInteraction.WATER.put(GTItems.wooden_bucket.get(), GTEvents::emptyCompostWooden);
+        CauldronInteraction.WATER.put(Items.BUCKET, GTEvents::emptyCompostVanilla);
 
         // fill empty cauldron with water
         CauldronInteraction.EMPTY.put(GTItems.water_sand_bucket.get(), GTEvents::fillWaterCauldron);
+        CauldronInteraction.EMPTY.put(GTItems.water_wooden_bucket.get(), GTEvents::fillWaterCauldron);
+        //Compost
+        CauldronInteraction.EMPTY.put(GTItems.water_sand_bucket.get(), GTEvents::fillCompostCauldron);
+        CauldronInteraction.EMPTY.put(GTItems.water_wooden_bucket.get(), GTEvents::fillCompostCauldron);
+        CauldronInteraction.EMPTY.put(Items.WATER_BUCKET, GTEvents::fillCompostCauldron);
 
     }
 
@@ -193,6 +219,9 @@ public class GTEvents {
         return fillCauldron(Blocks.WATER_CAULDRON, SoundEvents.BUCKET_EMPTY, state, level, pos, player, hand, stack);
     }
 
+    private static InteractionResult fillCompostCauldron(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, ItemStack stack) {
+        return fillCauldron(GTBlocks.compost_water.get(), SoundEvents.BUCKET_EMPTY, state, level, pos, player, hand, stack);
+    }
 
     // Empty //
 
@@ -213,8 +242,36 @@ public class GTEvents {
         return InteractionResult.PASS;
     }
 
+    public static InteractionResult emptyCompost(ItemLike filled, SoundEvent sound, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, ItemStack stack) {
+        if (state.getValue(LayeredCauldronBlock.LEVEL) == 3) {
+            if (!level.isClientSide) {
+                player.setItemInHand(hand, ItemUtils.createFilledResult(stack, player, SandBucketItem.getFilledSuccessItem(stack, player)));
+                player.awardStat(Stats.USE_CAULDRON);
+                player.awardStat(Stats.ITEM_USED.get(stack.getItem()));
+                level.setBlockAndUpdate(pos, GTBlocks.compost.get().defaultBlockState());
+                level.playSound(null, pos, sound, SoundSource.BLOCKS, 1.0F, 1.0F);
+                level.gameEvent(null, GameEvent.FLUID_PICKUP, pos);
+            }
+
+            return InteractionResult.sidedSuccess(level.isClientSide);
+        }
+
+        return InteractionResult.PASS;
+    }
+
     private static InteractionResult emptyWaterCauldron(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, ItemStack stack) {
         return emptyCauldron(GTItems.water_sand_bucket::get, SoundEvents.BUCKET_FILL, state, level, pos, player, hand, stack);
     }
 
+
+    private static InteractionResult emptyCompost(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, ItemStack stack) {
+        return emptyCompost(GTItems.water_sand_bucket::get, SoundEvents.BUCKET_FILL, state, level, pos, player, hand, stack);
+    }
+    private static InteractionResult emptyCompostWooden(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, ItemStack stack) {
+        return emptyCompost(GTItems.water_wooden_bucket::get, SoundEvents.BUCKET_FILL, state, level, pos, player, hand, stack);
+    }
+
+    private static InteractionResult emptyCompostVanilla(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, ItemStack stack) {
+        return emptyCompost(Items.WATER_BUCKET, SoundEvents.BUCKET_FILL, state, level, pos, player, hand, stack);
+    }
 }

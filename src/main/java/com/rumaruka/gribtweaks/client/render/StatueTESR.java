@@ -27,7 +27,7 @@ public class StatueTESR implements BlockEntityRenderer<StatueOBJBlockEntity> {
         if (GateWayEvents.isCatalystRightClick) {
 
 
-                ItemStack itemstack = new ItemStack(GTItems.TEST.get());
+                ItemStack itemstack = GateWayEvents.stack;
                 if (!itemstack.isEmpty()) {
                     matrixStack.pushPose();
                     float yDiff = Mth.sin((System.currentTimeMillis() % 86400000) / 1000F) * 0.1F + 0.1F;
@@ -35,7 +35,7 @@ public class StatueTESR implements BlockEntityRenderer<StatueOBJBlockEntity> {
                     float f3 = ((System.currentTimeMillis() % 86400000) / 2000F) * (180F / (float) Math.PI);
                     matrixStack.mulPose(Vector3f.YP.rotationDegrees(f3));
                     matrixStack.scale(1.5F, 1.5F, 1.5F);
-                    Minecraft.getInstance().getItemRenderer().renderStatic(GateWayEvents.stack, ItemTransforms.TransformType.GROUND, packedLight, OverlayTexture.NO_OVERLAY, matrixStack, buffer, 0);
+                    Minecraft.getInstance().getItemRenderer().renderStatic(itemstack, ItemTransforms.TransformType.GROUND, packedLight, OverlayTexture.NO_OVERLAY, matrixStack, buffer, 0);
                     matrixStack.popPose();
                 }
 

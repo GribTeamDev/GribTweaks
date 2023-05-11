@@ -22,12 +22,12 @@ import shadows.gateways.gate.Gateway;
 import shadows.gateways.gate.GatewayManager;
 import shadows.gateways.item.GatePearlItem;
 
-public class TestItem extends GatePearlItem {
+public class HopeCatalystItem extends GatePearlItem {
 
     public static final float ARENA_RANGE = 12F;
     public static final int ARENA_HEIGHT = 5;
 
-    public TestItem(Item.Properties props) {
+    public HopeCatalystItem(Item.Properties props) {
         super(props);
     }
 
@@ -88,7 +88,7 @@ public class TestItem extends GatePearlItem {
             return super.getName(stack);
         } else {
             Gateway gate = getGate(stack);
-            return (Component) (gate != null ? Component.translatable("gateways.test", new Object[]{Component.translatable(gate.getId().toString().replace(':', '.'))}).withStyle(Style.EMPTY.withColor(gate.getColor())) : super.getName(stack));
+            return (Component) (gate != null ? Component.translatable("gateways.hopecatalyst", new Object[]{Component.translatable(gate.getId().toString().replace(':', '.'))}).withStyle(Style.EMPTY.withColor(gate.getColor())) : super.getName(stack));
         }
     }
 
