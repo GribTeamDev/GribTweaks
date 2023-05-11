@@ -66,37 +66,13 @@ public class SandLayersBlock extends Block {
             }
 
 
-                if (state.getValue(LAYERS)==2){//15%
-                    if (RandomUtil.percentChance(0.15)){
+                if (state.getValue(LAYERS)!=8){//15%
+
                         inventory.add(new ItemStack(GTItems.sand_trough.get()));
                         world.removeBlock(pos, true);
-                    }
-                }
-                if (state.getValue(LAYERS)==3){//25%
-                    if (RandomUtil.percentChance(0.25)){
-                        inventory.add(new ItemStack(GTItems.sand_trough.get()));
-                        world.removeBlock(pos, true);
-                    }
-                }
-                if (state.getValue(LAYERS)==4){//35%
-                    if (RandomUtil.percentChance(0.35)){
-                        inventory.add(new ItemStack(GTItems.sand_trough.get()));
-                        world.removeBlock(pos, true);
-                    }
-                }
-                if (state.getValue(LAYERS)==5){//50%
-                    if (RandomUtil.percentChance(0.5)){
-                        inventory.add(new ItemStack(GTItems.sand_trough.get()));
-                        world.removeBlock(pos, true);
-                    }
+
                 }
 
-                if (state.getValue(LAYERS)>=7){//75%
-                    if (RandomUtil.percentChance(0.75)){
-                        inventory.add(new ItemStack(GTItems.sand_trough.get()));
-                        world.removeBlock(pos, true);
-                    }
-                }
 
 
         }

@@ -1,9 +1,11 @@
 package com.rumaruka.gribtweaks.common.items;
 
 import com.rumaruka.gribtweaks.util.RandomUtil;
+import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -18,19 +20,26 @@ public class SandTroughItem extends Item {
     @Override
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
         ItemStack stack = player.getMainHandItem();
-        if (RandomUtil.percentChance(0.7)) {
+        Inventory inventory = player.getInventory();
+        if (!level.isClientSide()) {
+            if (RandomUtil.percentChance(0.7)) {
 
-            player.setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(Items.STRING));
+                inventory.add( new ItemStack(Items.STRING));
+                player.awardStat(Stats.ITEM_USED.get(this));
 
 
+            }
+            if (RandomUtil.percentChance(0.3)) {
 
+                inventory.add( new ItemStack(Items.FEATHER));
+
+            }
+
+            player.awardStat(Stats.ITEM_USED.get(this));
+            if (!player.getAbilities().instabuild) {
+                stack.shrink(1);
+            }
         }
-        if (RandomUtil.percentChance(0.3)) {
-
-            player.setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(Items.FEATHER));
-
-
-        }
-        return InteractionResultHolder.consume(stack);
+        return InteractionResultHolder.sidedSuccess(stack,level.isClientSide());
     }
 }

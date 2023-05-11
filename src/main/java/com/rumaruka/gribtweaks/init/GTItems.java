@@ -4,14 +4,17 @@ import com.ncpbails.modestmining.item.ModTiers;
 import com.ncpbails.modestmining.item.custom.tools.BrushItem;
 import com.rumaruka.gribtweaks.common.items.*;
 
-import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.CreativeModeTab;
-import net.minecraft.world.item.Item;
+import com.rumaruka.gribtweaks.common.items.armor.ModArmorMaterial;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.*;
+import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
+import software.bernie.example.item.GeckoArmorItem;
 
 import static com.rumaruka.gribtweaks.GribTweaks.MODID;
 
@@ -46,11 +49,28 @@ public class GTItems {
     public static final RegistryObject<Item> water_wooden_bucket = ITEMS.register("water_wooden_bucket", ()->new WoodenBucketItem(Fluids.WATER,new Item.Properties().stacksTo(1)));
 
 
+ public static final RegistryObject<MushroomInfinityArmor> MUSHROOM_INFINITY_HELMET = ITEMS.register("mushroomhelmet",
+         () -> new MushroomInfinityArmor(ArmorTiers.MUSHROOM, EquipmentSlot.HEAD, new Item.Properties()));
+
 
     public static void setup() {
 
         ITEMS.register(FMLJavaModLoadingContext.get().getModEventBus());
 
+    }
+
+
+    public static class ArmorTiers {
+        public static final ArmorMaterial MUSHROOM = new ModArmorMaterial(
+                "mushroom",
+                500,
+                new int[] { 20, 40, 50, 10 },
+                300,
+                SoundEvents.ARMOR_EQUIP_DIAMOND,
+                0.0f,
+                0.0f,
+                ()->Ingredient.of(Items.GOLD_INGOT)
+              );
     }
 
 }

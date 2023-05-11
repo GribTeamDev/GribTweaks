@@ -34,6 +34,7 @@ import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import software.bernie.geckolib3.GeckoLib;
 
 import static com.rumaruka.gribtweaks.GribTweaks.MODID;
 
@@ -67,6 +68,7 @@ public class GribTweaks {
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::doClientStuff);
         NetworkHandler.initialize();
         modBus.addListener(EventPriority.LOWEST, GribTweaks::gatherData);
+        GeckoLib.initialize();
         MinecraftForge.EVENT_BUS.register(this);
     }
 
