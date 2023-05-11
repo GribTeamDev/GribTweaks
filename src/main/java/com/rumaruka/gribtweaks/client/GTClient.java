@@ -1,7 +1,9 @@
 package com.rumaruka.gribtweaks.client;
 
 import com.rumaruka.gribtweaks.GribTweaks;
+import com.rumaruka.gribtweaks.client.render.ArchaeologicalGeneratorRenderer;
 import com.rumaruka.gribtweaks.client.render.StatueTESR;
+import com.rumaruka.gribtweaks.common.tiles.ArchaeologicalGeneratorBlockEntity;
 import com.rumaruka.gribtweaks.init.GTItems;
 import com.rumaruka.gribtweaks.init.GTTiles;
 import com.rumaruka.gribtweaks.common.items.HopeCatalystItem;
@@ -154,6 +156,7 @@ public class GTClient {
 
     public static void registerBlockEntityRenderers() {
         BlockEntityRenderers.register(GTTiles.statue_obj.get(), StatueTESR::new);
+        BlockEntityRenderers.register(GTTiles.arch_block.get(), ArchaeologicalGeneratorRenderer::new);
 
     }
 

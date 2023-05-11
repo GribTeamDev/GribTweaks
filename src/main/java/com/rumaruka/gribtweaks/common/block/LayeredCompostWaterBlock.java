@@ -84,11 +84,7 @@ public class LayeredCompostWaterBlock extends AbstractCauldronBlock {
         }
     }
 
-    /**
-     * @deprecated call via {@link
-     * net.minecraft.world.level.block.state.BlockBehavior.BlockStateBase#getAnalogOutputSignal} whenever possible.
-     * Implementing/overriding is fine.
-     */
+
     public int getAnalogOutputSignal(BlockState pState, Level pLevel, BlockPos pPos) {
         return pState.getValue(LEVEL);
     }

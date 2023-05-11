@@ -27,6 +27,15 @@ public class GTItems {
     public static final RegistryObject<BrushItem> primitive_brush = ITEMS.register("primitive_brush",()-> new BrushItem(0.0F, 0.0F,ModTiers.MOUNTAIN_WOOD, new Item.Properties().tab(CreativeModeTab.TAB_TOOLS).durability(10)));
     public static final RegistryObject<PrimitiveBrushItem> primitive = ITEMS.register("primitive", PrimitiveBrushItem::new);
     public static final RegistryObject<Item> sand_copper = ITEMS.register("sand_copper", ()->new Item(new Item.Properties()));
+    public static final RegistryObject<Item> sand_gold = ITEMS.register("sand_gold", ()->new Item(new Item.Properties()));
+    public static final RegistryObject<Item> sand_iron = ITEMS.register("sand_iron", ()->new Item(new Item.Properties()));
+    public static final RegistryObject<Item> sand_lapis = ITEMS.register("sand_lapis", ()->new Item(new Item.Properties()));
+    public static final RegistryObject<Item> sand_redstone = ITEMS.register("sand_redstone", ()->new Item(new Item.Properties()));
+    public static final RegistryObject<Item> sand_zinc = ITEMS.register("sand_zinc", ()->new Item(new Item.Properties()));
+    public static final RegistryObject<Item> sand_copper_nugget = ITEMS.register("sand_copper_nugget", ()->new Item(new Item.Properties()));
+    public static final RegistryObject<Item> sand_gold_nugget = ITEMS.register("sand_gold_nugget", ()->new Item(new Item.Properties()));
+    public static final RegistryObject<Item> sand_iron_nugget = ITEMS.register("sand_iron_nugget", ()->new Item(new Item.Properties()));
+    public static final RegistryObject<Item> sand_zinc_nugget = ITEMS.register("sand_zinc_nugget", ()->new Item(new Item.Properties()));
     public static final RegistryObject<Item> sand_trough = ITEMS.register("sand_trough", ()->new SandTroughItem(new Item.Properties()));
     public static final RegistryObject<Item> sand_knife = ITEMS.register("sand_knife", ()->new Item(new Item.Properties().durability(1)));
     public static final RegistryObject<Item> sand_bucket = ITEMS.register("sand_bucket", ()->new SandBucketItem(Fluids.EMPTY,new Item.Properties()));

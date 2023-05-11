@@ -21,16 +21,14 @@ public class SandTroughItem extends Item {
         if (RandomUtil.percentChance(0.7)) {
 
             player.setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(Items.STRING));
-            stack.shrink(1);
-            return InteractionResultHolder.success(stack);
+
 
 
         }
         if (RandomUtil.percentChance(0.3)) {
 
             player.setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(Items.FEATHER));
-            stack.shrink(1);
-            return InteractionResultHolder.success(stack);
+
 
         }
         return InteractionResultHolder.consume(stack);
