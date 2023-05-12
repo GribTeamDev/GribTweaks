@@ -15,6 +15,8 @@ import net.minecraft.Util;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.ConfirmScreen;
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.renderer.ItemBlockRenderTypes;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.core.cauldron.CauldronInteraction;
 import net.minecraft.data.DataGenerator;
@@ -115,6 +117,9 @@ public class GribTweaks {
     public static ResourceLocation rl(String path) {
         return new ResourceLocation(MODID, path);
     }
-
+    @SubscribeEvent
+    public static void init(FMLClientSetupEvent event) {
+        ItemBlockRenderTypes.setRenderLayer(GTBlocks.breake_bush.get(), RenderType.cutout());
+    }
 
 }

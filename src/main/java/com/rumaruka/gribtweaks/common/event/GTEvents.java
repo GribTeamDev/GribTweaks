@@ -100,6 +100,7 @@ public class GTEvents {
     public static void onLevelTick(TickEvent.ServerTickEvent event) {
         if (isActive) {
             ticks++;
+
         }
 
 
@@ -121,6 +122,7 @@ public class GTEvents {
 
                     if (world.getBlockState(pos).getBlock() == GTBlocks.breake_bush.get() && world.getBlockState(pos.below()).getBlock() == Blocks.MUD) {
                         isActive = true;
+
                         if (ticks >= 30 * 20) {
                             world.setBlockAndUpdate(pos, Blocks.OAK_SAPLING.defaultBlockState());
                             world.setBlockAndUpdate(pos.below(), Blocks.DIRT.defaultBlockState());

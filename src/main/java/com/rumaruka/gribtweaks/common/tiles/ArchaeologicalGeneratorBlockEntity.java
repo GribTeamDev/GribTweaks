@@ -51,10 +51,10 @@ public class ArchaeologicalGeneratorBlockEntity extends BlockEntity {
         pBlockEntity.ticks++;
 
         if (pBlockEntity.checkStructure(pLevel,pPos)){
-            if (pBlockEntity.ticks>=300){
+            if (pBlockEntity.ticks>=100){
                 applyWork(pLevel,pPos);
                 pBlockEntity.ticks=0;
-            }
+           }
 
             addSandParticles(pLevel,pPos,6);
 
@@ -151,13 +151,13 @@ public class ArchaeologicalGeneratorBlockEntity extends BlockEntity {
 
             pLevel.addParticle(new BlockParticleOption(ParticleTypes.BLOCK,Blocks.SANDSTONE.defaultBlockState()),pPos.getX(),pPos.getY(),pPos.getZ(),pLevel.random.nextInt(),pLevel.random.nextInt(),pLevel.random.nextInt());
 
-            if (RandomUtil.percentChance(0.2)) {
+            if (RandomUtil.percentChance(0.8)) {
                 pLevel.setBlockAndUpdate(pPos.above(), ModBlocks.SUSPICIOUS_SAND.get().defaultBlockState());
 
 
             }
 
-            if (RandomUtil.percentChance(0.8)) {
+            if (RandomUtil.percentChance(0.2)) {
                 pLevel.setBlockAndUpdate(pPos.above(), Blocks.SAND.defaultBlockState());
 
 

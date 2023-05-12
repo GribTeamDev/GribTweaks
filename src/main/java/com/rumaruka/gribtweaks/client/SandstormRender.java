@@ -20,6 +20,8 @@ import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
+import java.awt.*;
+
 @Mod.EventBusSubscriber
 public class SandstormRender {
     public static boolean active;
@@ -30,7 +32,7 @@ public class SandstormRender {
     private static final ResourceLocation SAND_BLUR_TEXTURE = new ResourceLocation(GribTweaks.MODID, "textures/hud/sandstormwip.png");
     @SubscribeEvent
     public static void onViewportRender(ViewportEvent.RenderFog event) {
-        if (active || fog < 2F) {
+        if (active || fog < 4F) {
             float f = 12F;
             f = f >= event.getFarPlaneDistance() ? event.getFarPlaneDistance() : Mth.clampedLerp(f, event.getFarPlaneDistance(), fog);
             float shift = (float) ((active ? (fog > 0.25F ? 0.1F : 0.005F) : (fog > 0.25F ? 0.01F : 0.001F)) * event.getPartialTick());
@@ -72,9 +74,10 @@ public class SandstormRender {
                 color -= shift;
 
             color = Mth.clamp(color, 0F, 5F);
-            event.setRed(120);
-            event.setGreen(45);
-            event.setBlue(0);
+            Color color1 = Color.pink;
+            event.setRed(color1.getRed());
+            event.setGreen(color1.getGreen());
+            event.setBlue(color1.getBlue());
         }
     }
 
