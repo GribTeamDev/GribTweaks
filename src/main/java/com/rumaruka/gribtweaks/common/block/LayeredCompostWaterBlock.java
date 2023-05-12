@@ -9,7 +9,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.AbstractCauldronBlock;
 import net.minecraft.world.level.block.Block;
-
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.CauldronBlock;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
@@ -23,7 +23,7 @@ import net.minecraft.world.level.material.Fluids;
 import java.util.Map;
 import java.util.function.Predicate;
 
-public class LayeredCompostWaterBlock extends AbstractCauldronBlock {
+public class LayeredCompostWaterBlock  extends AbstractCauldronBlock {
     public static final int MIN_FILL_LEVEL = 1;
     public static final int MAX_FILL_LEVEL = 3;
     public static final IntegerProperty LEVEL = BlockStateProperties.LEVEL_CAULDRON;

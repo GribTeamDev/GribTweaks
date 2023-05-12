@@ -1,5 +1,6 @@
 package com.rumaruka.gribtweaks.common.items;
 
+import com.rumaruka.gribtweaks.GribTweaks;
 import com.rumaruka.gribtweaks.common.recipe.PrimitiveBrushRecipe;
 import com.simibubi.create.AllSoundEvents;
 
@@ -43,7 +44,7 @@ import java.util.function.Consumer;
 
 public class PrimitiveBrushItem extends Item implements CustomUseEffectsItem {
     public PrimitiveBrushItem( ) {
-        super(new Properties().defaultDurability(8));
+        super(new Properties().defaultDurability(8).tab(GribTweaks.GRIBTWEAKS_TABS));
     }
 
     public InteractionResultHolder<ItemStack> use(Level worldIn, Player playerIn, InteractionHand handIn) {

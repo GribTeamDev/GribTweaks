@@ -56,7 +56,7 @@ public class GTClient {
     public static void tooltip(ItemTooltipEvent e) {
         currentTooltipItem = e.getItemStack();
         tooltipTick = PlaceboClient.ticks;
-        if (e.getItemStack().getItem() == GTItems.HOPE_CATALYST.get()) {
+        if (e.getItemStack().getItem() == GTItems.HOPE_CATALYST.get() || e.getItemStack().getItem() == GTItems.FOREST_CATALYST.get()) {
             Gateway gate = HopeCatalystItem.getGate(e.getItemStack());
             List<Component> tooltips = e.getToolTip();
             if (gate == null) {
@@ -137,7 +137,7 @@ public class GTClient {
     }
 
     public static void scroll(ScreenEvent.MouseScrolled.Pre e) {
-        if (currentTooltipItem!=null&&(currentTooltipItem.getItem() == GTItems.HOPE_CATALYST.get()) && tooltipTick == PlaceboClient.ticks && Screen.hasShiftDown()) {
+        if (currentTooltipItem!=null&&(currentTooltipItem.getItem() == GTItems.HOPE_CATALYST.get()|| currentTooltipItem.getItem() == GTItems.FOREST_CATALYST.get()) && tooltipTick == PlaceboClient.ticks && Screen.hasShiftDown()) {
             waveIdx += e.getScrollDelta() < 0 ? 1 : -1;
             e.setCanceled(true);
         } else {
@@ -146,7 +146,7 @@ public class GTClient {
     }
 
     public static void scroll2(InputEvent.MouseScrollingEvent e) {
-         if (currentTooltipItem!=null&&(currentTooltipItem.getItem() == GTItems.HOPE_CATALYST.get()) && tooltipTick == PlaceboClient.ticks && Screen.hasShiftDown()) {
+         if (currentTooltipItem!=null&&(currentTooltipItem.getItem() == GTItems.HOPE_CATALYST.get()||currentTooltipItem.getItem() == GTItems.FOREST_CATALYST.get()) && tooltipTick == PlaceboClient.ticks && Screen.hasShiftDown()) {
             waveIdx += e.getScrollDelta() < 0 ? 1 : -1;
             e.setCanceled(true);
         } else {

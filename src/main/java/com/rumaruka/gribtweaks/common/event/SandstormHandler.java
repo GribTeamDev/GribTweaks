@@ -75,23 +75,21 @@ public class SandstormHandler {
             }
 
             if (this.stormTime <= 0) {
-                if (DimensionHelper.getData(serverLevel).isStorming()   ) {
+                if (level.isThundering()|| level.isRaining()  ) {
                     this.stormTime = serverLevel.random.nextInt(4000) + 4000;
-
                 }
-                DimensionHelper.getData(serverLevel).setStorming(DimensionHelper.getData(serverLevel).isStorming()   );
                 NetworkHandler.getInstance().sendToDimension(new WeatherPacket(this.stormTime), serverLevel, Level.OVERWORLD);
             } else {
                 this.stormTime--;
                 if (this.stormTime <= 0) {
-                    DimensionHelper.getData(serverLevel).setStorming(!DimensionHelper.getData(serverLevel).isStorming());
+                    level.setRainLevel(0);
                 }
             }
 
             worldInfo.setClearWeatherTime(cleanWeatherTime);
 
             this.prevStormStrength = this.stormStrength;
-            if (DimensionHelper.getData(serverLevel).isStorming()   ) {
+            if (level.isThundering()|| level.isRaining()) {
                 this.stormStrength += 2.0F / (float) (20 * GTConfig.GENERAL.sandstormTransitionTime.get());
             } else {
                 this.stormStrength -= 2.0F / (float) (20 * GTConfig.GENERAL.sandstormTransitionTime.get());
@@ -118,12 +116,13 @@ public class SandstormHandler {
 
                                     if (serverLevel.isAreaLoaded(posDown, 1)) {
                                         BlockState sandState = serverLevel.getBlockState(pos);
-                                        if (sandState.getBlock() == GTBlocks.sand_layer.get()) {
+                                        BlockState belowState = serverLevel.getBlockState(posDown);
+                                        if (sandState.getBlock() == GTBlocks.sand_layer.get() && belowState.getBlock() != Blocks.WATER) {
                                             int layers = sandState.getValue(SandLayersBlock.LAYERS);
                                             if (layers < 8) {
                                                 serverLevel.setBlockAndUpdate(pos, sandState.setValue(SandLayersBlock.LAYERS, ++layers));
                                             }
-                                        } else if (this.canPlaceSandAt(serverLevel, pos)) {
+                                        } else if (this.canPlaceSandAt(serverLevel, pos) ) {
                                             serverLevel.setBlockAndUpdate(pos, GTBlocks.sand_layer.get().defaultBlockState());
                                         }
                                     }

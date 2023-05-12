@@ -22,8 +22,8 @@ apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'org.spongepowered.mixin'
 apply plugin: 'org.parchmentmc.librarian.forgegradle'
 version = '1.0'
-group = 'com.rumaruka.modfixes' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
-archivesBaseName = 'modfixes'
+group = 'com.rumaruka.gribtweaks' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
+archivesBaseName = 'gribtweaks'
 
 // Mojang ships Java 17 to end users in 1.18+, so your mod should target Java 17.
 java.toolchain.languageVersion = JavaLanguageVersion.of(17)
@@ -155,7 +155,7 @@ dependencies {
     // The userdev artifact is a special name and will get all sorts of transformations applied to it.
     minecraft 'net.minecraftforge:forge:1.19.2-43.2.8'
     implementation fg.deobf("curse.maven:placebo-283644:4452975")
-    implementation fg.deobf("curse.maven:gateways-to-eternity-417802:4297481")
+   //implementation fg.deobf("curse.maven:gateways-to-eternity-417802:4297481")
     implementation fg.deobf('software.bernie.geckolib:geckolib-forge-1.19:3.1.40')
 
     implementation fg.deobf("com.simibubi.create:create-${create_minecraft_version}:${create_version}:slim") { transitive = false }

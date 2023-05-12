@@ -32,8 +32,8 @@ public class SandstormRender {
     private static final ResourceLocation SAND_BLUR_TEXTURE = new ResourceLocation(GribTweaks.MODID, "textures/hud/sandstormwip.png");
     @SubscribeEvent
     public static void onViewportRender(ViewportEvent.RenderFog event) {
-        if (active || fog < 4F) {
-            float f = 12F;
+        if (active || fog < 8F) {
+            float f = 45F;
             f = f >= event.getFarPlaneDistance() ? event.getFarPlaneDistance() : Mth.clampedLerp(f, event.getFarPlaneDistance(), fog);
             float shift = (float) ((active ? (fog > 0.25F ? 0.1F : 0.005F) : (fog > 0.25F ? 0.01F : 0.001F)) * event.getPartialTick());
             if (active)
@@ -61,23 +61,23 @@ public class SandstormRender {
     @SubscribeEvent
     public static void onViewportComputeFogColor(ViewportEvent.ComputeFogColor event) {
         if (active || color > 0F) {
-            final float[] realColors = {event.getRed(), event.getGreen(), event.getBlue()};
-            for (int i = 0; i < 3; i++) {
-                final float real = realColors[i];
-                final float c = 1;
-                colors[i] = real == c ? c : Mth.clampedLerp(real, c, color);
-            }
-            float shift = (float) (5F * event.getPartialTick());
-            if (active)
-                color += shift;
-            else
-                color -= shift;
-
-            color = Mth.clamp(color, 0F, 5F);
-            Color color1 = Color.pink;
-            event.setRed(color1.getRed());
-            event.setGreen(color1.getGreen());
-            event.setBlue(color1.getBlue());
+//            final float[] realColors = {event.getRed(), event.getGreen(), event.getBlue()};
+//            for (int i = 0; i < 3; i++) {
+//                final float real = realColors[i];
+//                final float c = 1;
+//                colors[i] = real == c ? c : Mth.clampedLerp(real, c, color);
+//            }
+//            float shift = (float) (5F * event.getPartialTick());
+//            if (active)
+//                color += shift;
+//            else
+//                color -= shift;
+//
+//            color = Mth.clamp(color, 0F, 5F);
+//            Color color1 = Color.pink;
+            event.setRed(0);
+            event.setGreen(0);
+            event.setBlue(0);
         }
     }
 

@@ -62,7 +62,7 @@ public class GateWayEvents {
         if (Minecraft.getInstance().level != null) {
             BlockState state = Minecraft.getInstance().level.getBlockState(blockPos);
             if (state.getBlock() == GTBlocks.statue_obj.get()) {
-                if (stack.getItem() == GTItems.HOPE_CATALYST.get()) {
+                if (stack.getItem() == GTItems.HOPE_CATALYST.get()|| stack.getItem()== GTItems.FOREST_CATALYST.get()) {
                     isCatalystRightClick = true;
                 }
             }
@@ -77,8 +77,6 @@ public class GateWayEvents {
         LivingEntity entity = event.getEntity();
         if (entity instanceof Player player) {
             if (isWaveStopped) {
-                player.level.addFreshEntity(new ItemEntity(player.level, player.getX(), player.getY(), player.getZ(), new ItemStack(GTItems.TEST_DAMAGE.get())));
-                player.sendSystemMessage(Component.literal("Ты лох! Переделывай все"));
                 isWaveStopped = false;
             }
 

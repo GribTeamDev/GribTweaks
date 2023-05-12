@@ -11,7 +11,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.CreativeModeTab;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
@@ -22,12 +21,12 @@ import shadows.gateways.gate.Gateway;
 import shadows.gateways.gate.GatewayManager;
 import shadows.gateways.item.GatePearlItem;
 
-public class HopeCatalystItem extends GatePearlItem {
+public class ForestCatalystItem extends GatePearlItem {
 
     public static final float ARENA_RANGE = 12F;
     public static final int ARENA_HEIGHT = 5;
 
-    public HopeCatalystItem(Item.Properties props) {
+    public ForestCatalystItem(Properties props) {
         super(props);
     }
 
@@ -88,7 +87,7 @@ public class HopeCatalystItem extends GatePearlItem {
             return super.getName(stack);
         } else {
             Gateway gate = getGate(stack);
-            return (Component) (gate != null ? Component.translatable("gateways.hopecatalyst").withStyle(Style.EMPTY.withColor(gate.getColor())) : super.getName(stack));
+            return (Component) (gate != null ? Component.translatable("gateways.forestcatalyst").withStyle(Style.EMPTY.withColor(gate.getColor())) : super.getName(stack));
         }
     }
 

@@ -1,8 +1,12 @@
 package com.rumaruka.gribtweaks.common.block;
 
+import com.rumaruka.gribtweaks.common.event.GTEvents;
 import net.minecraft.core.BlockPos;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.item.BoneMealItem;
 import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.BushBlock;
@@ -17,6 +21,15 @@ public class BreakeDeadBushBlock extends BushBlock implements net.minecraftforge
 
     public BreakeDeadBushBlock(BlockBehaviour.Properties pProperties) {
         super(pProperties);
+    }
+
+    @Override
+    public void animateTick(BlockState pState, Level pLevel, BlockPos pPos, RandomSource pRandom) {
+        if (GTEvents.isActive){
+            BoneMealItem.addGrowthParticles(pLevel, pPos, 25);
+
+        }
+        super.animateTick(pState, pLevel, pPos, pRandom);
     }
 
     public VoxelShape getShape(BlockState pState, BlockGetter pLevel, BlockPos pPos, CollisionContext pContext) {

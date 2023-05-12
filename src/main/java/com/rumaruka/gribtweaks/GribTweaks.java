@@ -22,6 +22,8 @@ import net.minecraft.core.cauldron.CauldronInteraction;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.data.event.GatherDataEvent;
 import net.minecraftforge.event.RegisterCommandsEvent;
@@ -47,7 +49,12 @@ public class GribTweaks {
     public static boolean isModInstalled = false;
     public static boolean flag = false;
     public static final CreateRegistrate REGISTRATE = CreateRegistrate.create(MODID);
-
+    public static final CreativeModeTab GRIBTWEAKS_TABS = new CreativeModeTab(MODID) {
+        @Override
+        public ItemStack makeIcon() {
+            return new ItemStack(GTItems.FOREST_CATALYST.get());
+        }
+    };
     public static Screen WarningScreen = new ConfirmScreen(b -> {
         if (b) {
             Util.getPlatform().openUri("https://drive.google.com/drive/folders/1BFNaJFeCNsbS814NRKGbZEHkYK93kko5?usp=share_link");
@@ -86,6 +93,7 @@ public class GribTweaks {
 
     private void doClientStuff(FMLClientSetupEvent event) {
         isModInstalled =/* ModList.get().isLoaded("avaritia") &&*/ ModList.get().isLoaded("gateways") && ModList.get().isLoaded("modestmining");
+        ItemBlockRenderTypes.setRenderLayer(GTBlocks.breake_bush.get(), RenderType.cutoutMipped());
 
     }
 
@@ -117,9 +125,6 @@ public class GribTweaks {
     public static ResourceLocation rl(String path) {
         return new ResourceLocation(MODID, path);
     }
-    @SubscribeEvent
-    public static void init(FMLClientSetupEvent event) {
-        ItemBlockRenderTypes.setRenderLayer(GTBlocks.breake_bush.get(), RenderType.cutout());
-    }
+
 
 }
