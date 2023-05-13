@@ -31,7 +31,7 @@ public class GTItems {
     public static final RegistryObject<Item> sand_layer = ITEMS.register("sand_layer", () -> new BlockItem(GTBlocks.sand_layer.get(), new Item.Properties().tab(GribTweaks.GRIBTWEAKS_TABS)));
     public static final RegistryObject<Item> breake_bush = ITEMS.register("breake_bush", () -> new BlockItem(GTBlocks.breake_bush.get(), new Item.Properties().tab(GribTweaks.GRIBTWEAKS_TABS)));
     public static final RegistryObject<Item> arch_block = ITEMS.register("arch_block", () -> new BlockItem(GTBlocks.arch_block.get(), new Item.Properties().tab(GribTweaks.GRIBTWEAKS_TABS)));
-    public static final RegistryObject<BrushItem> primitive_brush = ITEMS.register("primitive_brush",()-> new BrushItem(0.0F, 0.0F,ModTiers.MOUNTAIN_WOOD, new Item.Properties().tab(GribTweaks.GRIBTWEAKS_TABS).durability(10)));
+    public static final RegistryObject<BrushItem> primitive_brush = ITEMS.register("primitive_brush",()-> new BrushItem(0.0F, 0.0F,ModTiers.MOUNTAIN_WOOD, new Item.Properties().tab(GribTweaks.GRIBTWEAKS_TABS).durability(40)));
     public static final RegistryObject<PrimitiveBrushItem> primitive = ITEMS.register("primitive", PrimitiveBrushItem::new);
     public static final RegistryObject<Item> sand_copper = ITEMS.register("sand_copper", ()->new Item(new Item.Properties().tab(GribTweaks.GRIBTWEAKS_TABS)));
     public static final RegistryObject<Item> sand_gold = ITEMS.register("sand_gold", ()->new Item(new Item.Properties().tab(GribTweaks.GRIBTWEAKS_TABS)));

@@ -1,6 +1,5 @@
 package com.rumaruka.gribtweaks.common.tiles;
 
-import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 import com.ncpbails.modestmining.block.ModBlocks;
 import com.rumaruka.gribtweaks.init.GTTiles;
@@ -23,13 +22,12 @@ import net.minecraft.world.level.block.state.properties.Half;
 import java.util.List;
 
 public class ArchaeologicalGeneratorBlockEntity extends BlockEntity {
-    List<ArchaeologicalGeneratorBlockEntity.BeaconBeamSection> beamSections = Lists.newArrayList();
-    private List<ArchaeologicalGeneratorBlockEntity.BeaconBeamSection> checkingBeamSections = Lists.newArrayList();
+
     /**
      * The number of levels of this beacon's pyramid.
      */
     int levels;
-    private int lastCheckY;
+
     public static boolean isActive;
     private int ticks;
 
@@ -44,7 +42,7 @@ public class ArchaeologicalGeneratorBlockEntity extends BlockEntity {
             if (pBlockEntity.ticks >= 100) {
                 isActive = true;
                 applyWork(pLevel, pPos);
-                playSound(pLevel,pPos, SoundEvents.BEACON_AMBIENT);
+                playSound(pLevel, pPos, SoundEvents.BEACON_AMBIENT);
                 pBlockEntity.ticks = 0;
             }
 
@@ -109,15 +107,21 @@ public class ArchaeologicalGeneratorBlockEntity extends BlockEntity {
 
             if (RandomUtil.percentChance(0.8)) {
                 pLevel.setBlockAndUpdate(pPos.above(), ModBlocks.SUSPICIOUS_SAND.get().defaultBlockState());
-
+                if (isBlockAbove(pPos, pLevel)) {
+                    isActive = false;
+                }
 
             }
 
             if (RandomUtil.percentChance(0.2)) {
                 pLevel.setBlockAndUpdate(pPos.above(), Blocks.SAND.defaultBlockState());
+                if (isBlockAbove(pPos, pLevel)) {
+                    isActive = false;
+                }
 
 
             }
+
         }
 
 
@@ -128,36 +132,10 @@ public class ArchaeologicalGeneratorBlockEntity extends BlockEntity {
         pLevel.playSound((Player) null, pPos, pSound, SoundSource.MASTER, 1.0F, 1.0F);
     }
 
-    public List<ArchaeologicalGeneratorBlockEntity.BeaconBeamSection> getBeamSections() {
-        return (List<ArchaeologicalGeneratorBlockEntity.BeaconBeamSection>) (this.levels == 0 ? ImmutableList.of() : this.beamSections);
+
+    public static boolean isBlockAbove(BlockPos pos, Level world) {
+        return world.getBlockState(pos.above()).getBlock() != Blocks.AIR;
     }
 
 
-    public static class BeaconBeamSection {
-        /**
-         * The colors of this section of a beacon beam, in RGB float format.
-         */
-        final float[] color;
-        private int height;
-
-        public BeaconBeamSection(float[] pColor) {
-            this.color = pColor;
-            this.height = 1;
-        }
-
-        protected void increaseHeight() {
-            ++this.height;
-        }
-
-        /**
-         * @return The colors of this section of a beacon beam, in RGB float format.
-         */
-        public float[] getColor() {
-            return this.color;
-        }
-
-        public int getHeight() {
-            return this.height;
-        }
-    }
 }
