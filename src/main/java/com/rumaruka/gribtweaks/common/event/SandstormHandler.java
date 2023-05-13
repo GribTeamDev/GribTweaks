@@ -119,7 +119,7 @@ public class SandstormHandler {
                                         BlockState belowState = serverLevel.getBlockState(posDown);
                                         if (sandState.getBlock() == GTBlocks.sand_layer.get() && belowState.getBlock() != Blocks.WATER) {
                                             int layers = sandState.getValue(SandLayersBlock.LAYERS);
-                                            if (layers <= 8) {
+                                            if (layers < 8) {
                                                 serverLevel.setBlockAndUpdate(pos, sandState.setValue(SandLayersBlock.LAYERS, ++layers));
                                             }
                                         } else if (this.canPlaceSandAt(serverLevel, pos) ) {

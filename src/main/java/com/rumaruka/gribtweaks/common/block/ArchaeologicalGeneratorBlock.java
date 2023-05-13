@@ -11,10 +11,7 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
-import net.minecraft.world.level.block.BaseEntityBlock;
-import net.minecraft.world.level.block.BeaconBeamBlock;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -36,6 +33,10 @@ public class ArchaeologicalGeneratorBlock extends BaseEntityBlock implements Bea
         return DyeColor.BROWN;
     }
 
+    @Override
+    public RenderShape getRenderShape(BlockState pState) {
+        return RenderShape.MODEL;
+    }
 
     @javax.annotation.Nullable
     protected static <T extends BlockEntity> BlockEntityTicker<T> createArcGeneratorTicker(Level p_151988_, BlockEntityType<T> p_151989_, BlockEntityType<? extends ArchaeologicalGeneratorBlockEntity> p_151990_) {

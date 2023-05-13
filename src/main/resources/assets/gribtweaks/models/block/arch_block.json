@@ -1,0 +1,9 @@
+{
+	"parent": "block/orientable",
+	"textures": {
+		"side": "gribtweaks:block/archaeological_generator_side",
+		"front": "gribtweaks:block/archaeological_generator_side",
+		"top": "gribtweaks:block/archaeological_generator_top",
+		"bottom": "gribtweaks:block/archaeological_generator_bottom"
+	}
+}

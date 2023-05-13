@@ -1,7 +1,6 @@
 package com.rumaruka.gribtweaks.common.event;
 
 
-import com.rumaruka.gribtweaks.common.block.SandLayersBlock;
 import com.rumaruka.gribtweaks.common.block.watercompost.LayeredWaterCompost;
 import com.rumaruka.gribtweaks.common.items.SandBucketItem;
 import com.rumaruka.gribtweaks.common.items.WoodenBucketItem;
@@ -47,9 +46,8 @@ import net.minecraftforge.fml.common.Mod;
 public class GTEvents {
 
     public static int ticks = 0;
-    public static int ticksRain = 0;
+
     public static boolean isActive = false;
-    public static boolean isRainingThunder = false;
 
 
     @SubscribeEvent
@@ -113,10 +111,6 @@ public class GTEvents {
             ticks++;
 
         }
-        if (isRainingThunder){
-            ticksRain++;
-        }
-
 
 
     }
@@ -124,42 +118,36 @@ public class GTEvents {
     @SubscribeEvent
     public static void onLevelRainOrThunder(TickEvent.LevelTickEvent event) {
         Level level = event.level;
+        int water = 1;
         for (Player player : level.players()) {
             BlockHitResult rayTraceResult = Item.getPlayerPOVHitResult(level, player, ClipContext.Fluid.NONE);
             if (rayTraceResult.getType() == BlockHitResult.Type.BLOCK) {
                 BlockPos pos = rayTraceResult.getBlockPos();
                 BlockState state = level.getBlockState(pos);
+                BlockState newState = level.getBlockState(pos);
 
                 if (level instanceof ServerLevel serverLevel && (serverLevel.isThundering() || serverLevel.isRaining())) {
-                    isRainingThunder=true;
+
 
                     if (state.getBlock() == GTBlocks.compost.get()) {
 
-                        if (RandomUtil.percentChance(0.4f)) {
-                            if (ticksRain>=10){
 
-                                int water = GTBlocks.compost_water.get().defaultBlockState().getValue(LayeredWaterCompost.LEVEL);
+                        if (RandomUtil.percentChance(0.25f)) {
 
-                                level.setBlockAndUpdate(pos, GTBlocks.compost_water.get().defaultBlockState().setValue(LayeredWaterCompost.LEVEL, ++water));
-
-
-
-
-                            }
-
+                            level.setBlockAndUpdate(pos, GTBlocks.compost_water.get().defaultBlockState().setValue(LayeredWaterCompost.LEVEL, 3));
 
 
                         }
-                    }
 
-                }else {
-                    ticksRain=0;
-                    isRainingThunder=false;
+
+                    }
                 }
+
             }
         }
-
     }
+
+
 
     @SubscribeEvent
     public static void onLevelTick(TickEvent.LevelTickEvent event) {

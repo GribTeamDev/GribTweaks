@@ -10,6 +10,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.particles.BlockParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
@@ -43,6 +44,7 @@ public class ArchaeologicalGeneratorBlockEntity extends BlockEntity {
             if (pBlockEntity.ticks >= 100) {
                 isActive = true;
                 applyWork(pLevel, pPos);
+                playSound(pLevel,pPos, SoundEvents.BEACON_AMBIENT);
                 pBlockEntity.ticks = 0;
             }
 
@@ -123,7 +125,7 @@ public class ArchaeologicalGeneratorBlockEntity extends BlockEntity {
 
 
     public static void playSound(Level pLevel, BlockPos pPos, SoundEvent pSound) {
-        pLevel.playSound((Player) null, pPos, pSound, SoundSource.MASTER, 0.5F, 1.0F);
+        pLevel.playSound((Player) null, pPos, pSound, SoundSource.MASTER, 1.0F, 1.0F);
     }
 
     public List<ArchaeologicalGeneratorBlockEntity.BeaconBeamSection> getBeamSections() {

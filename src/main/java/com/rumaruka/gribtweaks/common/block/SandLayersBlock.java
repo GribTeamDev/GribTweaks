@@ -120,7 +120,7 @@ public class SandLayersBlock extends Block {
     @Override
     public boolean canSurvive(@Nonnull BlockState state, @Nonnull LevelReader level, BlockPos pos) {
         BlockState stateDown = level.getBlockState(pos.below());
-        if (!stateDown.is(Blocks.WATER)&&!stateDown.is(Blocks.ICE) && !stateDown.is(Blocks.PACKED_ICE) && !stateDown.is(Blocks.BARRIER)) {
+        if (!stateDown.is(Blocks.WATER)&&!stateDown.is(Blocks.ICE) &&!stateDown.is(Blocks.CACTUS) &&  !stateDown.is(Blocks.PACKED_ICE) && !stateDown.is(Blocks.BARRIER)) {
             if (!stateDown.is(Blocks.HONEY_BLOCK) && !stateDown.is(Blocks.SOUL_SAND)) {
                 return Block.isFaceFull(stateDown.getCollisionShape(level, pos.below()), Direction.UP) || stateDown.getBlock() == this && stateDown.getValue(LAYERS) < 8;
             } else {
