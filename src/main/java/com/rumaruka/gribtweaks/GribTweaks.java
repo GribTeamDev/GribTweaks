@@ -1,6 +1,7 @@
 package com.rumaruka.gribtweaks;
 
 import com.mojang.brigadier.CommandDispatcher;
+import com.rumaruka.gribtweaks.client.particle.SandMote;
 import com.rumaruka.gribtweaks.common.command.GribTweaksWeather;
 import com.rumaruka.gribtweaks.common.event.GTEvents;
 import com.rumaruka.gribtweaks.config.GTConfig;
@@ -24,6 +25,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
+import net.minecraftforge.client.event.RegisterParticleProvidersEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.data.event.GatherDataEvent;
 import net.minecraftforge.event.RegisterCommandsEvent;
@@ -70,6 +72,7 @@ public class GribTweaks {
         GTBlocks.setup();
         GTItems.setup();
         GTTiles.setup();
+        GTParticles.init(modBus);
         REGISTRATE.registerEventListeners(modBus);
         modBus.addListener(this::setupCommon);
         GTRecipeType.register(modBus);
@@ -95,6 +98,15 @@ public class GribTweaks {
         isModInstalled =/* ModList.get().isLoaded("avaritia") &&*/ ModList.get().isLoaded("gateways") && ModList.get().isLoaded("modestmining");
         ItemBlockRenderTypes.setRenderLayer(GTBlocks.breake_bush.get(), RenderType.cutoutMipped());
 
+    }
+
+    @Mod.EventBusSubscriber(modid = MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
+    public static class ModEventBusEvents {
+        @SubscribeEvent
+        public static void registerParticleFactories(final RegisterParticleProvidersEvent event) {
+            Minecraft.getInstance().particleEngine.register(GTParticles.SANDMOTE.get(),
+                    SandMote.SandMoteFactory::new);
+        }
     }
 
     @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.FORGE)
