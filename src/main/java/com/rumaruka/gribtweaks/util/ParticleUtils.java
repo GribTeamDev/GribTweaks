@@ -29,17 +29,17 @@ public class ParticleUtils {
             double x = (double) i + random.nextDouble();
             double y = (double) j + random.nextDouble();
             double z = (double) k + random.nextDouble();
-            for (double hj = 0; hj < Math.ceil(8 * ((GTConfig.GENERAL.particleDensity.get() * 4))); hj++) {
+            for (double hj = 0; hj < Math.ceil(8 * ((GTConfig.GENERAL.particleDensity.get() * 6))); hj++) {
                 if ((SandstormRender.active) && !instance2.isPaused()) {
                     for (int l = 0; l < 4; ++l) {
                         for (int i1 = 1; i1 <= GTConfig.GENERAL.sandmotemodifier.get(); ++i1) {
                             if (MiscUtil.forloopdecimalizer(GTConfig.GENERAL.sandmotemodifier.get(), i1)) {
                                     if (world2.getBiome(new BlockPos(Mth.lerp(world2.random.nextDouble(), x - 40, x + 40),
-                                            Mth.lerp(world2.random.nextDouble(), 64, 256),
+                                            Mth.lerp(world2.random.nextDouble(), 30, 256),
                                             Mth.lerp(world2.random.nextDouble(), z - 40, z + 40))).is(Biomes.DESERT)) {
                                             world2.addParticle(GTParticles.SANDMOTE.get(),
                                                     Mth.lerp(world2.random.nextDouble(), x - 40, x + 40),
-                                                    Mth.lerp(world2.random.nextDouble(), 63, 90),
+                                                    Mth.lerp(world2.random.nextDouble(), 30, 90),
                                                     Mth.lerp(world2.random.nextDouble(), z - 40, z + 40), 0f, 0f, 0f);
                                     }
                                 }

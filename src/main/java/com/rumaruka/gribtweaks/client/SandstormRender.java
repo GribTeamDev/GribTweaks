@@ -59,7 +59,7 @@ public class SandstormRender {
     @SubscribeEvent
     public static void onPlayerTick(TickEvent.PlayerTickEvent event) {
         if (event.player.level instanceof ServerLevel serverLevel) {
-            if (DimensionHelper.getData(serverLevel).isStorming) {
+            if (serverLevel.isThundering()||serverLevel.isRaining()) {
                 long penis = event.player.level.getGameTime() % 24000;
                 isDay = penis < 13000;
                 active = true;

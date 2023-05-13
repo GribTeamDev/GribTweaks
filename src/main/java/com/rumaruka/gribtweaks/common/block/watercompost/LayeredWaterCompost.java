@@ -1,4 +1,4 @@
-package com.rumaruka.gribtweaks.common.block;
+package com.rumaruka.gribtweaks.common.block.watercompost;
 
 import com.rumaruka.gribtweaks.init.GTBlocks;
 import net.minecraft.core.BlockPos;
@@ -7,7 +7,6 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.biome.Biome;
-import net.minecraft.world.level.block.AbstractCauldronBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.CauldronBlock;
@@ -23,22 +22,20 @@ import net.minecraft.world.level.material.Fluids;
 import java.util.Map;
 import java.util.function.Predicate;
 
-public class LayeredCompostWaterBlock  extends AbstractCauldronBlock {
+public class LayeredWaterCompost extends AbstractWaterCompostBlock {
     public static final int MIN_FILL_LEVEL = 1;
     public static final int MAX_FILL_LEVEL = 3;
-    public static final IntegerProperty LEVEL = BlockStateProperties.LEVEL_CAULDRON;
+    public static final IntegerProperty LEVEL =  IntegerProperty.create("water", 1, 3);
     private static final int BASE_CONTENT_HEIGHT = 6;
     private static final double HEIGHT_PER_LEVEL = 3.0D;
     public static final Predicate<Biome.Precipitation> RAIN = (p_153553_) -> {
         return p_153553_ == Biome.Precipitation.RAIN;
     };
-    public static final Predicate<Biome.Precipitation> SNOW = (p_153526_) -> {
-        return p_153526_ == Biome.Precipitation.SNOW;
-    };
+
     private final Predicate<Biome.Precipitation> fillPredicate;
 
-    public LayeredCompostWaterBlock(BlockBehaviour.Properties pProperties, Predicate<Biome.Precipitation> pFillPredicate, Map<Item, CauldronInteraction> pInteractions) {
-        super(pProperties, pInteractions);
+    public LayeredWaterCompost(BlockBehaviour.Properties pProperties, Predicate<Biome.Precipitation> pFillPredicate) {
+        super(pProperties);
         this.fillPredicate = pFillPredicate;
         this.registerDefaultState(this.stateDefinition.any().setValue(LEVEL, Integer.valueOf(1)));
     }
@@ -77,7 +74,7 @@ public class LayeredCompostWaterBlock  extends AbstractCauldronBlock {
     }
 
     public void handlePrecipitation(BlockState pState, Level pLevel, BlockPos pPos, Biome.Precipitation pPrecipitation) {
-        if (CompostWaterBlock.shouldHandlePrecipitation(pLevel, pPrecipitation) && pState.getValue(LEVEL) != 3 && this.fillPredicate.test(pPrecipitation)) {
+        if (WaterCompost.shouldHandlePrecipitation(pLevel, pPrecipitation) && pState.getValue(LEVEL) != 3 && this.fillPredicate.test(pPrecipitation)) {
             BlockState blockstate = pState.cycle(LEVEL);
             pLevel.setBlockAndUpdate(pPos, blockstate);
             pLevel.gameEvent(GameEvent.BLOCK_CHANGE, pPos, GameEvent.Context.of(blockstate));

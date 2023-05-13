@@ -39,14 +39,14 @@ public class SandstormHandler {
 
     @SubscribeEvent(priority = EventPriority.LOW)
     public void onWorldLoad(LevelEvent.Load event) {
-        if (event.getLevel() instanceof ServerLevel serverLevel && serverLevel.dimension() == Level.OVERWORLD && DimensionHelper.getData(serverLevel).isStorming()) {
+        if (event.getLevel() instanceof ServerLevel serverLevel && serverLevel.dimension() == Level.OVERWORLD &&  (serverLevel.isRaining()|| serverLevel.isThundering())) {
             this.stormStrength = 1.0F;
         }
     }
 
     @SubscribeEvent
     public void onPlayerTick(TickEvent.PlayerTickEvent event) {
-        if (event.player.level instanceof ServerLevel serverLevel && serverLevel.dimension() == Level.OVERWORLD && DimensionHelper.getData(serverLevel).isStorming()) {
+        if (event.player.level instanceof ServerLevel serverLevel && serverLevel.dimension() == Level.OVERWORLD && (serverLevel.isRaining()|| serverLevel.isThundering())) {
             event.player.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 2, 2, false, false));
 
         }
@@ -71,7 +71,7 @@ public class SandstormHandler {
 
             if (cleanWeatherTime > 0) {
                 --cleanWeatherTime;
-                this.stormTime = DimensionHelper.getData(serverLevel).isStorming() ? 1 : 2;
+                this.stormTime =  (serverLevel.isRaining()|| serverLevel.isThundering()) ? 1 : 2;
             }
 
             if (this.stormTime <= 0) {
@@ -119,7 +119,7 @@ public class SandstormHandler {
                                         BlockState belowState = serverLevel.getBlockState(posDown);
                                         if (sandState.getBlock() == GTBlocks.sand_layer.get() && belowState.getBlock() != Blocks.WATER) {
                                             int layers = sandState.getValue(SandLayersBlock.LAYERS);
-                                            if (layers < 8) {
+                                            if (layers <= 8) {
                                                 serverLevel.setBlockAndUpdate(pos, sandState.setValue(SandLayersBlock.LAYERS, ++layers));
                                             }
                                         } else if (this.canPlaceSandAt(serverLevel, pos) ) {

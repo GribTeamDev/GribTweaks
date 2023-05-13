@@ -1,12 +1,15 @@
-package com.rumaruka.gribtweaks.common.block;
+package com.rumaruka.gribtweaks.common.block.watercompost;
 
 import com.rumaruka.gribtweaks.init.GTBlocks;
+import com.rumaruka.gribtweaks.util.RandomUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.cauldron.CauldronInteraction;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.AbstractCauldronBlock;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
@@ -14,12 +17,11 @@ import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.Fluids;
 
-public class CompostBlock extends AbstractCauldronBlock {
-    private static final float RAIN_FILL_CHANCE = 0.05F;
-    private static final float POWDER_SNOW_FILL_CHANCE = 0.1F;
+public class WaterCompost extends AbstractWaterCompostBlock {
 
-    public CompostBlock(BlockBehaviour.Properties p_51403_) {
-        super(p_51403_, CauldronInteraction.EMPTY);
+
+    public WaterCompost(BlockBehaviour.Properties p_51403_) {
+        super(p_51403_);
     }
 
     public boolean isFull(BlockState pState) {
@@ -27,10 +29,9 @@ public class CompostBlock extends AbstractCauldronBlock {
     }
 
     protected static boolean shouldHandlePrecipitation(Level pLevel, Biome.Precipitation pPrecipitation) {
-        if (pPrecipitation == Biome.Precipitation.RAIN) {
-            return pLevel.getRandom().nextFloat() < 0.05F;
-        } else if (pPrecipitation == Biome.Precipitation.SNOW) {
-            return pLevel.getRandom().nextFloat() < 0.1F;
+        if (pLevel instanceof ServerLevel serverLevel&& (serverLevel.isRaining()|| serverLevel.isThundering())) {
+            return RandomUtil.percentChance(0.65f);
+
         } else {
             return false;
         }
@@ -43,6 +44,7 @@ public class CompostBlock extends AbstractCauldronBlock {
                 pLevel.gameEvent((Entity)null, GameEvent.BLOCK_CHANGE, pPos);
             }
 
+
         }
     }
 
@@ -52,15 +54,10 @@ public class CompostBlock extends AbstractCauldronBlock {
 
     protected void receiveStalactiteDrip(BlockState pState, Level pLevel, BlockPos pPos, Fluid pFluid) {
         if (pFluid == Fluids.WATER) {
-            BlockState blockstate = Blocks.WATER_CAULDRON.defaultBlockState();
+            BlockState blockstate =  GTBlocks.compost_water.get().defaultBlockState();
             pLevel.setBlockAndUpdate(pPos, blockstate);
             pLevel.gameEvent(GameEvent.BLOCK_CHANGE, pPos, GameEvent.Context.of(blockstate));
             pLevel.levelEvent(1047, pPos, 0);
-        } else if (pFluid == Fluids.LAVA) {
-            BlockState blockstate1 = Blocks.LAVA_CAULDRON.defaultBlockState();
-            pLevel.setBlockAndUpdate(pPos, blockstate1);
-            pLevel.gameEvent(GameEvent.BLOCK_CHANGE, pPos, GameEvent.Context.of(blockstate1));
-            pLevel.levelEvent(1046, pPos, 0);
         }
 
     }
