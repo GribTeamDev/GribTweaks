@@ -92,11 +92,11 @@ public class HopeCatalystItem extends GatePearlItem {
         }
     }
 
+
+    @Override
     public void fillItemCategory(CreativeModeTab group, NonNullList<ItemStack> items) {
 
-
     }
-
 
     public interface IGateSupplier {
         GatewayEntity createGate(Level var1, Player var2, Gateway var3);

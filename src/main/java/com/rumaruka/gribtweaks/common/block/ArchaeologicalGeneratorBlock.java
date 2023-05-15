@@ -47,7 +47,7 @@ public class ArchaeologicalGeneratorBlock extends BaseEntityBlock implements Bea
     public void animateTick(BlockState pState, Level pLevel, BlockPos pPos, RandomSource pRandom) {
         BlockEntity blockEntity = pLevel.getBlockEntity(pPos);
         if (blockEntity instanceof ArchaeologicalGeneratorBlockEntity archaeologicalGeneratorBlockEntity){
-            if (ArchaeologicalGeneratorBlockEntity.isActive){
+            if (ArchaeologicalGeneratorBlockEntity.isWork){
                 addSandParticles(pLevel,pPos,15);
             }
         }

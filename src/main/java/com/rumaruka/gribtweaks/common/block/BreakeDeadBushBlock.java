@@ -26,7 +26,7 @@ public class BreakeDeadBushBlock extends BushBlock implements net.minecraftforge
     @Override
     public void animateTick(BlockState pState, Level pLevel, BlockPos pPos, RandomSource pRandom) {
         if (GTEvents.isActive){
-            BoneMealItem.addGrowthParticles(pLevel, pPos, 25);
+            BoneMealItem.addGrowthParticles(pLevel, pPos, 10);
 
         }
         super.animateTick(pState, pLevel, pPos, pRandom);

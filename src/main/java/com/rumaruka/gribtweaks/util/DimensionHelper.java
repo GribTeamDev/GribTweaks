@@ -59,7 +59,7 @@ public class DimensionHelper {
         BlockState state = world.getBlockState(pos);
         BlockState stateDown = world.getBlockState(pos.below());
         Optional<ResourceKey<Biome>> biomeKey = world.registryAccess().registryOrThrow(ForgeRegistries.BIOMES.getRegistryKey()).getResourceKey(world.getBiome(pos).value());
-        return (biomeKey.isPresent() && biomeKey.get() != Biomes.THE_VOID)
+        return (biomeKey.isPresent() && biomeKey.get() == Biomes.DESERT)
                 && world.isEmptyBlock(pos.above())
                 && state.getMaterial().isReplaceable()
                 && Block.canSupportRigidBlock(world, pos.below())

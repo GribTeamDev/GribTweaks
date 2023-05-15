@@ -7,16 +7,20 @@ import com.rumaruka.gribtweaks.net.NetworkHandler;
 import com.rumaruka.gribtweaks.net.packet.StormStrengthPacket;
 import com.rumaruka.gribtweaks.net.packet.WeatherPacket;
 import com.rumaruka.gribtweaks.util.DimensionHelper;
+import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ChunkHolder;
 import net.minecraft.server.level.ChunkMap;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.Mth;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.biome.Biomes;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.LevelChunk;
@@ -66,74 +70,77 @@ public class SandstormHandler {
 
     public void updateWeather(Level level) {
         if (level instanceof ServerLevel serverLevel && !level.isClientSide) {
+
             ServerLevelData worldInfo = serverLevel.getServer().getWorldData().overworldData();
             int cleanWeatherTime = worldInfo.getClearWeatherTime();
 
-            if (cleanWeatherTime > 0) {
-                --cleanWeatherTime;
-                this.stormTime =  (serverLevel.isRaining()|| serverLevel.isThundering()) ? 1 : 2;
-            }
-
-            if (this.stormTime <= 0) {
-                if (level.isThundering()|| level.isRaining()  ) {
-                    this.stormTime = serverLevel.random.nextInt(4000) + 4000;
+                if (cleanWeatherTime > 0) {
+                    --cleanWeatherTime;
+                    this.stormTime =  (serverLevel.isRaining()|| serverLevel.isThundering()) ? 1 : 2;
                 }
-                NetworkHandler.getInstance().sendToDimension(new WeatherPacket(this.stormTime), serverLevel, Level.OVERWORLD);
-            } else {
-                this.stormTime--;
+
                 if (this.stormTime <= 0) {
-                    level.setRainLevel(0);
+                    if (level.isThundering()|| level.isRaining()  ) {
+                        this.stormTime = serverLevel.random.nextInt(4000) + 4000;
+                    }
+                    NetworkHandler.getInstance().sendToDimension(new WeatherPacket(this.stormTime), serverLevel, Level.OVERWORLD);
+                } else {
+                    this.stormTime--;
+                    if (this.stormTime <= 0) {
+                        level.setRainLevel(0);
+                    }
                 }
-            }
 
-            worldInfo.setClearWeatherTime(cleanWeatherTime);
+                worldInfo.setClearWeatherTime(cleanWeatherTime);
 
-            this.prevStormStrength = this.stormStrength;
-            if (level.isThundering()|| level.isRaining()) {
-                this.stormStrength += 2.0F / (float) (20 * GTConfig.GENERAL.sandstormTransitionTime.get());
-            } else {
-                this.stormStrength -= 2.0F / (float) (20 * GTConfig.GENERAL.sandstormTransitionTime.get());
-            }
-            this.stormStrength = Mth.clamp(this.stormStrength, 0.0F, 1.0F);
+                this.prevStormStrength = this.stormStrength;
+                if (level.isThundering()|| level.isRaining()) {
+                    this.stormStrength += 2.0F / (float) (20 * GTConfig.GENERAL.sandstormTransitionTime.get());
+                } else {
+                    this.stormStrength -= 2.0F / (float) (20 * GTConfig.GENERAL.sandstormTransitionTime.get());
+                }
+                this.stormStrength = Mth.clamp(this.stormStrength, 0.0F, 1.0F);
 
-            if (this.stormStrength != this.prevStormStrength || this.lastUpdateTime < System.currentTimeMillis() - 500) {
-                NetworkHandler.getInstance().sendToDimension(new StormStrengthPacket(this.stormStrength), serverLevel, Level.OVERWORLD);
-                this.lastUpdateTime = System.currentTimeMillis();
-            }
+                if (this.stormStrength != this.prevStormStrength || this.lastUpdateTime < System.currentTimeMillis() - 500) {
+                    NetworkHandler.getInstance().sendToDimension(new StormStrengthPacket(this.stormStrength), serverLevel, Level.OVERWORLD);
+                    this.lastUpdateTime = System.currentTimeMillis();
+                }
 
-            try {
-                if (GTConfig.GENERAL.sandstormSandLayerChance.get() > 0 && serverLevel.random.nextInt(GTConfig.GENERAL.sandstormSandLayerChance.get()) == 0) {
-                    if (this.stormStrength > 0.9F) {
-                        ChunkMap chunkManager = serverLevel.getChunkSource().chunkMap;
+                try {
+                    if (GTConfig.GENERAL.sandstormSandLayerChance.get() > 0 && serverLevel.random.nextInt(GTConfig.GENERAL.sandstormSandLayerChance.get()) == 0) {
+                        if (this.stormStrength > 0.9F) {
+                            ChunkMap chunkManager = serverLevel.getChunkSource().chunkMap;
 
-                        chunkManager.getChunks().forEach(chunkHolder -> {
-                            Optional<LevelChunk> optionalChunk = chunkHolder.getEntityTickingChunkFuture().getNow(ChunkHolder.UNLOADED_LEVEL_CHUNK).left();
-                            if (optionalChunk.isPresent()) {
-                                ChunkPos chunkPos = optionalChunk.get().getPos();
-                                if (!chunkManager.getPlayersCloseForSpawning(chunkPos).isEmpty()) {
-                                    BlockPos pos = serverLevel.getHeightmapPos(Heightmap.Types.MOTION_BLOCKING, serverLevel.getBlockRandomPos(chunkPos.getMinBlockX(), 0, chunkPos.getMinBlockZ(), 15));
-                                    BlockPos posDown = pos.below();
+                            chunkManager.getChunks().forEach(chunkHolder -> {
+                                Optional<LevelChunk> optionalChunk = chunkHolder.getEntityTickingChunkFuture().getNow(ChunkHolder.UNLOADED_LEVEL_CHUNK).left();
+                                if (optionalChunk.isPresent()) {
+                                    ChunkPos chunkPos = optionalChunk.get().getPos();
+                                    if (!chunkManager.getPlayersCloseForSpawning(chunkPos).isEmpty()) {
+                                        BlockPos pos = serverLevel.getHeightmapPos(Heightmap.Types.MOTION_BLOCKING, serverLevel.getBlockRandomPos(chunkPos.getMinBlockX(), 0, chunkPos.getMinBlockZ(), 15));
+                                        BlockPos posDown = pos.below();
 
-                                    if (serverLevel.isAreaLoaded(posDown, 1)) {
-                                        BlockState sandState = serverLevel.getBlockState(pos);
-                                        BlockState belowState = serverLevel.getBlockState(posDown);
-                                        if (sandState.getBlock() == GTBlocks.sand_layer.get() && belowState.getBlock() != Blocks.WATER) {
-                                            int layers = sandState.getValue(SandLayersBlock.LAYERS);
-                                            if (layers < 8) {
-                                                serverLevel.setBlockAndUpdate(pos, sandState.setValue(SandLayersBlock.LAYERS, ++layers));
+                                        if (serverLevel.isAreaLoaded(posDown, 1)) {
+                                            BlockState sandState = serverLevel.getBlockState(pos);
+                                            BlockState belowState = serverLevel.getBlockState(posDown);
+                                            if (sandState.getBlock() == GTBlocks.sand_layer.get() && belowState.getBlock() != Blocks.WATER) {
+                                                int layers = sandState.getValue(SandLayersBlock.LAYERS);
+                                                if (layers < 8) {
+                                                    serverLevel.setBlockAndUpdate(pos, sandState.setValue(SandLayersBlock.LAYERS, ++layers));
+                                                }
+                                            } else if (this.canPlaceSandAt(serverLevel, pos) ) {
+                                                serverLevel.setBlockAndUpdate(pos, GTBlocks.sand_layer.get().defaultBlockState());
                                             }
-                                        } else if (this.canPlaceSandAt(serverLevel, pos) ) {
-                                            serverLevel.setBlockAndUpdate(pos, GTBlocks.sand_layer.get().defaultBlockState());
                                         }
                                     }
                                 }
-                            }
-                        });
+                            });
+                        }
                     }
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
-            } catch (Exception e) {
-                e.printStackTrace();
             }
-        }
+            }
+
     }
-}
+

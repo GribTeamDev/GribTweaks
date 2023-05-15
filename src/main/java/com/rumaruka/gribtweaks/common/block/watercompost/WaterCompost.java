@@ -29,8 +29,8 @@ public class WaterCompost extends AbstractWaterCompostBlock {
     }
 
     protected static boolean shouldHandlePrecipitation(Level pLevel, Biome.Precipitation pPrecipitation) {
-        if (pLevel instanceof ServerLevel serverLevel&& (serverLevel.isRaining()|| serverLevel.isThundering())) {
-            return RandomUtil.percentChance(0.65f);
+        if (pPrecipitation == Biome.Precipitation.RAIN) {
+            return pLevel.getRandom().nextFloat() < 0.65F;
 
         } else {
             return false;
@@ -41,7 +41,7 @@ public class WaterCompost extends AbstractWaterCompostBlock {
         if (shouldHandlePrecipitation(pLevel, pPrecipitation)) {
             if (pPrecipitation == Biome.Precipitation.RAIN) {
                 pLevel.setBlockAndUpdate(pPos, GTBlocks.compost_water.get().defaultBlockState());
-                pLevel.gameEvent((Entity)null, GameEvent.BLOCK_CHANGE, pPos);
+                pLevel.gameEvent(null, GameEvent.BLOCK_CHANGE, pPos);
             }
 
 

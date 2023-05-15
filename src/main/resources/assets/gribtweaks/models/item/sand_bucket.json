@@ -1,6 +1,6 @@
 {
-    "parent": "item/generated",
+    "parent": "bucketlib:item/universal_bucket",
     "textures": {
-        "layer0": "gribtweaks:item/sandstone_cup"
+        "base": "gribtweaks:item/sand_bucket"
     }
 }

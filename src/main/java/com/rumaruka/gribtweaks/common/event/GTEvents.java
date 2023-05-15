@@ -1,9 +1,8 @@
 package com.rumaruka.gribtweaks.common.event;
 
 
+import com.rumaruka.gribtweaks.common.block.GTCauldronInteractions;
 import com.rumaruka.gribtweaks.common.block.watercompost.LayeredWaterCompost;
-import com.rumaruka.gribtweaks.common.items.SandBucketItem;
-import com.rumaruka.gribtweaks.common.items.WoodenBucketItem;
 import com.rumaruka.gribtweaks.init.GTBlocks;
 import com.rumaruka.gribtweaks.init.GTItems;
 import com.rumaruka.gribtweaks.util.RandomUtil;
@@ -13,34 +12,27 @@ import net.minecraft.core.cauldron.CauldronInteraction;
 import net.minecraft.core.particles.BlockParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.stats.Stats;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.ItemUtils;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.ClipContext;
-import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.LayeredCauldronBlock;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+
+import static net.minecraft.world.item.Item.getPlayerPOVHitResult;
 
 @Mod.EventBusSubscriber
 public class GTEvents {
@@ -80,7 +72,7 @@ public class GTEvents {
         Player player = event.getEntity();
         ItemStack heldItem = player.getItemInHand(event.getHand());
 
-        if (heldItem.getItem() == GTItems.water_sand_bucket.get() && world.getBlockState(pos).getBlock() == Blocks.SAND) {
+        if (heldItem.getItem() == GTItems.wooden_bucket.get() && world.getBlockState(pos).getBlock() == Blocks.SAND) {
             world.setBlockAndUpdate(pos, Blocks.MUD.defaultBlockState());
             player.setItemInHand(event.getHand(), new ItemStack(GTItems.sand_bucket.get()));
             world.playSound(null, pos, SoundEvents.BUCKET_EMPTY, SoundSource.BLOCKS, 1.0F, 1.0F);
@@ -120,19 +112,16 @@ public class GTEvents {
         Level level = event.level;
         int water = 1;
         for (Player player : level.players()) {
-            BlockHitResult rayTraceResult = Item.getPlayerPOVHitResult(level, player, ClipContext.Fluid.NONE);
+            BlockHitResult rayTraceResult = getPlayerPOVHitResult(level, player, ClipContext.Fluid.NONE);
             if (rayTraceResult.getType() == BlockHitResult.Type.BLOCK) {
                 BlockPos pos = rayTraceResult.getBlockPos();
                 BlockState state = level.getBlockState(pos);
-                BlockState newState = level.getBlockState(pos);
 
                 if (level instanceof ServerLevel serverLevel && (serverLevel.isThundering() || serverLevel.isRaining())) {
 
+                    if (RandomUtil.percentChance(0.45f)) {
+                        if (state.getBlock() == GTBlocks.compost.get()) {
 
-                    if (state.getBlock() == GTBlocks.compost.get()) {
-
-
-                        if (RandomUtil.percentChance(0.25f)) {
 
                             level.setBlockAndUpdate(pos, GTBlocks.compost_water.get().defaultBlockState().setValue(LayeredWaterCompost.LEVEL, 3));
 
@@ -148,7 +137,6 @@ public class GTEvents {
     }
 
 
-
     @SubscribeEvent
     public static void onLevelTick(TickEvent.LevelTickEvent event) {
 
@@ -158,7 +146,7 @@ public class GTEvents {
 
             for (Player player : world.players()) {
 
-                BlockHitResult rayTraceResult = Item.getPlayerPOVHitResult(world, player, ClipContext.Fluid.NONE);
+                BlockHitResult rayTraceResult = getPlayerPOVHitResult(world, player, ClipContext.Fluid.NONE);
                 if (rayTraceResult.getType() == BlockHitResult.Type.BLOCK) {
                     BlockPos pos = rayTraceResult.getBlockPos();
 
@@ -226,95 +214,17 @@ public class GTEvents {
     }
 
 
-    public static void registerCauldronInteractions() {
-        // Cauldron
-        CauldronInteraction.WATER.put(GTItems.sand_bucket.get(), GTEvents::emptyCauldronSand);
-        CauldronInteraction.WATER.put(GTItems.wooden_bucket.get(), GTEvents::emptyCauldronWooden);
-
-        CauldronInteraction.EMPTY.put(GTItems.water_sand_bucket.get(), GTEvents::fillCauldronSand);
-        CauldronInteraction.EMPTY.put(GTItems.water_wooden_bucket.get(), GTEvents::fillCauldronWooden);
-
-
-    }
     //Cauldron
 
-    public static InteractionResult emptyCauldronSand(ItemLike filled, SoundEvent sound, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, ItemStack stack) {
-        if (state.getValue(LayeredCauldronBlock.LEVEL) == 3) {
-            if (!level.isClientSide) {
-                player.setItemInHand(hand, ItemUtils.createFilledResult(stack, player, SandBucketItem.getFilledSuccessItem(stack, player)));
-                player.awardStat(Stats.USE_CAULDRON);
-                player.awardStat(Stats.ITEM_USED.get(stack.getItem()));
-                level.setBlockAndUpdate(pos, Blocks.CAULDRON.defaultBlockState());
-                level.playSound(null, pos, sound, SoundSource.BLOCKS, 1.0F, 1.0F);
-                level.gameEvent(null, GameEvent.FLUID_PICKUP, pos);
-            }
+    public static void registerCauldronInteractions() {
+        // Cauldron
+        CauldronInteraction.WATER.put(GTItems.sand_bucket.get(), GTCauldronInteractions.EMPTY_WATER_SAND);
+        CauldronInteraction.WATER.put(GTItems.wooden_bucket.get(), GTCauldronInteractions.EMPTY_WATER_WOODEN);
 
-            return InteractionResult.sidedSuccess(level.isClientSide);
-        }
-
-        return InteractionResult.PASS;
-    }
-
-    public static InteractionResult emptyCauldronWooden(ItemLike filled, SoundEvent sound, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, ItemStack stack) {
-        if (state.getValue(LayeredCauldronBlock.LEVEL) == 3) {
-            if (!level.isClientSide) {
-                player.setItemInHand(hand, ItemUtils.createFilledResult(stack, player, WoodenBucketItem.getFilledSuccessItem(stack, player)));
-                player.awardStat(Stats.USE_CAULDRON);
-                player.awardStat(Stats.ITEM_USED.get(stack.getItem()));
-                level.setBlockAndUpdate(pos, Blocks.CAULDRON.defaultBlockState());
-                level.playSound(null, pos, sound, SoundSource.BLOCKS, 1.0F, 1.0F);
-                level.gameEvent(null, GameEvent.FLUID_PICKUP, pos);
-            }
-
-            return InteractionResult.sidedSuccess(level.isClientSide);
-        }
-
-        return InteractionResult.PASS;
-    }
+        CauldronInteraction.EMPTY.put(GTItems.water_sand_bucket.get(), GTCauldronInteractions.FILL_WATER_SAND);
+        CauldronInteraction.EMPTY.put(GTItems.water_wooden_bucket.get(), GTCauldronInteractions.FILL_WATER_WOODN);
 
 
-    private static InteractionResult emptyCauldronSand(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, ItemStack stack) {
-        return emptyCauldronSand(GTItems.water_sand_bucket::get, SoundEvents.BUCKET_FILL, state, level, pos, player, hand, stack);
-    }
-
-
-    private static InteractionResult emptyCauldronWooden(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, ItemStack stack) {
-        return emptyCauldronWooden(GTItems.water_wooden_bucket::get, SoundEvents.BUCKET_FILL, state, level, pos, player, hand, stack);
-    }
-
-
-    public static InteractionResult fillCauldronSand(Block filledBlock, SoundEvent sound, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, ItemStack stack) {
-        if (!level.isClientSide) {
-            player.setItemInHand(hand, ItemUtils.createFilledResult(stack, player, SandBucketItem.getEmptySuccessItem(stack, player)));
-            player.awardStat(Stats.FILL_CAULDRON);
-            player.awardStat(Stats.ITEM_USED.get(stack.getItem()));
-            level.setBlockAndUpdate(pos, filledBlock.defaultBlockState().setValue(LayeredCauldronBlock.LEVEL, 3));
-            level.playSound(null, pos, sound, SoundSource.BLOCKS, 1f, 1f);
-            level.gameEvent(null, GameEvent.FLUID_PLACE, pos);
-        }
-
-        return InteractionResult.sidedSuccess(level.isClientSide);
-    }
-
-    public static InteractionResult fillCauldronWooden(Block filledBlock, SoundEvent sound, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, ItemStack stack) {
-        if (!level.isClientSide) {
-            player.setItemInHand(hand, ItemUtils.createFilledResult(stack, player, WoodenBucketItem.getEmptySuccessItem(stack, player)));
-            player.awardStat(Stats.FILL_CAULDRON);
-            player.awardStat(Stats.ITEM_USED.get(stack.getItem()));
-            level.setBlockAndUpdate(pos, filledBlock.defaultBlockState().setValue(LayeredCauldronBlock.LEVEL, 3));
-            level.playSound(null, pos, sound, SoundSource.BLOCKS, 1f, 1f);
-            level.gameEvent(null, GameEvent.FLUID_PLACE, pos);
-        }
-
-        return InteractionResult.sidedSuccess(level.isClientSide);
-    }
-
-    private static InteractionResult fillCauldronSand(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, ItemStack stack) {
-        return fillCauldronSand(Blocks.WATER_CAULDRON, SoundEvents.BUCKET_EMPTY, state, level, pos, player, hand, stack);
-    }
-
-    private static InteractionResult fillCauldronWooden(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, ItemStack stack) {
-        return fillCauldronWooden(Blocks.WATER_CAULDRON, SoundEvents.BUCKET_EMPTY, state, level, pos, player, hand, stack);
     }
 
 

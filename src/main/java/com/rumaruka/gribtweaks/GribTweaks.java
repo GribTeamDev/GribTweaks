@@ -4,13 +4,11 @@ import com.mojang.brigadier.CommandDispatcher;
 import com.rumaruka.gribtweaks.client.particle.SandMote;
 import com.rumaruka.gribtweaks.common.command.GribTweaksWeather;
 import com.rumaruka.gribtweaks.common.event.GTEvents;
-import com.rumaruka.gribtweaks.config.GTConfig;
-
-import com.rumaruka.gribtweaks.data.PrimiriveBrushRecipeGen;
 import com.rumaruka.gribtweaks.common.event.SandstormHandler;
+import com.rumaruka.gribtweaks.config.GTConfig;
+import com.rumaruka.gribtweaks.data.PrimiriveBrushRecipeGen;
 import com.rumaruka.gribtweaks.init.*;
 import com.rumaruka.gribtweaks.net.NetworkHandler;
-
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import net.minecraft.Util;
 import net.minecraft.client.Minecraft;
@@ -19,7 +17,6 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.commands.CommandSourceStack;
-import net.minecraft.core.cauldron.CauldronInteraction;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -82,16 +79,17 @@ public class GribTweaks {
         modBus.addListener(EventPriority.LOWEST, GribTweaks::gatherData);
         GeckoLib.initialize();
         MinecraftForge.EVENT_BUS.register(this);
+
+
     }
 
     @SubscribeEvent
-    public  void setupCommon(FMLCommonSetupEvent event) {
+    public void setupCommon(FMLCommonSetupEvent event) {
         GTEvents.registerCauldronInteractions();
         if (GTConfig.GENERAL.sandstormEnabled.get()) {
             MinecraftForge.EVENT_BUS.register(new SandstormHandler());
         }
     }
-
 
 
     private void doClientStuff(FMLClientSetupEvent event) {
@@ -108,6 +106,7 @@ public class GribTweaks {
                     SandMote.SandMoteFactory::new);
         }
     }
+
 
     @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.FORGE)
     public static class RegisterWarningEvent {
@@ -130,10 +129,12 @@ public class GribTweaks {
 
         }
     }
+
     public static void gatherData(GatherDataEvent event) {
         DataGenerator gen = event.getGenerator();
-        gen.addProvider(true,new PrimiriveBrushRecipeGen(gen));
+        gen.addProvider(true, new PrimiriveBrushRecipeGen(gen));
     }
+
     public static ResourceLocation rl(String path) {
         return new ResourceLocation(MODID, path);
     }

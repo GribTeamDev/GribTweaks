@@ -90,11 +90,11 @@ public class ForestCatalystItem extends GatePearlItem {
             return (Component) (gate != null ? Component.translatable("gateways.forestcatalyst").withStyle(Style.EMPTY.withColor(gate.getColor())) : super.getName(stack));
         }
     }
-
+    @Override
     public void fillItemCategory(CreativeModeTab group, NonNullList<ItemStack> items) {
 
-
     }
+
 
 
     public interface IGateSupplier {

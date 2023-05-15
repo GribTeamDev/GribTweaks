@@ -29,6 +29,7 @@ public class ArchaeologicalGeneratorBlockEntity extends BlockEntity {
     int levels;
 
     public static boolean isActive;
+    public static boolean isWork;
     private int ticks;
 
     public ArchaeologicalGeneratorBlockEntity(BlockPos pPos, BlockState pBlockState) {
@@ -39,7 +40,9 @@ public class ArchaeologicalGeneratorBlockEntity extends BlockEntity {
         pBlockEntity.ticks++;
 
         if (pBlockEntity.checkStructure(pLevel, pPos)) {
+            isWork=true;
             if (pBlockEntity.ticks >= 100) {
+
                 isActive = true;
                 applyWork(pLevel, pPos);
                 playSound(pLevel, pPos, SoundEvents.BEACON_AMBIENT);
@@ -50,15 +53,15 @@ public class ArchaeologicalGeneratorBlockEntity extends BlockEntity {
         } else {
             isActive = false;
         }
+        if (isBlockAbove(pPos, pLevel)) {
+
+            isWork=false;
+            return;
+        }
 
     }
 
     public boolean checkStructure(Level level, BlockPos pos) {
-        /*
-         * "xxx"
-         * "xsx"
-         * "xxx"
-         * */
 
         for (int x = -1; x <= 1; x++) {
             for (int z = -1; z <= 1; z++) {
@@ -107,17 +110,13 @@ public class ArchaeologicalGeneratorBlockEntity extends BlockEntity {
 
             if (RandomUtil.percentChance(0.8)) {
                 pLevel.setBlockAndUpdate(pPos.above(), ModBlocks.SUSPICIOUS_SAND.get().defaultBlockState());
-                if (isBlockAbove(pPos, pLevel)) {
-                    isActive = false;
-                }
+
 
             }
 
             if (RandomUtil.percentChance(0.2)) {
                 pLevel.setBlockAndUpdate(pPos.above(), Blocks.SAND.defaultBlockState());
-                if (isBlockAbove(pPos, pLevel)) {
-                    isActive = false;
-                }
+
 
 
             }
