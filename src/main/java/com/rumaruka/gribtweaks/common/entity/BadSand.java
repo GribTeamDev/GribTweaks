@@ -99,7 +99,7 @@ public class BadSand extends Monster {
     }
 
     public static void init() {
-   
+
         DungeonHooks.addDungeonMob((EntityType)((EntityType) GTEntity.SAND_BAD.get()), (int)180);
     }
 
