@@ -49,14 +49,14 @@ public class BadSand extends Monster {
                 return 4.0 + (double)(pAttackTarget.getBbWidth() * pAttackTarget.getBbWidth());
             }
         });
-        this.goalSelector.addGoal(2, new HurtByTargetGoal(this, new Class[0]));
+        this.goalSelector.addGoal(2, new HurtByTargetGoal(this));
         this.goalSelector.addGoal(3, new RandomStrollGoal(this, 0.8));
         this.goalSelector.addGoal(4, new RandomLookAroundGoal(this));
         this.goalSelector.addGoal(5, new NearestAttackableTargetGoal<>(this, Player.class, false, false));
-        this.goalSelector.addGoal(7, new RemoveBlockGoal(Blocks.POTATOES, this, 1.0, 5));
-        this.goalSelector.addGoal(8, new RemoveBlockGoal(Blocks.WHEAT, this, 1.0, 5));
-        this.goalSelector.addGoal(9, new RemoveBlockGoal(Blocks.CARROTS, this, 1.0, 5));
-        this.goalSelector.addGoal(10, new RemoveBlockGoal(Blocks.BEETROOTS, this, 1.0, 5));
+    //  this.goalSelector.addGoal(7, new RemoveBlockGoal(Blocks.POTATOES, this, 1.0, 5));
+       // this.goalSelector.addGoal(8, new RemoveBlockGoal(Blocks.WHEAT, this, 1.0, 5));
+      //  this.goalSelector.addGoal(9, new RemoveBlockGoal(Blocks.CARROTS, this, 1.0, 5));
+      //  this.goalSelector.addGoal(10, new RemoveBlockGoal(Blocks.BEETROOTS, this, 1.0, 5));
     }
 
     @Override
@@ -100,7 +100,7 @@ public class BadSand extends Monster {
 
     public static void init() {
 
-        DungeonHooks.addDungeonMob((EntityType)((EntityType) GTEntity.SAND_BAD.get()), (int)180);
+        DungeonHooks.addDungeonMob(GTEntity.SAND_BAD.get(), 180);
     }
 
     public static AttributeSupplier.Builder createAttributes() {

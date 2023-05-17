@@ -14,6 +14,7 @@ import net.minecraft.world.item.ItemUtils;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
@@ -38,6 +39,8 @@ public class InteractionEvent {
                 world.setBlockAndUpdate(pos, GTBlocks.compost_water.get().defaultBlockState().setValue(LayeredWaterCompost.LEVEL, 3));
                 inventory.add( new ItemStack(Items.BUCKET));
                 world.playSound(null, pos, SoundEvents.BUCKET_EMPTY, SoundSource.BLOCKS, 1.0F, 1.0F);
+                bucket.shrink(1);
+
 
 
             }
@@ -47,7 +50,7 @@ public class InteractionEvent {
                 world.setBlockAndUpdate(pos, GTBlocks.compost_water.get().defaultBlockState().setValue(LayeredWaterCompost.LEVEL, 3));
                 inventory.add(new ItemStack(GTItems.sand_bucket.get()));
                 world.playSound(null, pos, SoundEvents.BUCKET_EMPTY, SoundSource.BLOCKS, 1.0F, 1.0F);
-
+                bucket.shrink(1);
 
             }
             if (bucket.getItem() == GTItems.water_wooden_bucket.get()) {
@@ -55,7 +58,7 @@ public class InteractionEvent {
                 world.setBlockAndUpdate(pos, GTBlocks.compost_water.get().defaultBlockState().setValue(LayeredWaterCompost.LEVEL, 3));
                 inventory.add(new ItemStack(GTItems.wooden_bucket.get()));
                 world.playSound(null, pos, SoundEvents.BUCKET_EMPTY, SoundSource.BLOCKS, 1.0F, 1.0F);
-
+                bucket.shrink(1);
 
             }
         }

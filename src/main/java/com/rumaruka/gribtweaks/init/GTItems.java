@@ -41,17 +41,18 @@ public class GTItems {
     public static final RegistryObject<Item> sand_trough = ITEMS.register("sand_trough", () -> new SandTroughItem(new Item.Properties().tab(GribTweaks.GRIBTWEAKS_TABS)));
     public static final RegistryObject<Item> sand_knife = ITEMS.register("sand_knife", () -> new Item(new Item.Properties().tab(GribTweaks.GRIBTWEAKS_TABS).durability(1)));
     public static final RegistryObject<Item> sand_bucket = ITEMS.register("sand_bucket",
-            () -> new SandBucket(()->Fluids.EMPTY, new Item.Properties().tab(GribTweaks.GRIBTWEAKS_TABS)));
+            () -> new SandBucket(() -> Fluids.EMPTY, new Item.Properties().stacksTo(16).tab(GribTweaks.GRIBTWEAKS_TABS)));
 
- public static final RegistryObject<Item> water_sand_bucket = ITEMS.register("water_sand_bucket",
-         () -> new SandBucket(()->Fluids.WATER, new Item.Properties().tab(GribTweaks.GRIBTWEAKS_TABS)));
+    public static final RegistryObject<Item> water_sand_bucket = ITEMS.register("water_sand_bucket",
+            () -> new SandBucket(() -> Fluids.WATER, new Item.Properties().stacksTo(1).tab(GribTweaks.GRIBTWEAKS_TABS)));
 
 
     public static final RegistryObject<Item> wooden_bucket = ITEMS.register("wooden_bucket",
-            () -> new WoodenBucket(()->Fluids.EMPTY, new Item.Properties().tab(GribTweaks.GRIBTWEAKS_TABS)));
+            () -> new WoodenBucket(() -> Fluids.EMPTY, new Item.Properties().stacksTo(16).tab(GribTweaks.GRIBTWEAKS_TABS)));
 
     public static final RegistryObject<Item> water_wooden_bucket = ITEMS.register("water_wooden_bucket",
-            () -> new WoodenBucket(()->Fluids.WATER, new Item.Properties().tab(GribTweaks.GRIBTWEAKS_TABS)));
+            () -> new WoodenBucket(() -> Fluids.WATER, new Item.Properties().stacksTo(1).tab(GribTweaks.GRIBTWEAKS_TABS)));
+
     public static void setup() {
 
         ITEMS.register(FMLJavaModLoadingContext.get().getModEventBus());

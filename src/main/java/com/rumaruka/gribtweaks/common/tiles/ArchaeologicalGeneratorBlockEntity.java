@@ -40,7 +40,7 @@ public class ArchaeologicalGeneratorBlockEntity extends BlockEntity {
         pBlockEntity.ticks++;
 
         if (pBlockEntity.checkStructure(pLevel, pPos)) {
-            isWork=true;
+
             if (pBlockEntity.ticks >= 100) {
 
                 isActive = true;
@@ -66,6 +66,7 @@ public class ArchaeologicalGeneratorBlockEntity extends BlockEntity {
         for (int x = -1; x <= 1; x++) {
             for (int z = -1; z <= 1; z++) {
                 if ((x != 0 || z != 0) && level.getBlockState(pos.offset(x, 0, z)).getBlock() != Blocks.SANDSTONE) {
+                    isWork=false;
                     return false;
                 }
                 if (x != 0 && z != 0) {
@@ -75,6 +76,7 @@ public class ArchaeologicalGeneratorBlockEntity extends BlockEntity {
                                 || (y == 2 && state.getBlock() != Blocks.CHISELED_SANDSTONE)
                                 || (y == 1 && state.getBlock() != Blocks.CUT_SANDSTONE)
                                 || (y == 0 && state.getBlock() != Blocks.SANDSTONE)) {
+                            isWork=false;
                             return false;
                         }
                     }
@@ -89,17 +91,21 @@ public class ArchaeologicalGeneratorBlockEntity extends BlockEntity {
             Direction clockwise = dir.getClockWise(Direction.Axis.Y);
             Direction counterclockwise = dir.getCounterClockWise(Direction.Axis.Y);
             if (level.getBlockState(dirPos).getBlock() != Blocks.SANDSTONE_SLAB) {
+                isWork=false;
                 return false;
             }
             BlockState cwState = level.getBlockState(dirPos.relative(clockwise));
             BlockState ccwState = level.getBlockState(dirPos.relative(counterclockwise));
             if (cwState.getBlock() != Blocks.SANDSTONE_STAIRS || cwState.getValue(StairBlock.FACING) != clockwise || cwState.getValue(StairBlock.HALF) != Half.BOTTOM) {
+                isWork=false;
                 return false;
             }
             if (ccwState.getBlock() != Blocks.SANDSTONE_STAIRS || ccwState.getValue(StairBlock.FACING) != counterclockwise || ccwState.getValue(StairBlock.HALF) != Half.BOTTOM) {
+                isWork=false;
                 return false;
             }
         }
+        isWork=true;
         return true;
     }
 
