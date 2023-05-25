@@ -49,7 +49,7 @@ public class HopeCatalystItem extends GatePearlItem {
                 int y = 0;
 
                 while (y++ < 2 && !world.noCollision(entity)) {
-                    entity.setPos(entity.getX(), entity.getY() - 2.0, entity.getZ());
+                    entity.setPos(entity.getX(), entity.getY() , entity.getZ());
                 }
 
 //                if (!world.noCollision(entity)) {

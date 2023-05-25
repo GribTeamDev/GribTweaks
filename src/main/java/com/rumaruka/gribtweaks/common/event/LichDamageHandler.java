@@ -1,10 +1,7 @@
 package com.rumaruka.gribtweaks.common.event;
 
 
-import net.minecraft.client.Minecraft;
-import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.monster.Zombie;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -41,9 +38,8 @@ public class LichDamageHandler {
                     directEntity instanceof DemonsEyeWandEntity ||
                     directEntity instanceof SoulHunterStaffEntity ||
                     directEntity instanceof HowlingAuroraWandEntity ||
-                    directEntity instanceof BoguslavTheSorcererEntity)) {
+                    directEntity instanceof BoguslavTheSorcererEntity) || !(event.getEntity().isOnFire())) {
                 event.setCanceled(true);
-
             }
         }
 

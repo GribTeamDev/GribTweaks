@@ -3,6 +3,8 @@ package com.rumaruka.gribtweaks;
 import com.mojang.brigadier.CommandDispatcher;
 import com.rumaruka.gribtweaks.client.particle.SandMote;
 import com.rumaruka.gribtweaks.common.command.GribTweaksWeather;
+import com.rumaruka.gribtweaks.common.entity.BadSand;
+import com.rumaruka.gribtweaks.common.entity.SandyBreeze;
 import com.rumaruka.gribtweaks.common.event.GTEvents;
 import com.rumaruka.gribtweaks.common.event.SandstormHandler;
 import com.rumaruka.gribtweaks.config.GTConfig;
@@ -27,6 +29,7 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.data.event.GatherDataEvent;
 import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.event.TickEvent;
+import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -69,7 +72,9 @@ public class GribTweaks {
         GTBlocks.setup();
         GTItems.setup();
         GTTiles.setup();
+        GTEntity.setup();
         GTParticles.init(modBus);
+
         REGISTRATE.registerEventListeners(modBus);
         modBus.addListener(this::setupCommon);
         GTRecipeType.register(modBus);
@@ -93,7 +98,7 @@ public class GribTweaks {
 
 
     private void doClientStuff(FMLClientSetupEvent event) {
-        isModInstalled =/* ModList.get().isLoaded("avaritia") &&*/ ModList.get().isLoaded("gateways") && ModList.get().isLoaded("modestmining");
+        isModInstalled =/* ModList.get().isLoaded("avaritia") && */ModList.get().isLoaded("gateways") && ModList.get().isLoaded("modestmining");
         ItemBlockRenderTypes.setRenderLayer(GTBlocks.breake_bush.get(), RenderType.cutoutMipped());
 
     }
@@ -104,6 +109,12 @@ public class GribTweaks {
         public static void registerParticleFactories(final RegisterParticleProvidersEvent event) {
             Minecraft.getInstance().particleEngine.register(GTParticles.SANDMOTE.get(),
                     SandMote.SandMoteFactory::new);
+        }
+
+        @SubscribeEvent
+        public static void entityAttributeEvent(EntityAttributeCreationEvent event) {
+            event.put(GTEntity.SAND_BAD.get(), BadSand.setAttributes());
+//            event.put(GTEntity.SANDY_BREEZE.get(), SandyBreeze.setAttributes());
         }
     }
 
@@ -120,7 +131,7 @@ public class GribTweaks {
     }
 
     @Mod.EventBusSubscriber
-    public static class ROMCommand {
+    public static class GTCommand {
         @SubscribeEvent
         public static void onRegisterCommandEvent(RegisterCommandsEvent event) {
             CommandDispatcher<CommandSourceStack> dispatcher = event.getDispatcher();

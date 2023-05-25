@@ -4,9 +4,7 @@ import com.rumaruka.gribtweaks.init.GTBlocks;
 import com.rumaruka.gribtweaks.init.GTItems;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
-import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
@@ -21,7 +19,7 @@ public class GateWayEvents {
     public static boolean isWaveStopped;
     public static boolean isWaveCompleted;
     public static boolean isCatalystRightClick;
-    public static boolean isInvisibleRender;
+
     public static ItemStack stack;
 
     @SubscribeEvent
@@ -29,7 +27,7 @@ public class GateWayEvents {
 
         isWaveStopped = false;
         isWaveCompleted = false;
-        isInvisibleRender = true;
+
     }
 
     @SubscribeEvent
@@ -62,7 +60,7 @@ public class GateWayEvents {
         if (Minecraft.getInstance().level != null) {
             BlockState state = Minecraft.getInstance().level.getBlockState(blockPos);
             if (state.getBlock() == GTBlocks.statue_obj.get()) {
-                if (stack.getItem() == GTItems.HOPE_CATALYST.get()|| stack.getItem()== GTItems.FOREST_CATALYST.get()) {
+                if (stack.getItem() == GTItems.HOPE_CATALYST.get() || stack.getItem() == GTItems.FOREST_CATALYST.get()) {
                     isCatalystRightClick = true;
                 }
             }
@@ -75,7 +73,7 @@ public class GateWayEvents {
     @SubscribeEvent
     public static void onDrop(LivingEvent.LivingTickEvent event) {
         LivingEntity entity = event.getEntity();
-        if (entity instanceof Player player) {
+        if (entity instanceof Player ) {
             if (isWaveStopped) {
                 isWaveStopped = false;
             }

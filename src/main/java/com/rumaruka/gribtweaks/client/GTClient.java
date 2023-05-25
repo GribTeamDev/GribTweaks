@@ -1,7 +1,12 @@
 package com.rumaruka.gribtweaks.client;
 
 import com.rumaruka.gribtweaks.GribTweaks;
+import com.rumaruka.gribtweaks.client.model.SandShardModel;
+import com.rumaruka.gribtweaks.client.render.BadSandRenderer;
+import com.rumaruka.gribtweaks.client.render.SandShardRenderer;
+
 import com.rumaruka.gribtweaks.client.render.StatueTESR;
+import com.rumaruka.gribtweaks.init.GTEntity;
 import com.rumaruka.gribtweaks.init.GTItems;
 import com.rumaruka.gribtweaks.init.GTTiles;
 import com.rumaruka.gribtweaks.common.items.HopeCatalystItem;
@@ -14,6 +19,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.client.event.InputEvent;
 import net.minecraftforge.client.event.ScreenEvent;
 import net.minecraftforge.common.MinecraftForge;
@@ -151,7 +157,19 @@ public class GTClient {
             waveIdx = 0;
         }
     }
+    @SubscribeEvent
+    public static void registerEntityRenderers(EntityRenderersEvent.RegisterRenderers event) {
 
+          event.registerEntityRenderer(GTEntity.SAND_BAD.get(), BadSandRenderer::new);
+
+          event.registerEntityRenderer(GTEntity.SAND_SHARD.get(), SandShardRenderer::new);
+         // event.registerEntityRenderer(GTEntity.SANDY_BREEZE.get(), SandyBreezeRenderer::new);
+
+    }
+    @SubscribeEvent
+    public static void registerLayers(EntityRenderersEvent.RegisterLayerDefinitions event) {
+        event.registerLayerDefinition(SandShardModel.LAYER_LOCATION, SandShardModel::createBodyLayer);
+    }
     public static void registerBlockEntityRenderers() {
         BlockEntityRenderers.register(GTTiles.statue_obj.get(), StatueTESR::new);
 

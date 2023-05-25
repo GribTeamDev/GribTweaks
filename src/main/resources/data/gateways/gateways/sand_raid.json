@@ -6,53 +6,53 @@
     {
       "entities": [
         {
-          "entity": "seeds:bad_grass"
+          "entity": "gribtweaks:bad_sand"
         },
-          {
-              "entity": "seeds:bad_grass"
-          },
-          {
-              "entity": "seeds:bad_grass"
-          },
-          {
-              "entity": "seeds:bad_grass"
-          },
-          {
-              "entity": "seeds:bad_grass"
-          },
-          {
-              "entity": "seeds:bad_grass"
-          },
-          {
-              "entity": "seeds:bad_grass"
-          },
-          {
-              "entity": "seeds:bad_grass"
-          },
-          {
-              "entity": "seeds:bad_grass"
-          },
-          {
-              "entity": "seeds:bad_grass"
-          },
-          {
-              "entity": "seeds:bad_grass"
-          },
-          {
-              "entity": "seeds:bad_grass"
-          },
-          {
-              "entity": "seeds:bad_grass"
-          },
-          {
-              "entity": "seeds:bad_grass"
-          },
-          {
-              "entity": "seeds:bad_grass"
-          },
-          {
-              "entity": "seeds:bad_grass"
-          }
+        {
+          "entity": "gribtweaks:bad_sand"
+        },
+        {
+          "entity": "gribtweaks:bad_sand"
+        },
+        {
+          "entity": "gribtweaks:bad_sand"
+        },
+        {
+          "entity": "gribtweaks:bad_sand"
+        },
+        {
+          "entity": "gribtweaks:bad_sand"
+        },
+        {
+          "entity": "gribtweaks:bad_sand"
+        },
+        {
+          "entity": "gribtweaks:bad_sand"
+        },
+        {
+          "entity": "gribtweaks:bad_sand"
+        },
+        {
+          "entity": "gribtweaks:bad_sand"
+        },
+        {
+          "entity": "gribtweaks:bad_sand"
+        },
+        {
+          "entity": "gribtweaks:bad_sand"
+        },
+        {
+          "entity": "gribtweaks:bad_sand"
+        },
+        {
+          "entity": "gribtweaks:bad_sand"
+        },
+        {
+          "entity": "gribtweaks:bad_sand"
+        },
+        {
+          "entity": "gribtweaks:bad_sand"
+        }
       ],
       "rewards": [
         {
@@ -67,37 +67,37 @@
     {
       "entities": [
           {
-              "entity": "seeds:bad_grass"
+              "entity": "minecraft:blaze"
           },
           {
-              "entity": "seeds:bad_grass"
+              "entity": "minecraft:blaze"
           },
           {
-              "entity": "seeds:bad_grass"
+              "entity": "minecraft:blaze"
           },
           {
-              "entity": "seeds:bad_grass"
+              "entity": "minecraft:blaze"
           },
           {
-              "entity": "seeds:bad_grass"
+              "entity": "minecraft:blaze"
           },
           {
-              "entity": "seeds:bad_grass"
+              "entity": "minecraft:blaze"
           },
           {
-              "entity": "seeds:bad_grass"
+              "entity": "minecraft:blaze"
           },
           {
-              "entity": "seeds:bad_grass"
+              "entity": "minecraft:blaze"
           },
           {
-              "entity": "seeds:bad_grass"
+              "entity": "minecraft:blaze"
           },
           {
-              "entity": "seeds:bad_grass"
+              "entity": "minecraft:blaze"
           },
           {
-              "entity": "seeds:bad_grass"
+              "entity": "minecraft:blaze"
           }
       ],
       "modifiers": [

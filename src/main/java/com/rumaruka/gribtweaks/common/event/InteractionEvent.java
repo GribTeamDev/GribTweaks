@@ -10,13 +10,9 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.ItemUtils;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.Fluid;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -37,10 +33,9 @@ public class InteractionEvent {
             if (bucket.getItem() == Items.WATER_BUCKET) {
 
                 world.setBlockAndUpdate(pos, GTBlocks.compost_water.get().defaultBlockState().setValue(LayeredWaterCompost.LEVEL, 3));
-                inventory.add( new ItemStack(Items.BUCKET));
+                inventory.add(new ItemStack(Items.BUCKET));
                 world.playSound(null, pos, SoundEvents.BUCKET_EMPTY, SoundSource.BLOCKS, 1.0F, 1.0F);
                 bucket.shrink(1);
-
 
 
             }
