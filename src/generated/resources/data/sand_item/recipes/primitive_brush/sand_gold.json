@@ -1,0 +1,13 @@
+{
+  "type": "gribtweaks:primitive_brush",
+  "ingredients": [
+    {
+      "item": "gribtweaks:sand_gold"
+    }
+  ],
+  "results": [
+    {
+      "item": "minecraft:raw_gold"
+    }
+  ]
+}

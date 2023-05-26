@@ -2,12 +2,12 @@
   "type": "gribtweaks:primitive_brush",
   "ingredients": [
     {
-      "item": "minecraft:gold_block"
+      "item": "gribtweaks:sand_zinc"
     }
   ],
   "results": [
     {
-      "item": "create:polished_rose_quartz"
+      "item": "create:raw_zinc"
     }
   ]
 }

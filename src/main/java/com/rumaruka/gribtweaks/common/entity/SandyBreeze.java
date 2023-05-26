@@ -1,10 +1,10 @@
 package com.rumaruka.gribtweaks.common.entity;
 
 import com.rumaruka.gribtweaks.common.entity.projectile.SandShardProjectile;
-import com.rumaruka.gribtweaks.init.GTEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.damagesource.DamageSource;
@@ -14,21 +14,16 @@ import net.minecraft.world.entity.MobType;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.control.FlyingMoveControl;
-import net.minecraft.world.entity.ai.goal.Goal;
-import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
-import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
-import net.minecraft.world.entity.ai.goal.RandomStrollGoal;
+import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.ai.navigation.FlyingPathNavigation;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
-import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.monster.RangedAttackMob;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.registries.ForgeRegistries;
 import software.bernie.geckolib3.core.IAnimatable;
@@ -46,8 +41,9 @@ import static software.bernie.geckolib3.core.builder.ILoopType.EDefaultLoopTypes
 
 public class SandyBreeze extends Monster implements RangedAttackMob, IAnimatable {
     private AnimationFactory factory = GeckoLibUtil.createFactory(this);
+    private static boolean isShoot;
 
-    public SandyBreeze(EntityType<? extends Monster> pEntityType, Level pLevel) {
+    public SandyBreeze(EntityType<? extends SandyBreeze> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
         this.xpReward = 0;
         this.setNoAi(false);
@@ -62,6 +58,9 @@ public class SandyBreeze extends Monster implements RangedAttackMob, IAnimatable
     @Override
     protected void registerGoals() {
         super.registerGoals();
+        this.goalSelector.addGoal(1, new RangedAttackGoal(this, 1.25D, 20, 10.0F));
+
+
         this.goalSelector.addGoal(1, new Goal() {
             {
                 this.setFlags(EnumSet.of(Goal.Flag.MOVE));
@@ -111,10 +110,13 @@ public class SandyBreeze extends Monster implements RangedAttackMob, IAnimatable
             }
         });
         this.goalSelector.addGoal(4, (Goal) new RandomLookAroundGoal(this));
-        this.targetSelector.addGoal(5, (Goal) new NearestAttackableTargetGoal<>(this, Animal.class, false, false));
-        this.targetSelector.addGoal(6, (Goal) new NearestAttackableTargetGoal<>(this, Player.class, false, false));
+//        this.targetSelector.addGoal(5, (Goal) new NearestAttackableTargetGoal<>(this, Animal.class, false, false));
+        this.targetSelector.addGoal(2, (Goal) new NearestAttackableTargetGoal<>(this, Player.class, false, false));
         this.targetSelector.addGoal(7, (Goal) new HurtByTargetGoal(this, new Class[0]));
+
+
     }
+
 
     public SoundEvent getHurtSound(DamageSource ds) {
         return (SoundEvent) ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("block.composter.fill"));
@@ -165,6 +167,7 @@ public class SandyBreeze extends Monster implements RangedAttackMob, IAnimatable
                 .add(Attributes.MAX_HEALTH, 2.0D)
                 .add(Attributes.ATTACK_DAMAGE, 3.0f)
                 .add(Attributes.ATTACK_SPEED, 2.0f)
+                .add(Attributes.FLYING_SPEED, 2.0f)
                 .add(Attributes.MOVEMENT_SPEED, 0.3f).build();
     }
 
@@ -186,10 +189,10 @@ public class SandyBreeze extends Monster implements RangedAttackMob, IAnimatable
 
 
     private <E extends IAnimatable> PlayState attackPredicate(AnimationEvent<E> state) {
-        if (this.swinging) {
+        if (isShoot) {
 
             state.getController().setAnimation(new AnimationBuilder().addAnimation("animation.attack", LOOP));
-            this.swinging = false;
+            isShoot = false;
             return PlayState.CONTINUE;
         }
 
@@ -203,13 +206,19 @@ public class SandyBreeze extends Monster implements RangedAttackMob, IAnimatable
 
     @Override
     public void performRangedAttack(LivingEntity pTarget, float pVelocity) {
-        SandShardProjectile sandShardProjectile = new SandShardProjectile(GTEntity.SAND_SHARD.get(), getLevel());
-        double d0 = pTarget.getX() - this.getX();
-        double d1 = pTarget.getBoundingBox().minY + pTarget.getBbHeight() / 3.0F - sandShardProjectile.getY();
-        double d2 = pTarget.getZ() - this.getZ();
-        double d3 = Mth.sqrt((float) (d0 * d0 + d2 * d2));
-        sandShardProjectile.shoot(d0, d1 + d3 * 0.2D, d2, 1.6F, 14 - this.getLevel().getDifficulty().getId() * 4);
-        this.gameEvent(GameEvent.PROJECTILE_SHOOT);
-        this.getLevel().addFreshEntity(sandShardProjectile);
+        SandShardProjectile sandShardProjectile = new SandShardProjectile(this, getLevel());
+        isShoot = true;
+        double d0 = pTarget.getEyeY() - (double)1.1F;
+        double d1 = pTarget.getX() - this.getX();
+        double d2 = d0 - sandShardProjectile.getY();
+        double d3 = pTarget.getZ() - this.getZ();
+        double d4 = Math.sqrt(d1 * d1 + d3 * d3) * (double)0.2F;
+        sandShardProjectile.shoot(d1, d2 + d4, d3, 1.6F, 12.0F);
+        this.playSound(SoundEvents.SNOW_GOLEM_SHOOT, 1.0F, 0.4F / (this.getRandom().nextFloat() * 0.4F + 0.8F));
+        this.level.addFreshEntity(sandShardProjectile);
+
+
     }
+
+
 }

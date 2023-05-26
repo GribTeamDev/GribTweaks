@@ -4,9 +4,11 @@ import com.ncpbails.modestmining.item.ModTiers;
 import com.ncpbails.modestmining.item.custom.tools.BrushItem;
 import com.rumaruka.gribtweaks.GribTweaks;
 import com.rumaruka.gribtweaks.common.items.*;
+import com.simibubi.create.foundation.block.ITE;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.material.Fluids;
+import net.minecraftforge.common.ForgeSpawnEggItem;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -52,7 +54,10 @@ public class GTItems {
 
     public static final RegistryObject<Item> water_wooden_bucket = ITEMS.register("water_wooden_bucket",
             () -> new WoodenBucket(() -> Fluids.WATER, new Item.Properties().stacksTo(1).tab(GribTweaks.GRIBTWEAKS_TABS)));
-
+    public static final RegistryObject<Item> SANDY_BREEZE_EGGS = ITEMS.register("sandy_breeze_egg_spawn",()->new ForgeSpawnEggItem(GTEntity.SANDY_BREEZE ,0x22b341, 0x19732e,
+            new Item.Properties().tab(GribTweaks.GRIBTWEAKS_TABS)));
+    public static final RegistryObject<Item> SAND_BAD_EGGS = ITEMS.register("sand_bad_egg_spawn",()->new ForgeSpawnEggItem(GTEntity.SAND_BAD ,0x22b341, 0x19732e,
+            new Item.Properties().tab(GribTweaks.GRIBTWEAKS_TABS)));
     public static void setup() {
 
         ITEMS.register(FMLJavaModLoadingContext.get().getModEventBus());

@@ -26,8 +26,8 @@ public class SandShardRenderer extends EntityRenderer<SandShardProjectile> {
     public void render(SandShardProjectile pEntity, float pEntityYaw, float pPartialTick, PoseStack pPoseStack, MultiBufferSource pBuffer, int pPackedLight) {
         VertexConsumer vb = pBuffer.getBuffer(RenderType.entityCutout(this.getTextureLocation(pEntity)));
         pPoseStack.pushPose();
-        pPoseStack.mulPose(Vector3f.YP.rotationDegrees(Mth.lerp(pPartialTick, pEntity.yRotO, pEntity.getYRot()) - 90.0F));
-        pPoseStack.mulPose(Vector3f.ZP.rotationDegrees(90.0F + Mth.lerp(pPartialTick, pEntity.xRotO, pEntity.getXRot())));
+//        pPoseStack.mulPose(Vector3f.YP.rotationDegrees(Mth.lerp(pPartialTick, pEntity.yRotO, pEntity.getYRot()) - 90.0F));
+//        pPoseStack.mulPose(Vector3f.ZP.rotationDegrees(90.0F + Mth.lerp(pPartialTick, pEntity.xRotO, pEntity.getXRot())));
         this.model.renderToBuffer(pPoseStack, vb, pPackedLight, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 0.0625F);
         pPoseStack.popPose();
         super.render(pEntity, pEntityYaw, pPartialTick, pPoseStack, pBuffer, pPackedLight);

@@ -114,7 +114,7 @@ public class GribTweaks {
         @SubscribeEvent
         public static void entityAttributeEvent(EntityAttributeCreationEvent event) {
             event.put(GTEntity.SAND_BAD.get(), BadSand.setAttributes());
-//            event.put(GTEntity.SANDY_BREEZE.get(), SandyBreeze.setAttributes());
+            event.put(GTEntity.SANDY_BREEZE.get(), SandyBreeze.setAttributes());
         }
     }
 

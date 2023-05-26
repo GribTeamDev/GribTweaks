@@ -25,80 +25,45 @@
         },
         {
           "entity": "gribtweaks:bad_sand"
-        },
-        {
-          "entity": "gribtweaks:bad_sand"
-        },
-        {
-          "entity": "gribtweaks:bad_sand"
-        },
-        {
-          "entity": "gribtweaks:bad_sand"
-        },
-        {
-          "entity": "gribtweaks:bad_sand"
-        },
-        {
-          "entity": "gribtweaks:bad_sand"
-        },
-        {
-          "entity": "gribtweaks:bad_sand"
-        },
-        {
-          "entity": "gribtweaks:bad_sand"
-        },
-        {
-          "entity": "gribtweaks:bad_sand"
-        },
-        {
-          "entity": "gribtweaks:bad_sand"
         }
       ],
       "rewards": [
         {
-          "type": "entity_loot",
-          "entity": "minecraft:blaze",
-          "rolls": 5
+          "type": "stack",
+          "stack": {
+            "item": "gribtweaks:sand_trough"
+          }
         }
       ],
       "max_wave_time": 750,
-      "setup_time": 150
+      "setup_time": 450
     },
     {
       "entities": [
-          {
-              "entity": "minecraft:blaze"
-          },
-          {
-              "entity": "minecraft:blaze"
-          },
-          {
-              "entity": "minecraft:blaze"
-          },
-          {
-              "entity": "minecraft:blaze"
-          },
-          {
-              "entity": "minecraft:blaze"
-          },
-          {
-              "entity": "minecraft:blaze"
-          },
-          {
-              "entity": "minecraft:blaze"
-          },
-          {
-              "entity": "minecraft:blaze"
-          },
-          {
-              "entity": "minecraft:blaze"
-          },
-          {
-              "entity": "minecraft:blaze"
-          },
-          {
-              "entity": "minecraft:blaze"
-          }
+        {
+          "entity": "gribtweaks:bad_sand"
+        },
+        {
+          "entity": "gribtweaks:bad_sand"
+        },
+        {
+          "entity": "gribtweaks:bad_sand"
+        },
+        {
+          "entity": "gribtweaks:bad_sand"
+        },
+        {
+          "entity": "gribtweaks:bad_sand"
+        },
+        {
+          "entity": "gribtweaks:sandy_breeze"
+        },
+        {
+          "entity": "gribtweaks:sandy_breeze"
+        },
+        {
+          "entity": "gribtweaks:sandy_breeze"
+        }
       ],
       "modifiers": [
         {
@@ -129,9 +94,10 @@
       ],
       "rewards": [
         {
-          "type": "entity_loot",
-          "entity": "minecraft:blaze",
-          "rolls": 10
+          "type": "stack",
+          "stack": {
+            "item": "gribtweaks:sand_trough"
+          }
         }
       ],
       "max_wave_time": 750,
@@ -140,19 +106,34 @@
     {
       "entities": [
         {
-          "entity": "minecraft:blaze"
+          "entity": "gribtweaks:bad_sand"
         },
         {
-          "entity": "minecraft:blaze"
+          "entity": "gribtweaks:bad_sand"
         },
         {
-          "entity": "minecraft:blaze"
+          "entity": "gribtweaks:bad_sand"
         },
         {
-          "entity": "minecraft:blaze"
+          "entity": "gribtweaks:bad_sand"
         },
         {
-          "entity": "minecraft:blaze"
+          "entity": "gribtweaks:bad_sand"
+        },
+        {
+          "entity": "gribtweaks:bad_sand"
+        },
+        {
+          "entity": "gribtweaks:bad_sand"
+        },
+        {
+          "entity": "gribtweaks:sandy_breeze"
+        },
+        {
+          "entity": "gribtweaks:sandy_breeze"
+        },
+        {
+          "entity": "gribtweaks:sandy_breeze"
         }
       ],
       "modifiers": [
@@ -184,9 +165,10 @@
       ],
       "rewards": [
         {
-          "type": "entity_loot",
-          "entity": "minecraft:blaze",
-          "rolls": 15
+          "type": "stack",
+          "stack": {
+            "item": "gribtweaks:sand_trough"
+          }
         }
       ],
       "max_wave_time": 750,
@@ -194,21 +176,6 @@
     },
     {
       "entities": [
-        {
-          "entity": "minecraft:blaze"
-        },
-        {
-          "entity": "minecraft:blaze"
-        },
-        {
-          "entity": "minecraft:blaze"
-        },
-        {
-          "entity": "minecraft:blaze"
-        },
-        {
-          "entity": "minecraft:blaze"
-        },
         {
           "entity": "minecraft:blaze"
         }
@@ -242,81 +209,23 @@
       ],
       "rewards": [
         {
-          "type": "entity_loot",
-          "entity": "minecraft:blaze",
-          "rolls": 20
-        }
-      ],
-      "max_wave_time": 750,
-      "setup_time": 150
-    },
-    {
-      "entities": [
-        {
-          "entity": "minecraft:blaze"
-        },
-        {
-          "entity": "minecraft:blaze"
-        },
-        {
-          "entity": "minecraft:blaze"
-        },
-        {
-          "entity": "minecraft:blaze"
-        },
-        {
-          "entity": "minecraft:blaze"
-        },
-        {
-          "entity": "minecraft:blaze"
-        },
-        {
-          "entity": "minecraft:blaze"
-        }
-      ],
-      "modifiers": [
-        {
-          "attribute": "generic.max_health",
-          "operation": "MULTIPLY_TOTAL",
-          "value": 1.25
-        },
-        {
-          "attribute": "generic.armor",
-          "operation": "ADDITION",
-          "value": 6
-        },
-        {
-          "attribute": "generic.attack_damage",
-          "operation": "MULTIPLY_TOTAL",
-          "value": 0.85
-        },
-        {
-          "attribute": "generic.knockback_resistance",
-          "operation": "ADDITION",
-          "value": 0.20
-        },
-        {
-          "attribute": "generic.movement_speed",
-          "operation": "MULTIPLY_TOTAL",
-          "value": 0.20
-        }
-      ],
-      "rewards": [
-        {
-          "type": "entity_loot",
-          "entity": "minecraft:blaze",
-          "rolls": 25
+          "type": "stack",
+          "stack": {
+            "item": "gribtweaks:sand_trough"
+          }
         }
       ],
       "max_wave_time": 750,
       "setup_time": 150
     }
+
   ],
   "rewards": [
     {
-      "type": "entity_loot",
-      "entity": "minecraft:blaze",
-      "rolls": 60
+      "type": "stack",
+      "stack": {
+        "item": "gribtweaks:sand_trough"
+      }
     }
   ],
   "completion_xp": 500,

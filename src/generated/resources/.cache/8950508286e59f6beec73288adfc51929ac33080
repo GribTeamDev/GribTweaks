@@ -1,3 +1,7 @@
-// 1.19.2	2023-05-12T18:10:13.3888162	Create's Processing Recipes: primitive_brush
-42b2ebbeaf4adb0da8321bfe47a8c0b14393ecf2 data/sand_copper/recipes/primitive_brush/sand_copper.json
-00b45ea00e789dabfb1b884afba137beba1ba73d data/test/recipes/primitive_brush/gold_block.json
+// 1.19.2	2023-05-27T02:33:02.5262198	Create's Processing Recipes: primitive_brush
+42b2ebbeaf4adb0da8321bfe47a8c0b14393ecf2 data/sand_item/recipes/primitive_brush/sand_copper.json
+d4571268a5e3eaa2cb024183dc42ae8b321d5c14 data/sand_item/recipes/primitive_brush/sand_gold.json
+69dff4417b60edbbb99b1a9caa410fcb9edc550f data/sand_item/recipes/primitive_brush/sand_iron.json
+92dc0849a463fd57c941b696fad947c46006e3a9 data/sand_item/recipes/primitive_brush/sand_lapis.json
+671c437b8ff6402d3829aba5f7e6c5bd1c9ed9f5 data/sand_item/recipes/primitive_brush/sand_redstone.json
+ca2d5ce74226ffcccb39e99f7c3df6ab6da46471 data/sand_item/recipes/primitive_brush/sand_zinc.json

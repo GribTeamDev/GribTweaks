@@ -4,12 +4,12 @@ import com.rumaruka.gribtweaks.GribTweaks;
 import com.rumaruka.gribtweaks.client.model.SandShardModel;
 import com.rumaruka.gribtweaks.client.render.BadSandRenderer;
 import com.rumaruka.gribtweaks.client.render.SandShardRenderer;
-
+import com.rumaruka.gribtweaks.client.render.SandyBreezeRenderer;
 import com.rumaruka.gribtweaks.client.render.StatueTESR;
+import com.rumaruka.gribtweaks.common.items.HopeCatalystItem;
 import com.rumaruka.gribtweaks.init.GTEntity;
 import com.rumaruka.gribtweaks.init.GTItems;
 import com.rumaruka.gribtweaks.init.GTTiles;
-import com.rumaruka.gribtweaks.common.items.HopeCatalystItem;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
@@ -141,7 +141,7 @@ public class GTClient {
     }
 
     public static void scroll(ScreenEvent.MouseScrolled.Pre e) {
-        if (currentTooltipItem!=null&&(currentTooltipItem.getItem() == GTItems.HOPE_CATALYST.get()|| currentTooltipItem.getItem() == GTItems.FOREST_CATALYST.get()) && tooltipTick == PlaceboClient.ticks && Screen.hasShiftDown()) {
+        if (currentTooltipItem != null && (currentTooltipItem.getItem() == GTItems.HOPE_CATALYST.get() || currentTooltipItem.getItem() == GTItems.FOREST_CATALYST.get()) && tooltipTick == PlaceboClient.ticks && Screen.hasShiftDown()) {
             waveIdx += e.getScrollDelta() < 0 ? 1 : -1;
             e.setCanceled(true);
         } else {
@@ -150,26 +150,28 @@ public class GTClient {
     }
 
     public static void scroll2(InputEvent.MouseScrollingEvent e) {
-         if (currentTooltipItem!=null&&(currentTooltipItem.getItem() == GTItems.HOPE_CATALYST.get()||currentTooltipItem.getItem() == GTItems.FOREST_CATALYST.get()) && tooltipTick == PlaceboClient.ticks && Screen.hasShiftDown()) {
+        if (currentTooltipItem != null && (currentTooltipItem.getItem() == GTItems.HOPE_CATALYST.get() || currentTooltipItem.getItem() == GTItems.FOREST_CATALYST.get()) && tooltipTick == PlaceboClient.ticks && Screen.hasShiftDown()) {
             waveIdx += e.getScrollDelta() < 0 ? 1 : -1;
             e.setCanceled(true);
         } else {
             waveIdx = 0;
         }
     }
+
     @SubscribeEvent
     public static void registerEntityRenderers(EntityRenderersEvent.RegisterRenderers event) {
 
-          event.registerEntityRenderer(GTEntity.SAND_BAD.get(), BadSandRenderer::new);
-
-          event.registerEntityRenderer(GTEntity.SAND_SHARD.get(), SandShardRenderer::new);
-         // event.registerEntityRenderer(GTEntity.SANDY_BREEZE.get(), SandyBreezeRenderer::new);
+        event.registerEntityRenderer(GTEntity.SAND_BAD.get(), BadSandRenderer::new);
+        event.registerEntityRenderer(GTEntity.SAND_SHARD.get(), SandShardRenderer::new);
+        event.registerEntityRenderer(GTEntity.SANDY_BREEZE.get(), SandyBreezeRenderer::new);
 
     }
+
     @SubscribeEvent
     public static void registerLayers(EntityRenderersEvent.RegisterLayerDefinitions event) {
         event.registerLayerDefinition(SandShardModel.LAYER_LOCATION, SandShardModel::createBodyLayer);
     }
+
     public static void registerBlockEntityRenderers() {
         BlockEntityRenderers.register(GTTiles.statue_obj.get(), StatueTESR::new);
 
