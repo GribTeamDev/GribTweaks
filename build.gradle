@@ -152,6 +152,16 @@ repositories {
     maven {
         url = "https://modmaven.dev/"
     }
+    maven {
+        // location of the maven that hosts JEI files
+        name = "Progwml6 maven"
+        url = "https://dvs1.progwml6.com/files/maven/"
+    }
+    maven {
+        // location of a maven mirror for JEI files, as a fallback
+        name = "ModMaven"
+        url = "https://modmaven.dev"
+    }
 }
 
 dependencies {
@@ -168,7 +178,9 @@ dependencies {
     implementation fg.deobf("com.jozufozu.flywheel:flywheel-forge-${flywheel_minecraft_version}:${flywheel_version}")
     implementation fg.deobf("com.tterrag.registrate:Registrate:${registrate_version}")
     implementation fg.deobf("teamtwilight:twilightforest:4.2.1518:universal")
-
+    compileOnly fg.deobf("mezz.jei:jei-1.19.2-common-api:${jei_version}")
+    compileOnly fg.deobf("mezz.jei:jei-1.19.2-forge-api:${jei_version}")
+    runtimeOnly fg.deobf("mezz.jei:jei-1.19.2-forge:${jei_version}")
     if (file("runtimeMods").exists()) {
         file("runtimeMods").eachFile { file ->
             def splitPos = file.name.lastIndexOf("-")
