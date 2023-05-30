@@ -30,7 +30,7 @@ public class BrushCategory extends CreateRecipeCategory<PrimitiveBrushRecipe> {
 
     public BrushCategory(Info<PrimitiveBrushRecipe> info) {
         super(info);
-        renderedBrush = new ItemStack(GTItems.primitive.get());
+        renderedBrush = GTItems.primitive.get().getDefaultInstance();
     }
 
     @Override
@@ -64,7 +64,7 @@ public class BrushCategory extends CreateRecipeCategory<PrimitiveBrushRecipe> {
         tag.put("Polishing", matchingStacks[0].serializeNBT());
         tag.putBoolean("JEI", true);
         GuiGameElement.of(renderedBrush)
-                .<GuiGameElement.GuiRenderBuilder>at(getBackground().getWidth() / 2 - 16, 0, 0)
+                .<GuiGameElement.GuiRenderBuilder>at((float) getBackground().getWidth() / 2 - 16, 0, 0)
                 .scale(2)
                 .render(matrixStack);
     }
