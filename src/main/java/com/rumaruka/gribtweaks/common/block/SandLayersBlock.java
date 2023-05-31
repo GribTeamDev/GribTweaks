@@ -62,7 +62,7 @@ public class SandLayersBlock extends Block {
             }
 
 
-            if (state.getValue(LAYERS) != 8) {//15%
+            if (state.getValue(LAYERS) != 8) {
 
                 inventory.add(new ItemStack(GTItems.sand_trough.get()));
                 world.removeBlock(pos, true);
@@ -99,16 +99,11 @@ public class SandLayersBlock extends Block {
     }
 
     @Override
-    public boolean isPathfindable(BlockState pState, BlockGetter pLevel, BlockPos pPos, PathComputationType pType) {
-        switch (pType) {
-            case LAND:
-                return pState.getValue(LAYERS) < 5;
-            case WATER:
-                return false;
-            case AIR:
-                return false;
-            default:
-                return false;
+    public boolean isPathfindable(@Nonnull BlockState state, @Nonnull BlockGetter reader, @Nonnull BlockPos pos, @Nonnull PathComputationType pathType) {
+        if (pathType == PathComputationType.LAND) {
+            return state.getValue(LAYERS) < 5;
+        } else {
+            return false;
         }
     }
 
@@ -145,7 +140,7 @@ public class SandLayersBlock extends Block {
 
             }
         }
-        return !canSurvive(state, level, currentPos) ? Blocks.AIR.defaultBlockState() : GTBlocks.sand_layer.get().defaultBlockState().setValue(LAYERS, layer);
+        return !state.canSurvive(level, currentPos) ? Blocks.AIR.defaultBlockState() : super.updateShape(state, direction, facingState, level, currentPos, facingPos);
     }
 
     @Override

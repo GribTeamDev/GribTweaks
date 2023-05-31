@@ -23,7 +23,7 @@ public class GTCauldronInteractions {
     public static final CauldronInteraction FILL_WATER_SAND = (state, level, pos, player, hand, stack) ->
             emptySandBucket(level, pos, player, hand, stack, Blocks.WATER_CAULDRON.defaultBlockState().setValue(LayeredCauldronBlock.LEVEL, 3), SoundEvents.BUCKET_EMPTY);
 
-    public static final CauldronInteraction FILL_WATER_WOODN = (state, level, pos, player, hand, stack) ->
+    public static final CauldronInteraction FILL_WATER_WOODEN = (state, level, pos, player, hand, stack) ->
             emptyWoodenBucket(level, pos, player, hand, stack, Blocks.WATER_CAULDRON.defaultBlockState().setValue(LayeredCauldronBlock.LEVEL, 3), SoundEvents.BUCKET_EMPTY);
 
 

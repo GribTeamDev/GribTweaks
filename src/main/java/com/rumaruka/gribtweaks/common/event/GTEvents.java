@@ -53,9 +53,10 @@ public class GTEvents {
         ItemStack sand_bucket = player.getOffhandItem();
         if (sand_knife.getItem() == GTItems.sand_knife.get() && sand_bucket.getItem() == GTItems.sand_bucket.get()) {
             if (state.getBlock() == Blocks.CACTUS) {
-                player.setItemInHand(InteractionHand.OFF_HAND, new ItemStack(GTItems.water_sand_bucket.get()));
+                player.setItemInHand(InteractionHand.OFF_HAND, GTItems.water_sand_bucket.get().getDefaultInstance());
                 sand_knife.shrink(1);
                 sand_bucket.shrink(1);
+
                 level.addParticle(ParticleTypes.ASH, pos.getX(), pos.getY(), pos.getZ(), 1, 1, 1);
                 level.playSound(null, player.getOnPos(), SoundEvents.AXE_STRIP, SoundSource.MASTER, 2, 2);
                 level.removeBlock(pos, true);
@@ -85,9 +86,6 @@ public class GTEvents {
     public static void onPlayerInteractDeadBush(PlayerInteractEvent.RightClickBlock event) {
         Level world = event.getLevel();
         BlockPos pos = event.getPos();
-        Player player = event.getEntity();
-        Inventory inventory = player.getInventory();
-
         if (world.getBlockState(pos).getBlock() == Blocks.DEAD_BUSH) {
             world.setBlockAndUpdate(pos, GTBlocks.breake_bush.get().defaultBlockState());
             ItemEntity itemEntity = new ItemEntity(world, pos.getX(), pos.getY(), pos.getZ(), new ItemStack(Items.STICK, 3));
@@ -110,7 +108,6 @@ public class GTEvents {
     @SubscribeEvent
     public static void onLevelRainOrThunder(TickEvent.LevelTickEvent event) {
         Level level = event.level;
-        int water = 1;
         for (Player player : level.players()) {
             BlockHitResult rayTraceResult = getPlayerPOVHitResult(level, player, ClipContext.Fluid.NONE);
             if (rayTraceResult.getType() == BlockHitResult.Type.BLOCK) {
@@ -222,7 +219,7 @@ public class GTEvents {
         CauldronInteraction.WATER.put(GTItems.wooden_bucket.get(), GTCauldronInteractions.EMPTY_WATER_WOODEN);
 
         CauldronInteraction.EMPTY.put(GTItems.water_sand_bucket.get(), GTCauldronInteractions.FILL_WATER_SAND);
-        CauldronInteraction.EMPTY.put(GTItems.water_wooden_bucket.get(), GTCauldronInteractions.FILL_WATER_WOODN);
+        CauldronInteraction.EMPTY.put(GTItems.water_wooden_bucket.get(), GTCauldronInteractions.FILL_WATER_WOODEN);
 
 
     }
