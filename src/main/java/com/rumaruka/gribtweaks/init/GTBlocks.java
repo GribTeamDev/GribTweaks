@@ -22,6 +22,7 @@ public class GTBlocks {
     public static final RegistryObject<Block> sand_layer = BLOCKS.register("sand_layer", SandLayersBlock::new);
     public static final RegistryObject<Block> compost = BLOCKS.register("compost",()-> new WaterCompost(BlockBehaviour.Properties.of(Material.WOOD, MaterialColor.WOOD).requiresCorrectToolForDrops().strength(2.0F).noOcclusion()));
     public static final RegistryObject<Block> compost_water = BLOCKS.register("compost_water",()-> new LayeredWaterCompost(BlockBehaviour.Properties.of(Material.WOOD, MaterialColor.WOOD).requiresCorrectToolForDrops().strength(2.0F).noOcclusion(), LayeredCauldronBlock.RAIN));
+    public static final RegistryObject<Block> suspection_sand = BLOCKS.register("suspection_sand",()-> new SuspectionSand(14406560, BlockBehaviour.Properties.copy(Blocks.SAND).strength(0.5F).sound(SoundType.SAND)));
     public static final RegistryObject<Block> breake_bush = BLOCKS.register("breake_bush",()-> new BreakeDeadBushBlock(BlockBehaviour.Properties.copy(Blocks.DEAD_BUSH)));
     public static final RegistryObject<Block> arch_block = BLOCKS.register("arch_block", ArchaeologicalGeneratorBlock::new);
     public static void setup() {

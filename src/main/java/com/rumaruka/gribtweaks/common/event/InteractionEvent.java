@@ -43,7 +43,6 @@ public class InteractionEvent {
             if (bucket.getItem() == GTItems.water_sand_bucket.get()) {
 
                 world.setBlockAndUpdate(pos, GTBlocks.compost_water.get().defaultBlockState().setValue(LayeredWaterCompost.LEVEL, 3));
-                inventory.add(new ItemStack(GTItems.sand_bucket.get()));
                 world.playSound(null, pos, SoundEvents.BUCKET_EMPTY, SoundSource.BLOCKS, 1.0F, 1.0F);
                 bucket.shrink(1);
 
@@ -51,7 +50,7 @@ public class InteractionEvent {
             if (bucket.getItem() == GTItems.water_wooden_bucket.get()) {
 
                 world.setBlockAndUpdate(pos, GTBlocks.compost_water.get().defaultBlockState().setValue(LayeredWaterCompost.LEVEL, 3));
-                inventory.add(new ItemStack(GTItems.wooden_bucket.get()));
+                inventory.add(GTItems.wooden_bucket.get().getDefaultInstance());
                 world.playSound(null, pos, SoundEvents.BUCKET_EMPTY, SoundSource.BLOCKS, 1.0F, 1.0F);
                 bucket.shrink(1);
 
@@ -70,7 +69,7 @@ public class InteractionEvent {
             if (bucket.getItem() == GTItems.sand_bucket.get()) {
 
                 world.setBlockAndUpdate(pos, GTBlocks.compost.get().defaultBlockState());
-                inventory.add(new ItemStack(GTItems.water_sand_bucket.get()));
+                inventory.add(GTItems.water_sand_bucket.get().getDefaultInstance());
                 bucket.shrink(1);
                 world.playSound(null, pos, SoundEvents.BUCKET_EMPTY, SoundSource.BLOCKS, 1.0F, 1.0F);
 

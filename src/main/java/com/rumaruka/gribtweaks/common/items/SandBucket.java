@@ -81,7 +81,7 @@ public class SandBucket extends BucketItem {
                             CriteriaTriggers.PLACED_BLOCK.trigger(serverPlayer, newPos, heldStack);
                         }
                         player.awardStat(Stats.ITEM_USED.get(this));
-                        return InteractionResultHolder.sidedSuccess(getEmptySuccessItem(heldStack, player), level.isClientSide());
+                        return InteractionResultHolder.sidedSuccess(ItemStack.EMPTY, level.isClientSide());
                     } else {
                         return InteractionResultHolder.fail(heldStack);
                     }

@@ -17,7 +17,6 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.item.ItemEntity;
-import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -40,6 +39,7 @@ public class GTEvents {
     public static int ticks = 0;
 
     public static boolean isActive = false;
+    public static boolean isHaveSapling ;
 
 
     @SubscribeEvent
@@ -67,18 +67,27 @@ public class GTEvents {
     }
 
     @SubscribeEvent
-    public static void onPlayerInteractSandBucket(PlayerInteractEvent.RightClickBlock event) {
+    public static void onTransformSand_to_Mud(PlayerInteractEvent.RightClickBlock event) {
         Level world = event.getLevel();
         BlockPos pos = event.getPos();
         Player player = event.getEntity();
         ItemStack heldItem = player.getItemInHand(event.getHand());
 
-        if (heldItem.getItem() == GTItems.wooden_bucket.get() && world.getBlockState(pos).getBlock() == Blocks.SAND) {
+        if (heldItem.getItem() == GTItems.water_sand_bucket.get() && (world.getBlockState(pos).getBlock() == Blocks.SAND && world.getBlockState(pos.above()).getBlock() == GTBlocks.breake_bush.get())) {
             world.setBlockAndUpdate(pos, Blocks.MUD.defaultBlockState());
             player.setItemInHand(event.getHand(), new ItemStack(GTItems.sand_bucket.get()));
             world.playSound(null, pos, SoundEvents.BUCKET_EMPTY, SoundSource.BLOCKS, 1.0F, 1.0F);
         }
-
+        if (heldItem.getItem() == GTItems.water_wooden_bucket.get() && world.getBlockState(pos).getBlock() == Blocks.SAND) {
+            world.setBlockAndUpdate(pos, Blocks.MUD.defaultBlockState());
+            player.setItemInHand(event.getHand(), new ItemStack(GTItems.wooden_bucket.get()));
+            world.playSound(null, pos, SoundEvents.BUCKET_EMPTY, SoundSource.BLOCKS, 1.0F, 1.0F);
+        }
+        if (heldItem.getItem() == Items.WATER_BUCKET && world.getBlockState(pos).getBlock() == Blocks.SAND) {
+            world.setBlockAndUpdate(pos, Blocks.MUD.defaultBlockState());
+            player.setItemInHand(event.getHand(), new ItemStack(Items.BUCKET));
+            world.playSound(null, pos, SoundEvents.BUCKET_EMPTY, SoundSource.BLOCKS, 1.0F, 1.0F);
+        }
 
     }
 
@@ -133,12 +142,24 @@ public class GTEvents {
         }
     }
 
+    @SubscribeEvent
+    public static void onServerLevelTick(TickEvent.ServerTickEvent event) {
+
+        if (event.phase == TickEvent.Phase.START) {
+            if (!QuestComplete.isLock){
+                event.getServer().getAllLevels().forEach(serverLevel ->
+                        serverLevel.getLevelData().setRaining(true)
+                );
+            }
+
+        }
+    }
 
     @SubscribeEvent
     public static void onLevelTick(TickEvent.LevelTickEvent event) {
 
         Level world = event.level;
-
+        isHaveSapling=false;
         if (event.phase == TickEvent.Phase.END) {
 
             for (Player player : world.players()) {
@@ -155,6 +176,7 @@ public class GTEvents {
                             world.setBlockAndUpdate(pos, Blocks.OAK_SAPLING.defaultBlockState());
                             world.setBlockAndUpdate(pos.below(), Blocks.DIRT.defaultBlockState());
                             addMudParticles(world, pos.below(), 5);
+                            isHaveSapling=true;
                             ticks = 0;
                             isActive = false;
                         }

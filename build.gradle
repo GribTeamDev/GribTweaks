@@ -181,6 +181,14 @@ dependencies {
     compileOnly fg.deobf("mezz.jei:jei-1.19.2-common-api:${jei_version}")
     compileOnly fg.deobf("mezz.jei:jei-1.19.2-forge-api:${jei_version}")
     runtimeOnly fg.deobf("mezz.jei:jei-1.19.2-forge:${jei_version}")
+
+
+    implementation fg.deobf("curse.maven:architectury-api-419699:4555749")
+    implementation fg.deobf("curse.maven:ftb-library-forge-404465:4541987")
+    implementation fg.deobf("curse.maven:ftb-quests-forge-289412:4553968")
+    implementation fg.deobf("curse.maven:ftb-teams-forge-404468:4477315")
+    implementation fg.deobf("curse.maven:item-filters-309674:4553326")
+
     if (file("runtimeMods").exists()) {
         file("runtimeMods").eachFile { file ->
             def splitPos = file.name.lastIndexOf("-")

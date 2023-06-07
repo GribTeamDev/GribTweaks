@@ -2,10 +2,7 @@ package com.rumaruka.gribtweaks.common.entity.projectile;
 
 import com.rumaruka.gribtweaks.init.GTEntity;
 import net.minecraft.network.protocol.Packet;
-import net.minecraft.world.Difficulty;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -40,11 +37,9 @@ public class SandShardProjectile extends ThrowableProjectile {
         Entity owner = this.getOwner();
         Entity entityHit = result.getEntity();
         if (entityHit instanceof LivingEntity living && (owner == null || (entityHit != owner && entityHit != owner.getVehicle()))) {
-            if (entityHit.hurt(DamageSource.GENERIC, 2)
-                    && this.getLevel().getDifficulty() != Difficulty.PEACEFUL) {
-                int poisonTime = this.getLevel().getDifficulty() == Difficulty.HARD ? 7 : 3;
-                living.addEffect(new MobEffectInstance(MobEffects.POISON, poisonTime * 20, 0));
-            }
+
+            living.hurt(DamageSource.GENERIC, 0.2f);
+
         }
     }
 

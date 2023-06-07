@@ -1,0 +1,19 @@
+{
+  "type": "gateways:gate_recipe",
+  "group": "gateways",
+  "pattern": [
+    "A ",
+    "  "
+  ],
+  "key": {
+
+
+    "A": {
+      "item": "gribtweaks:damage_hope_catalyst"
+    }
+  },
+  "result": {
+    "item": "gribtweaks:hope_catalyst"
+  },
+  "gateway": "gateways:sand_raid"
+}

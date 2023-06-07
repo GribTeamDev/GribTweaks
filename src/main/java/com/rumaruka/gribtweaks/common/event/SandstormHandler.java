@@ -62,7 +62,7 @@ public class SandstormHandler {
 
     private boolean canPlaceSandAt(ServerLevel serverLevel, BlockPos pos) {
         BlockState state = serverLevel.getBlockState(pos.below());
-        return (state.getBlock() != Blocks.SAND) || !state.is(BlockTags.LEAVES) || !state.is(Blocks.WATER) && DimensionHelper.canPlaceSandLayer(serverLevel, pos);
+        return (state.getBlock() != Blocks.SAND) ||!state.is(Blocks.WATER) || !state.is(Blocks.AIR) && DimensionHelper.canPlaceSandLayer(serverLevel, pos);
     }
 
     public void updateWeather(Level level) {
@@ -119,16 +119,18 @@ public class SandstormHandler {
                                     if (serverLevel.isAreaLoaded(posDown, 1)) {
                                         BlockState sandState = serverLevel.getBlockState(pos);
                                         BlockState belowState = serverLevel.getBlockState(posDown);
-                                        if (sandState.getBlock() == GTBlocks.sand_layer.get() && (belowState.getBlock() != Blocks.WATER||belowState.getBlock() != Blocks.LAVA||belowState.getBlock() != Blocks.AIR)) {
+                                        this.canPlaceSandAt(serverLevel, pos);
+                                        if (sandState.getBlock() == GTBlocks.sand_layer.get() && (belowState.getBlock() != Blocks.WATER||belowState.getBlock() != Blocks.LAVA||belowState.getBlock() != Blocks.AIR || !belowState.is(BlockTags.LEAVES))) {
                                             int layers = sandState.getValue(SandLayersBlock.LAYERS);
                                             if (layers < 8) {
                                                 serverLevel.setBlockAndUpdate(pos, sandState.setValue(SandLayersBlock.LAYERS, ++layers));
                                             }
-                                        } else if (this.canPlaceSandAt(serverLevel, pos)) {
+                                        } else if (this.canPlaceSandAt(serverLevel, pos) && pos.getY()>1) {
                                             serverLevel.setBlockAndUpdate(pos, GTBlocks.sand_layer.get().defaultBlockState());
                                         }
                                     }
                                 }
+
                             }
                         });
                     }

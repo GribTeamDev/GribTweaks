@@ -27,11 +27,6 @@ import java.util.Optional;
 
 @Mod.EventBusSubscriber(modid = GribTweaks.MODID)
 public class DimensionHelper {
-    public static final int GROUND_LEVEL = 63;
-
-    public static List<Block> getSurfaceBlocks() {
-        return Lists.newArrayList(Blocks.SAND);
-    }
 
     public static GribSaveData getData(ServerLevel serverLevel) {
         return serverLevel.getDataStorage().computeIfAbsent(GribSaveData::load, GribSaveData::new, GribSaveData.ID);
@@ -49,17 +44,13 @@ public class DimensionHelper {
         }
     }
 
-    public static int getSkyColorWithTemperatureModifier(float temperature) {
-        float f = temperature / 3.0F;
-        f = Mth.clamp(f, -1.0F, 1.0F);
-        return Mth.hsvToRgb(0.62222224F - f * 0.05F, 0.5F + f * 0.1F, 1.0F);
-    }
+
 
     public static boolean canPlaceSandLayer(ServerLevel world, BlockPos pos) {
         BlockState state = world.getBlockState(pos);
         BlockState stateDown = world.getBlockState(pos.below());
         Optional<ResourceKey<Biome>> biomeKey = world.registryAccess().registryOrThrow(ForgeRegistries.BIOMES.getRegistryKey()).getResourceKey(world.getBiome(pos).value());
-        return (biomeKey.isPresent() && biomeKey.get() == Biomes.DESERT)
+        return (biomeKey.isPresent() && biomeKey.get() != Biomes.THE_VOID)
                 && world.isEmptyBlock(pos.above())
                 && state.getMaterial().isReplaceable()
                 && Block.canSupportRigidBlock(world, pos.below())
@@ -67,22 +58,6 @@ public class DimensionHelper {
                 && !(state.getBlock() instanceof SandLayersBlock);
     }
 
-    /**
-     * Only use when world#getHeight is not working
-     *
-     * @param world the world
-     * @param pos original pos
-     * @return surface pos
-     */
-    public static BlockPos getSurfacePos(Level world, BlockPos pos) {
-        while (pos.getY() > 1 && world.isEmptyBlock(pos.below())) {
-            pos = pos.below();
-        }
-        while (!world.canSeeSky(pos)) {
-            pos = pos.above();
-        }
-        return pos;
-    }
 
 
 }

@@ -22,15 +22,20 @@ public class GTItems {
     private static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, MODID);
     public static final RegistryObject<HopeCatalystItem> HOPE_CATALYST = ITEMS.register("hope_catalyst", () -> new HopeCatalystItem(new Item.Properties().tab(GribTweaks.GRIBTWEAKS_TABS)));
     public static final RegistryObject<ForestCatalystItem> FOREST_CATALYST = ITEMS.register("forest_catalyst", () -> new ForestCatalystItem(new Item.Properties().tab(GribTweaks.GRIBTWEAKS_TABS)));
-    public static final RegistryObject<Item> TEST_DAMAGE = ITEMS.register("test_damage", () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> DAMAGE_HOPE_CATALYST = ITEMS.register("damage_hope_catalyst", () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> statue_obj = ITEMS.register("statue_obj", () -> new BlockItem(GTBlocks.statue_obj.get(), new Item.Properties().tab(GribTweaks.GRIBTWEAKS_TABS)));
     public static final RegistryObject<Item> compost = ITEMS.register("compost", () -> new BlockItem(GTBlocks.compost.get(), new Item.Properties().tab(GribTweaks.GRIBTWEAKS_TABS)));
     public static final RegistryObject<Item> sand_layer = ITEMS.register("sand_layer", () -> new BlockItem(GTBlocks.sand_layer.get(), new Item.Properties().tab(GribTweaks.GRIBTWEAKS_TABS)));
     public static final RegistryObject<Item> breake_bush = ITEMS.register("breake_bush", () -> new BlockItem(GTBlocks.breake_bush.get(), new Item.Properties().tab(GribTweaks.GRIBTWEAKS_TABS)));
     public static final RegistryObject<Item> arch_block = ITEMS.register("arch_block", () -> new BlockItem(GTBlocks.arch_block.get(), new Item.Properties().tab(GribTweaks.GRIBTWEAKS_TABS)));
     public static final RegistryObject<BrushItem> primitive_brush = ITEMS.register("primitive_brush", () -> new BrushItem(0.0F, 0.0F, ModTiers.MOUNTAIN_WOOD, new Item.Properties().tab(GribTweaks.GRIBTWEAKS_TABS).durability(40)));
+    public static final RegistryObject<BrushItem> copper_brush = ITEMS.register("copper_brush", () -> new BrushItem(0.0F, 0.0F, ModTiers.MOUNTAIN_WOOD, new Item.Properties().tab(GribTweaks.GRIBTWEAKS_TABS).durability(40)));
     public static final RegistryObject<PrimitiveBrushItem> primitive = ITEMS.register("primitive", PrimitiveBrushItem::new);
+
     public static final RegistryObject<Item> sand_copper = ITEMS.register("sand_copper", () -> new Item(new Item.Properties().tab(GribTweaks.GRIBTWEAKS_TABS)));
+    public static final RegistryObject<Item> sand_stone_pieces = ITEMS.register("sand_stone_pieces", () -> new Item(new Item.Properties().tab(GribTweaks.GRIBTWEAKS_TABS)));
+    public static final RegistryObject<Item> stone_pieces = ITEMS.register("stone_pieces", () -> new Item(new Item.Properties().tab(GribTweaks.GRIBTWEAKS_TABS)));
+    public static final RegistryObject<Item> andezit_pieces = ITEMS.register("andezit_pieces", () -> new Item(new Item.Properties().tab(GribTweaks.GRIBTWEAKS_TABS)));
     public static final RegistryObject<Item> sand_gold = ITEMS.register("sand_gold", () -> new Item(new Item.Properties().tab(GribTweaks.GRIBTWEAKS_TABS)));
     public static final RegistryObject<Item> sand_iron = ITEMS.register("sand_iron", () -> new Item(new Item.Properties().tab(GribTweaks.GRIBTWEAKS_TABS)));
     public static final RegistryObject<Item> sand_lapis = ITEMS.register("sand_lapis", () -> new Item(new Item.Properties().tab(GribTweaks.GRIBTWEAKS_TABS)));

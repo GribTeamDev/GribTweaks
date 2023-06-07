@@ -3,8 +3,10 @@ package com.rumaruka.gribtweaks.common.event;
 import com.rumaruka.gribtweaks.init.GTBlocks;
 import com.rumaruka.gribtweaks.init.GTItems;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
@@ -21,7 +23,7 @@ public class GateWayEvents {
     public static boolean isCatalystRightClick;
 
     public static ItemStack stack;
-
+    public static Minecraft mc;
     @SubscribeEvent
     public static void onGateStop(GateEvent.Opened event) {
 
@@ -33,11 +35,14 @@ public class GateWayEvents {
     @SubscribeEvent
     public static void onGateStop(GateEvent.Failed event) {
 
+        Player player = mc.player;
+        assert player != null;
+        Inventory inventory = player.getInventory();
 
         if (isCatalystRightClick) {
             isWaveStopped = true;
             isCatalystRightClick = false;
-
+            inventory.add(new ItemStack(GTItems.HOPE_CATALYST.get()));
         }
     }
 

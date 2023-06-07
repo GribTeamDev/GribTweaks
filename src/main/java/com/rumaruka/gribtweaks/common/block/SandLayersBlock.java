@@ -1,7 +1,6 @@
 package com.rumaruka.gribtweaks.common.block;
 
 import com.ncpbails.modestmining.block.ModBlocks;
-import com.rumaruka.gribtweaks.init.GTBlocks;
 import com.rumaruka.gribtweaks.init.GTItems;
 import com.rumaruka.gribtweaks.util.RandomUtil;
 import net.minecraft.core.BlockPos;
@@ -44,12 +43,13 @@ public class SandLayersBlock extends Block {
         this.registerDefaultState(this.stateDefinition.any().setValue(LAYERS, 1));
     }
 
+
     @Override
     public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult result) {
         Inventory inventory = player.getInventory();
         if (!world.isClientSide()) {
-            if (state.getValue(LAYERS) == 8) {
-                if (RandomUtil.percentChance(0.77)) {
+            if (state.getValue(LAYERS) == 8 || state.getValue(LAYERS) == 7) {
+                if (RandomUtil.percentChance(0.8)) {
                     world.setBlockAndUpdate(pos, Blocks.SAND.defaultBlockState());
 
                 }
@@ -63,9 +63,49 @@ public class SandLayersBlock extends Block {
 
 
             if (state.getValue(LAYERS) != 8) {
+                if (state.getValue(LAYERS) == 1) {
+                    if (RandomUtil.percentChance(0.15)) {
+                        inventory.add(new ItemStack(GTItems.sand_trough.get()));
+                        world.removeBlock(pos, false);
+                    }
+                    world.removeBlock(pos, false);
+                }
 
-                inventory.add(new ItemStack(GTItems.sand_trough.get()));
-                world.removeBlock(pos, true);
+                if (state.getValue(LAYERS) == 2) {
+                    if (RandomUtil.percentChance(0.25)) {
+                        inventory.add(new ItemStack(GTItems.sand_trough.get()));
+                        world.removeBlock(pos, false);
+                    }
+                    world.removeBlock(pos, false);
+                }
+                if (state.getValue(LAYERS) == 3) {
+                    if (RandomUtil.percentChance(0.35)) {
+                        inventory.add(new ItemStack(GTItems.sand_trough.get()));
+                        world.removeBlock(pos, false);
+                    }
+                    world.removeBlock(pos, false);
+                }
+                if (state.getValue(LAYERS) == 4) {
+                    if (RandomUtil.percentChance(0.50)) {
+                        inventory.add(new ItemStack(GTItems.sand_trough.get()));
+                        world.removeBlock(pos, false);
+                    }
+                    world.removeBlock(pos, false);
+                }
+                if (state.getValue(LAYERS) == 5) {
+                    if (RandomUtil.percentChance(0.50)) {
+                        inventory.add(new ItemStack(GTItems.sand_trough.get()));
+                        world.removeBlock(pos, false);
+                    }
+                    world.removeBlock(pos, false);
+                }
+                if (state.getValue(LAYERS) == 6) {
+                    if (RandomUtil.percentChance(0.75)) {
+                        inventory.add(new ItemStack(GTItems.sand_trough.get()));
+                        world.removeBlock(pos, false);
+                    }
+                    world.removeBlock(pos, false);
+                }
 
             }
 
@@ -113,11 +153,11 @@ public class SandLayersBlock extends Block {
     }
 
     @Override
-    public boolean canSurvive(@Nonnull BlockState state, @Nonnull LevelReader level, BlockPos pos) {
-        BlockState stateDown = level.getBlockState(pos.below());
-        if (!stateDown.is(Blocks.WATER) && !stateDown.is(Blocks.ICE) && !stateDown.is(Blocks.CACTUS) && !stateDown.is(Blocks.PACKED_ICE) && !stateDown.is(Blocks.BARRIER) || !stateDown.is(Blocks.AIR)) {
+    public boolean canSurvive(@Nonnull BlockState state, @Nonnull LevelReader world, BlockPos pos) {
+        BlockState stateDown = world.getBlockState(pos.below());
+        if (!stateDown.is(Blocks.ICE) && !stateDown.is(Blocks.PACKED_ICE) && !stateDown.is(Blocks.BARRIER) && !stateDown.is(Blocks.CACTUS)) {
             if (!stateDown.is(Blocks.HONEY_BLOCK) && !stateDown.is(Blocks.SOUL_SAND)) {
-                return Block.isFaceFull(stateDown.getCollisionShape(level, pos.below()), Direction.UP) || stateDown.getBlock() == this && stateDown.getValue(LAYERS) < 8;
+                return Block.isFaceFull(stateDown.getCollisionShape(world, pos.below()), Direction.UP) || stateDown.getBlock() == this && stateDown.getValue(LAYERS) == 8;
             } else {
                 return true;
             }
@@ -142,6 +182,7 @@ public class SandLayersBlock extends Block {
         }
         return !state.canSurvive(level, currentPos) ? Blocks.AIR.defaultBlockState() : super.updateShape(state, direction, facingState, level, currentPos, facingPos);
     }
+
 
     @Override
     public boolean canBeReplaced(BlockState state, BlockPlaceContext useContext) {

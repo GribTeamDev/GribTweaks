@@ -22,9 +22,9 @@ public class GTEntity {
     public static final DeferredRegister<EntityType<?>> ENTITY_TYPES = DeferredRegister.create(ForgeRegistries.ENTITY_TYPES, MODID);
 
     public static final RegistryObject<EntityType<BadSand>> SAND_BAD = ENTITY_TYPES.register("bad_sand",
-            () -> EntityType.Builder.of(BadSand::new, MobCategory.MONSTER).sized(3.0F, 3.0F).clientTrackingRange(10).build(rl("bad_sand").toString()));
+            () -> EntityType.Builder.of(BadSand::new, MobCategory.MONSTER).sized(3.0F, 0.5F).clientTrackingRange(10).build(rl("bad_sand").toString()));
     public static final RegistryObject<EntityType<SandyBreeze>> SANDY_BREEZE = ENTITY_TYPES.register("sandy_breeze",
-            () -> EntityType.Builder.of(SandyBreeze::new, MobCategory.MONSTER).sized(3.0F, 3.0F).clientTrackingRange(10).build(rl("sandy_breeze").toString()));
+            () -> EntityType.Builder.of(SandyBreeze::new, MobCategory.MONSTER).sized(3.0F, 0.5F).clientTrackingRange(10).build(rl("sandy_breeze").toString()));
     public static final RegistryObject<EntityType<SandShardProjectile>> SAND_SHARD = ENTITY_TYPES.register("sand_shard",
             () -> EntityType.Builder.<SandShardProjectile>of(SandShardProjectile::new, MobCategory.MISC).sized(3.0F, 3.0F).clientTrackingRange(10).build(rl("sand_shard").toString()));
 

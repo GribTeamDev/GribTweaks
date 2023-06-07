@@ -10,7 +10,7 @@
           "conditions": [
             {
               "condition": "minecraft:block_state_property",
-              "block": "modestmining:suspicious_sand",
+              "block": "minecraft:sand",
               "properties": {
                 "brushing": "3"
               }
