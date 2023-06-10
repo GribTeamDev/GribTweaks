@@ -1,0 +1,6 @@
+{
+	"parent": "minecraft:block/cross",
+	"textures": {
+		"cross": "gribtweaks:block/broken_bush"
+	}
+}

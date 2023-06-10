@@ -1,0 +1,28 @@
+{
+  "type": "gateways:gate_recipe",
+  "group": "gateways",
+  "pattern": [
+    "IAI",
+    "ASA",
+    "ZAZ"
+  ],
+  "key": {
+
+	"S": {
+      "item": "minecraft:oak_sapling"
+    },
+    "I": {
+      "item": "gribtweaks:sand_iron"
+    },
+    "Z": {
+      "item": "gribtweaks:sand_zinc"
+    },
+    "A": {
+      "item": "minecraft:sandstone"
+    }
+  },
+  "result": {
+    "item": "gribtweaks:hope_catalyst"
+  },
+  "gateway": "gateways:sand_raid"
+}

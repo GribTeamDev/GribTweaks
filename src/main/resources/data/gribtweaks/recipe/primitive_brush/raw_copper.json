@@ -1,0 +1,13 @@
+{
+  "type": "gribtweals:primitive_brush",
+  "ingredients": [
+    {
+      "item": "minecraft:raw_copper"
+    }
+  ],
+  "results": [
+    {
+      "item": "minecraft:copper_ingot"
+    }
+  ]
+}

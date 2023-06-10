@@ -1,0 +1,13 @@
+{
+  "type": "gribtweaks:primitive_brush",
+  "ingredients": [
+    {
+      "item": "gribtweaks:sand_copper"
+    }
+  ],
+  "results": [
+    {
+      "item": "minecraft:raw_copper"
+    }
+  ]
+}
