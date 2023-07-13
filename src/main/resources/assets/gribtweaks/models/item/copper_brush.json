@@ -1,6 +1,6 @@
 {
     "parent": "item/handheld",
     "textures": {
-        "layer0": "gribtweaks:item/primitive_brush"
+        "layer0": "gribtweaks:item/copper_brush"
     }
 }

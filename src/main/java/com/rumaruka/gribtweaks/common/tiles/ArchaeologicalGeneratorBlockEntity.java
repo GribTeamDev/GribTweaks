@@ -1,7 +1,6 @@
 package com.rumaruka.gribtweaks.common.tiles;
 
-import com.google.common.collect.Lists;
-import com.ncpbails.modestmining.block.ModBlocks;
+import com.rumaruka.gribtweaks.init.GTBlocks;
 import com.rumaruka.gribtweaks.init.GTTiles;
 import com.rumaruka.gribtweaks.util.RandomUtil;
 import net.minecraft.core.BlockPos;
@@ -18,8 +17,6 @@ import net.minecraft.world.level.block.StairBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.Half;
-
-import java.util.List;
 
 public class ArchaeologicalGeneratorBlockEntity extends BlockEntity {
 
@@ -55,7 +52,7 @@ public class ArchaeologicalGeneratorBlockEntity extends BlockEntity {
         }
         if (isBlockAbove(pPos, pLevel)) {
 
-            isWork=false;
+            isWork = false;
             return;
         }
 
@@ -66,7 +63,7 @@ public class ArchaeologicalGeneratorBlockEntity extends BlockEntity {
         for (int x = -1; x <= 1; x++) {
             for (int z = -1; z <= 1; z++) {
                 if ((x != 0 || z != 0) && level.getBlockState(pos.offset(x, 0, z)).getBlock() != Blocks.SANDSTONE) {
-                    isWork=false;
+                    isWork = false;
                     return false;
                 }
                 if (x != 0 && z != 0) {
@@ -76,7 +73,7 @@ public class ArchaeologicalGeneratorBlockEntity extends BlockEntity {
                                 || (y == 2 && state.getBlock() != Blocks.CHISELED_SANDSTONE)
                                 || (y == 1 && state.getBlock() != Blocks.CUT_SANDSTONE)
                                 || (y == 0 && state.getBlock() != Blocks.SANDSTONE)) {
-                            isWork=false;
+                            isWork = false;
                             return false;
                         }
                     }
@@ -91,21 +88,21 @@ public class ArchaeologicalGeneratorBlockEntity extends BlockEntity {
             Direction clockwise = dir.getClockWise(Direction.Axis.Y);
             Direction counterclockwise = dir.getCounterClockWise(Direction.Axis.Y);
             if (level.getBlockState(dirPos).getBlock() != Blocks.SANDSTONE_SLAB) {
-                isWork=false;
+                isWork = false;
                 return false;
             }
             BlockState cwState = level.getBlockState(dirPos.relative(clockwise));
             BlockState ccwState = level.getBlockState(dirPos.relative(counterclockwise));
             if (cwState.getBlock() != Blocks.SANDSTONE_STAIRS || cwState.getValue(StairBlock.FACING) != clockwise || cwState.getValue(StairBlock.HALF) != Half.BOTTOM) {
-                isWork=false;
+                isWork = false;
                 return false;
             }
             if (ccwState.getBlock() != Blocks.SANDSTONE_STAIRS || ccwState.getValue(StairBlock.FACING) != counterclockwise || ccwState.getValue(StairBlock.HALF) != Half.BOTTOM) {
-                isWork=false;
+                isWork = false;
                 return false;
             }
         }
-        isWork=true;
+        isWork = true;
         return true;
     }
 
@@ -115,14 +112,13 @@ public class ArchaeologicalGeneratorBlockEntity extends BlockEntity {
             pLevel.addParticle(new BlockParticleOption(ParticleTypes.BLOCK, Blocks.SANDSTONE.defaultBlockState()), pPos.getX(), pPos.getY(), pPos.getZ(), pLevel.random.nextInt(), pLevel.random.nextInt(), pLevel.random.nextInt());
 
             if (RandomUtil.percentChance(0.8)) {
-                pLevel.setBlockAndUpdate(pPos.above(), ModBlocks.SUSPICIOUS_SAND.get().defaultBlockState());
+                pLevel.setBlockAndUpdate(pPos.above(), GTBlocks.SUSPICIOUS_SAND.get().defaultBlockState());
 
 
             }
 
             if (RandomUtil.percentChance(0.2)) {
-                pLevel.setBlockAndUpdate(pPos.above(), Blocks.SAND.defaultBlockState());
-
+                pLevel.setBlockAndUpdate(pPos.above(), GTBlocks.SAND.get().defaultBlockState());
 
 
             }

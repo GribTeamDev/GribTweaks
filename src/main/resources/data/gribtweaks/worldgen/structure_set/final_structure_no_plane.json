@@ -1,0 +1,14 @@
+{
+  "structures": [
+    {
+      "structure": "gribtweaks:final_structure_no_plane",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "type": "minecraft:random_spread",
+    "spacing": 21,
+    "separation": 12,
+    "salt": 129183922
+  }
+}

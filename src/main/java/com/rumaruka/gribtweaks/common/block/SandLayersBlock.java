@@ -1,6 +1,7 @@
 package com.rumaruka.gribtweaks.common.block;
 
-import com.ncpbails.modestmining.block.ModBlocks;
+
+import com.rumaruka.gribtweaks.init.GTBlocks;
 import com.rumaruka.gribtweaks.init.GTItems;
 import com.rumaruka.gribtweaks.util.RandomUtil;
 import net.minecraft.core.BlockPos;
@@ -50,11 +51,11 @@ public class SandLayersBlock extends Block {
         if (!world.isClientSide()) {
             if (state.getValue(LAYERS) == 8 || state.getValue(LAYERS) == 7) {
                 if (RandomUtil.percentChance(0.8)) {
-                    world.setBlockAndUpdate(pos, Blocks.SAND.defaultBlockState());
+                    world.setBlockAndUpdate(pos, GTBlocks.SAND.get().defaultBlockState());
 
                 }
                 if (RandomUtil.percentChance(0.2)) {
-                    world.setBlockAndUpdate(pos, ModBlocks.SUSPICIOUS_SAND.get().defaultBlockState());
+                    world.setBlockAndUpdate(pos, GTBlocks.SUSPICIOUS_SAND.get().defaultBlockState());
 
                 }
 
@@ -176,7 +177,7 @@ public class SandLayersBlock extends Block {
 
             }
             if (RandomUtil.percentChance(0.2)) {
-                return ModBlocks.SUSPICIOUS_SAND.get().defaultBlockState();
+                return GTBlocks.SUSPICIOUS_SAND.get().defaultBlockState();
 
             }
         }
@@ -206,11 +207,11 @@ public class SandLayersBlock extends Block {
             int layer = state.getValue(LAYERS);
             if (RandomUtil.percentChance(0.77)) {
 
-                return layer == 7 ? Blocks.SAND.defaultBlockState() : state.setValue(LAYERS, Math.min(7, layer + 1));
+                return layer == 7 ? GTBlocks.SAND.get().defaultBlockState() : state.setValue(LAYERS, Math.min(7, layer + 1));
 
             }
             if (RandomUtil.percentChance(0.2)) {
-                return layer == 7 ? ModBlocks.SUSPICIOUS_SAND.get().defaultBlockState() : state.setValue(LAYERS, Math.min(7, layer + 1));
+                return layer == 7 ? GTBlocks.SUSPICIOUS_SAND.get().defaultBlockState() : state.setValue(LAYERS, Math.min(7, layer + 1));
             }
 
         }

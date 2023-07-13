@@ -25,7 +25,7 @@ public class SandBrushIterationEvent {
         BlockState state = world.getBlockState(pos);
         ItemStack brush = player.getMainHandItem();
         Inventory inventory = player.getInventory();
-        if (state.getBlock() == Blocks.SAND && (brush.getItem() == GTItems.primitive_brush.get() || brush.getItem() == GTItems.copper_brush.get())) {
+        if (state.getBlock() == Blocks.SAND && (brush.getItem() == GTItems.PRIMITIVE_BRUSH.get() || brush.getItem() == GTItems.COPPER_BRUSH.get())) {
             brush.hurtAndBreak(1, player, (e) ->
                     e.broadcastBreakEvent(EquipmentSlot.MAINHAND)
             );
@@ -34,14 +34,14 @@ public class SandBrushIterationEvent {
                 inventory.add(GTItems.sand_copper.get().getDefaultInstance());
             }
             if (RandomUtil.percentChance(0.2)) {
-                inventory.add(GTItems.sand_stone_pieces.get().getDefaultInstance());
+                inventory.add(GTItems.SAND_STONE_PIECES.get().getDefaultInstance());
             }
             if (RandomUtil.percentChance(0.4)) {
-                inventory.add(GTItems.stone_pieces.get().getDefaultInstance());
+                inventory.add(GTItems.STONE_NUGGET.get().getDefaultInstance());
             }
         }
 
-        if (state.getBlock() == GTBlocks.suspection_sand.get() && brush.getItem() == GTItems.copper_brush.get()) {
+        if (state.getBlock() == GTBlocks.SUSPICIOUS_SAND.get() && brush.getItem() == GTItems.COPPER_BRUSH.get()) {
             brush.hurtAndBreak(1, player, (e) ->
                     e.broadcastBreakEvent(EquipmentSlot.MAINHAND)
             );
@@ -49,7 +49,7 @@ public class SandBrushIterationEvent {
                 inventory.add(GTItems.sand_iron.get().getDefaultInstance());
             }
             if (RandomUtil.percentChance(0.25)) {
-                inventory.add(GTItems.andezit_pieces.get().getDefaultInstance());
+                inventory.add(GTItems.ANDESITE_PIECE.get().getDefaultInstance());
             }
             if (RandomUtil.percentChance(0.15)) {
                 inventory.add(GTItems.sand_zinc.get().getDefaultInstance());
@@ -58,10 +58,10 @@ public class SandBrushIterationEvent {
                 inventory.add(GTItems.sand_copper.get().getDefaultInstance());
             }
             if (RandomUtil.percentChance(0.1)) {
-                inventory.add(GTItems.sand_stone_pieces.get().getDefaultInstance());
+                inventory.add(GTItems.SAND_STONE_PIECES.get().getDefaultInstance());
             }
             if (RandomUtil.percentChance(0.1)) {
-                inventory.add(GTItems.stone_pieces.get().getDefaultInstance());
+                inventory.add(GTItems.STONE_NUGGET.get().getDefaultInstance());
             }
         }
     }

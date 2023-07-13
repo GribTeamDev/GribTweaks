@@ -10,9 +10,9 @@
           "conditions": [
             {
               "condition": "minecraft:block_state_property",
-              "block": "minecraft:sand",
+              "block": "gribtweaks:suspicious_sand",
               "properties": {
-                "brushing": "3"
+                "dusted": "3"
               }
             }
           ]

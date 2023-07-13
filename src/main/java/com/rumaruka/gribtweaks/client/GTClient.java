@@ -2,10 +2,7 @@ package com.rumaruka.gribtweaks.client;
 
 import com.rumaruka.gribtweaks.GribTweaks;
 import com.rumaruka.gribtweaks.client.model.SandShardModel;
-import com.rumaruka.gribtweaks.client.render.BadSandRenderer;
-import com.rumaruka.gribtweaks.client.render.SandShardRenderer;
-import com.rumaruka.gribtweaks.client.render.SandyBreezeRenderer;
-import com.rumaruka.gribtweaks.client.render.StatueTESR;
+import com.rumaruka.gribtweaks.client.render.*;
 import com.rumaruka.gribtweaks.common.items.HopeCatalystItem;
 import com.rumaruka.gribtweaks.init.GTEntity;
 import com.rumaruka.gribtweaks.init.GTItems;
@@ -174,7 +171,7 @@ public class GTClient {
 
     public static void registerBlockEntityRenderers() {
         BlockEntityRenderers.register(GTTiles.statue_obj.get(), StatueTESR::new);
-
+        BlockEntityRenderers.register(GTTiles.BRUSHABLE_BLOCK_ENTITY.get(), BrushableBlockRenderer::new);
     }
 
 }
