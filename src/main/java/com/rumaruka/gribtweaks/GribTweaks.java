@@ -98,7 +98,7 @@ public class GribTweaks {
 
 
     private void doClientStuff(FMLClientSetupEvent event) {
-        isModInstalled =/* ModList.get().isLoaded("avaritia") && */ModList.get().isLoaded("gateways") && ModList.get().isLoaded("modestmining");
+        isModInstalled =/* ModList.get().isLoaded("avaritia") && */ModList.get().isLoaded("gateways");
         ItemBlockRenderTypes.setRenderLayer(GTBlocks.breake_bush.get(), RenderType.cutoutMipped());
 
     }

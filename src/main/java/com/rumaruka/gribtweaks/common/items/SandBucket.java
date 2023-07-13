@@ -56,7 +56,6 @@ public class SandBucket extends BucketItem {
             if (level.mayInteract(player, blockPos) && player.mayUseItemAt(relativePos, direction, heldStack)) {
                 if (this.getFluid() == Fluids.EMPTY) {
                     BlockState blockState = level.getBlockState(blockPos);
-                    FluidState fluidState = level.getFluidState(blockPos);
                     if (blockState.getBlock() instanceof BucketPickup bucketPickup ) {
                         ItemStack bucketStack = bucketPickup.pickupBlock(level, blockPos, blockState);
                         bucketStack = swapBucketType(bucketStack);
@@ -106,21 +105,17 @@ public class SandBucket extends BucketItem {
         return ItemStack.EMPTY;
     }
 
-    /**
-     * Based on {@link BucketItem#getEmptySuccessItem(ItemStack, Player)} except it returns a et instead of a vanilla bucket.
-     */
-    public static ItemStack getEmptySuccessItem(ItemStack bucketStack, Player player) {
-        return !player.getAbilities().instabuild ? new ItemStack(GTItems.sand_bucket.get()) : bucketStack;
-    }
 
     /**
      * We don't initialize the Forge {@link net.minecraftforge.fluids.capability.wrappers.FluidBucketWrapper} for Skyroot Buckets.
      */
     @Override
-    public ICapabilityProvider initCapabilities(ItemStack stack, @Nullable CompoundTag tag) {
-        return null;
+    public net.minecraftforge.common.capabilities.ICapabilityProvider initCapabilities(ItemStack stack, @Nullable net.minecraft.nbt.CompoundTag nbt) {
+        if (this.getClass() == SandBucket.class)
+            return new net.minecraftforge.fluids.capability.wrappers.FluidBucketWrapper(stack);
+        else
+            return super.initCapabilities(stack, nbt);
     }
-
     /**
      * Copy of BucketItem#canBlockContainFluid(Level, BlockPos, BlockState).
      */

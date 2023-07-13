@@ -12,6 +12,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -29,6 +30,7 @@ public class InteractionEvent {
         Inventory inventory = player.getInventory();
         //fill
         BlockState compost = world.getBlockState(pos);
+
         if (compost.getBlock() == GTBlocks.compost.get()) {
             if (bucket.getItem() == Items.WATER_BUCKET) {
 
@@ -47,6 +49,7 @@ public class InteractionEvent {
                 bucket.shrink(1);
 
             }
+
             if (bucket.getItem() == GTItems.water_wooden_bucket.get()) {
 
                 world.setBlockAndUpdate(pos, GTBlocks.compost_water.get().defaultBlockState().setValue(LayeredWaterCompost.LEVEL, 3));

@@ -112,15 +112,18 @@ public class WoodenBucket extends BucketItem {
      * Based on {@link BucketItem#getEmptySuccessItem(ItemStack, Player)} except it returns a et instead of a vanilla bucket.
      */
     public static ItemStack getEmptySuccessItem(ItemStack bucketStack, Player player) {
-        return !player.getAbilities().instabuild ? new ItemStack(GTItems.sand_bucket.get()) : bucketStack;
+        return !player.getAbilities().instabuild ? new ItemStack(GTItems.wooden_bucket.get()) : bucketStack;
     }
 
     /**
      * We don't initialize the Forge {@link net.minecraftforge.fluids.capability.wrappers.FluidBucketWrapper} for Skyroot Buckets.
      */
     @Override
-    public ICapabilityProvider initCapabilities(ItemStack stack, @Nullable CompoundTag tag) {
-        return null;
+    public net.minecraftforge.common.capabilities.ICapabilityProvider initCapabilities(ItemStack stack, @Nullable net.minecraft.nbt.CompoundTag nbt) {
+        if (this.getClass() == WoodenBucket.class)
+            return new net.minecraftforge.fluids.capability.wrappers.FluidBucketWrapper(stack);
+        else
+            return super.initCapabilities(stack, nbt);
     }
 
     /**
