@@ -5,6 +5,7 @@ import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.*;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.LiquidBlockContainer;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.BucketPickup;
@@ -56,19 +57,22 @@ public class SandBucket extends BucketItem {
             if (level.mayInteract(player, blockPos) && player.mayUseItemAt(relativePos, direction, heldStack)) {
                 if (this.getFluid() == Fluids.EMPTY) {
                     BlockState blockState = level.getBlockState(blockPos);
+                    FluidState fluidState = level.getFluidState(blockPos);
                     if (blockState.getBlock() instanceof BucketPickup bucketPickup ) {
-                        ItemStack bucketStack = bucketPickup.pickupBlock(level, blockPos, blockState);
-                        bucketStack = swapBucketType(bucketStack);
-                        if (!bucketStack.isEmpty()) {
-                            player.awardStat(Stats.ITEM_USED.get(this));
-                            bucketPickup.getPickupSound(blockState).ifPresent((soundEvent) -> player.playSound(soundEvent, 1.0F, 1.0F));
-                            level.gameEvent(player, GameEvent.FLUID_PICKUP, blockPos);
-                            ItemStack resultStack = ItemUtils.createFilledResult(heldStack, player, bucketStack);
-                            if (!level.isClientSide()) {
-                                CriteriaTriggers.FILLED_BUCKET.trigger((ServerPlayer)player, bucketStack);
-                            }
-                            return InteractionResultHolder.sidedSuccess(resultStack, level.isClientSide());
+
+
+
+                        player.awardStat(Stats.ITEM_USED.get(this));
+                        bucketPickup.getPickupSound(blockState).ifPresent((soundEvent) -> player.playSound(soundEvent, 1.0F, 1.0F));
+                        level.gameEvent(player, GameEvent.FLUID_PICKUP, blockPos);
+                        ItemStack resultStack = ItemUtils.createFilledResult(heldStack, player,  GTItems.water_sand_bucket.get().getDefaultInstance());
+                        if (!level.isClientSide()) {
+                            CriteriaTriggers.FILLED_BUCKET.trigger((ServerPlayer)player,  GTItems.water_sand_bucket.get().getDefaultInstance());
+                            level.setBlockAndUpdate(blockPos, Blocks.AIR.defaultBlockState());
+
                         }
+                        return InteractionResultHolder.sidedSuccess(resultStack, level.isClientSide());
+
                     }
                     return InteractionResultHolder.fail(heldStack);
                 } else {
@@ -80,7 +84,7 @@ public class SandBucket extends BucketItem {
                             CriteriaTriggers.PLACED_BLOCK.trigger(serverPlayer, newPos, heldStack);
                         }
                         player.awardStat(Stats.ITEM_USED.get(this));
-                        return InteractionResultHolder.sidedSuccess(ItemStack.EMPTY, level.isClientSide());
+                        return InteractionResultHolder.sidedSuccess(getEmptySuccessItem(heldStack, player), level.isClientSide());
                     } else {
                         return InteractionResultHolder.fail(heldStack);
                     }
@@ -96,8 +100,8 @@ public class SandBucket extends BucketItem {
         Supplier<? extends Item> filledItem = filledStack::getItem;
         for (Map.Entry<Supplier<? extends Item>, Supplier<? extends Item>> entry : REPLACEMENTS.entrySet()) {
             if (filledItem.get() == entry.getKey().get()) {
-                Item replacedItem = entry.getValue().get();
-                ItemStack newStack = new ItemStack(replacedItem);
+
+                ItemStack newStack = GTItems.water_sand_bucket.get().getDefaultInstance();
                 newStack.setTag(filledStack.getTag());
                 return newStack;
             }
@@ -105,6 +109,12 @@ public class SandBucket extends BucketItem {
         return ItemStack.EMPTY;
     }
 
+    /**
+     * Based on {@link BucketItem#getEmptySuccessItem(ItemStack, Player)} except it returns a et instead of a vanilla bucket.
+     */
+    public static ItemStack getEmptySuccessItem(ItemStack bucketStack, Player player) {
+        return !player.getAbilities().instabuild ? ItemStack.EMPTY : bucketStack;
+    }
 
     /**
      * We don't initialize the Forge {@link net.minecraftforge.fluids.capability.wrappers.FluidBucketWrapper} for Skyroot Buckets.
@@ -116,6 +126,7 @@ public class SandBucket extends BucketItem {
         else
             return super.initCapabilities(stack, nbt);
     }
+
     /**
      * Copy of BucketItem#canBlockContainFluid(Level, BlockPos, BlockState).
      */
