@@ -42,7 +42,12 @@ public class GateWayEvents {
         if (isCatalystRightClick) {
             isWaveStopped = true;
             isCatalystRightClick = false;
-            inventory.add(new ItemStack(GTItems.HOPE_CATALYST.get()));
+            inventory.add(new ItemStack(GTItems.DAMAGE_HOPE_CATALYST.get()));
+        }
+        if (isCatalystRightClick) {
+            isWaveStopped = true;
+            isCatalystRightClick = false;
+            inventory.add(new ItemStack(GTItems.DAMAGE_FOREST_CATALYST.get()));
         }
     }
 

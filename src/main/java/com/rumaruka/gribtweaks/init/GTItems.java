@@ -24,6 +24,7 @@ public class GTItems {
     public static final RegistryObject<HopeCatalystItem> HOPE_CATALYST = ITEMS.register("hope_catalyst", () -> new HopeCatalystItem(new Item.Properties().tab(GribTweaks.GRIBTWEAKS_TABS)));
     public static final RegistryObject<ForestCatalystItem> FOREST_CATALYST = ITEMS.register("forest_catalyst", () -> new ForestCatalystItem(new Item.Properties().tab(GribTweaks.GRIBTWEAKS_TABS)));
     public static final RegistryObject<Item> DAMAGE_HOPE_CATALYST = ITEMS.register("damage_hope_catalyst", () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> DAMAGE_FOREST_CATALYST = ITEMS.register("damage_forest_catalyst", () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> statue_obj = ITEMS.register("statue_obj", () -> new BlockItem(GTBlocks.statue_obj.get(), new Item.Properties().tab(GribTweaks.GRIBTWEAKS_TABS)));
     public static final RegistryObject<Item> compost = ITEMS.register("compost", () -> new BlockItem(GTBlocks.compost.get(), new Item.Properties().tab(GribTweaks.GRIBTWEAKS_TABS)));
     public static final RegistryObject<Item> sand_layer = ITEMS.register("sand_layer", () -> new BlockItem(GTBlocks.sand_layer.get(), new Item.Properties().tab(GribTweaks.GRIBTWEAKS_TABS)));

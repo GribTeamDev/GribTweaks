@@ -1,0 +1,19 @@
+{
+  "type": "gateways:gate_recipe",
+  "group": "gateways",
+  "pattern": [
+    "A ",
+    "  "
+  ],
+  "key": {
+
+
+    "A": {
+      "item": "gribtweaks:damage_forest_catalyst"
+    }
+  },
+  "result": {
+    "item": "gribtweaks:forest_catalyst"
+  },
+  "gateway": "gateways:forest_raid"
+}
