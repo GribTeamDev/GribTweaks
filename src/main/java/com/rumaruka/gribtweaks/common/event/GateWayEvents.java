@@ -20,7 +20,8 @@ import shadows.gateways.event.GateEvent;
 public class GateWayEvents {
     public static boolean isWaveStopped;
     public static boolean isWaveCompleted;
-    public static boolean isCatalystRightClick;
+    public static boolean isHopeCatalystRightClick;
+    public static boolean isForestCatalystRightClick;
 
     public static ItemStack stack;
     public static Minecraft mc;
@@ -39,14 +40,14 @@ public class GateWayEvents {
         assert player != null;
         Inventory inventory = player.getInventory();
 
-        if (isCatalystRightClick) {
+        if (isHopeCatalystRightClick) {
             isWaveStopped = true;
-            isCatalystRightClick = false;
+            isHopeCatalystRightClick = false;
             inventory.add(new ItemStack(GTItems.DAMAGE_HOPE_CATALYST.get()));
         }
-        if (isCatalystRightClick) {
+        if (isForestCatalystRightClick) {
             isWaveStopped = true;
-            isCatalystRightClick = false;
+            isForestCatalystRightClick = false;
             inventory.add(new ItemStack(GTItems.DAMAGE_FOREST_CATALYST.get()));
         }
     }
@@ -55,12 +56,16 @@ public class GateWayEvents {
     public static void onGateComplete(GateEvent.Completed event) {
 
 
-        if (isCatalystRightClick) {
+        if (isHopeCatalystRightClick) {
             isWaveCompleted = true;
-            isCatalystRightClick = false;
+            isHopeCatalystRightClick = false;
 
         }
+        if (isForestCatalystRightClick) {
+            isWaveCompleted = true;
+            isForestCatalystRightClick = false;
 
+        }
     }
 
     @SubscribeEvent
@@ -70,8 +75,11 @@ public class GateWayEvents {
         if (Minecraft.getInstance().level != null) {
             BlockState state = Minecraft.getInstance().level.getBlockState(blockPos);
             if (state.getBlock() == GTBlocks.statue_obj.get()) {
-                if (stack.getItem() == GTItems.HOPE_CATALYST.get() || stack.getItem() == GTItems.FOREST_CATALYST.get()) {
-                    isCatalystRightClick = true;
+                if (stack.getItem() == GTItems.HOPE_CATALYST.get()) {
+                    isHopeCatalystRightClick = true;
+                }
+                if (stack.getItem() == GTItems.FOREST_CATALYST.get()) {
+                    isForestCatalystRightClick = true;
                 }
             }
 
