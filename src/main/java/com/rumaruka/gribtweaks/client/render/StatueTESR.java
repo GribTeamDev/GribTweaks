@@ -32,7 +32,7 @@ public class StatueTESR implements BlockEntityRenderer<StatueOBJBlockEntity> {
             float f3 = ((System.currentTimeMillis() % 86400000) / 2000F) * (180F / (float) Math.PI);
             matrixStack.mulPose(Vector3f.YP.rotationDegrees(f3));
             matrixStack.scale(1.5F, 1.5F, 1.5F);
-            Minecraft.getInstance().getItemRenderer().renderStatic(GTItems.FOREST_CATALYST.get().getDefaultInstance(), ItemTransforms.TransformType.GROUND, packedLight, OverlayTexture.NO_OVERLAY, matrixStack, buffer, 0);
+            Minecraft.getInstance().getItemRenderer().renderStatic(GTItems.HOPE_CATALYST.get().getDefaultInstance(), ItemTransforms.TransformType.GROUND, packedLight, OverlayTexture.NO_OVERLAY, matrixStack, buffer, 0);
             matrixStack.popPose();
 
 
