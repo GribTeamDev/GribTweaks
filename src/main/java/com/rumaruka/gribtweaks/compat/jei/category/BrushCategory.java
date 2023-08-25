@@ -8,8 +8,9 @@ import com.rumaruka.gribtweaks.common.recipe.PrimitiveBrushRecipe;
 import com.rumaruka.gribtweaks.init.GTItems;
 import com.simibubi.create.AllItems;
 import com.simibubi.create.compat.jei.category.CreateRecipeCategory;
-import com.simibubi.create.content.contraptions.processing.ProcessingOutput;
 
+
+import com.simibubi.create.content.processing.recipe.ProcessingOutput;
 import com.simibubi.create.foundation.gui.AllGuiTextures;
 import com.simibubi.create.foundation.gui.element.GuiGameElement;
 

@@ -57,13 +57,6 @@ public class GribTweaks {
             return new ItemStack(GTItems.FOREST_CATALYST.get());
         }
     };
-    public static Screen WarningScreen = new ConfirmScreen(b -> {
-        if (b) {
-            Util.getPlatform().openUri("https://drive.google.com/drive/folders/1BFNaJFeCNsbS814NRKGbZEHkYK93kko5?usp=share_link");
-        } else {
-            Minecraft.getInstance().stop();
-        }
-    }, Component.translatable("gribtweaks.rumaruka.failure.title"), Component.translatable("gribtweaks.rumaruka.failure.notfound"), Component.translatable("gribtweaks.rumaruka.openlink"), Component.translatable("menu.quit"));
 
 
     public GribTweaks() {
@@ -98,7 +91,7 @@ public class GribTweaks {
 
 
     private void doClientStuff(FMLClientSetupEvent event) {
-        isModInstalled =/* ModList.get().isLoaded("avaritia") && */ModList.get().isLoaded("gateways");
+
         ItemBlockRenderTypes.setRenderLayer(GTBlocks.breake_bush.get(), RenderType.cutoutMipped());
 
     }
@@ -119,16 +112,6 @@ public class GribTweaks {
     }
 
 
-    @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.FORGE)
-    public static class RegisterWarningEvent {
-        @SubscribeEvent
-        public static void checkMods(TickEvent.RenderTickEvent event) {
-            if (!isModInstalled && !flag) {
-                Minecraft.getInstance().setScreen(WarningScreen);
-            }
-        }
-
-    }
 
     @Mod.EventBusSubscriber
     public static class GTCommand {

@@ -23,7 +23,7 @@ public class GateWayEvents {
     public static boolean isHopeCatalystRightClick;
     public static boolean isForestCatalystRightClick;
 
-    public static ItemStack stack;
+
     public static Minecraft mc;
     @SubscribeEvent
     public static void onGateStop(GateEvent.Opened event) {
@@ -70,15 +70,15 @@ public class GateWayEvents {
 
     @SubscribeEvent
     public static void onInteraction(PlayerInteractEvent.RightClickBlock event) {
-        stack = event.getItemStack();
+
         BlockPos blockPos = event.getHitVec().getBlockPos();
         if (Minecraft.getInstance().level != null) {
             BlockState state = Minecraft.getInstance().level.getBlockState(blockPos);
             if (state.getBlock() == GTBlocks.statue_obj.get()) {
-                if (stack.getItem() == GTItems.HOPE_CATALYST.get()) {
+                if (event.getItemStack().getItem() == GTItems.HOPE_CATALYST.get()) {
                     isHopeCatalystRightClick = true;
                 }
-                if (stack.getItem() == GTItems.FOREST_CATALYST.get()) {
+                if (event.getItemStack().getItem() == GTItems.FOREST_CATALYST.get()) {
                     isForestCatalystRightClick = true;
                 }
             }

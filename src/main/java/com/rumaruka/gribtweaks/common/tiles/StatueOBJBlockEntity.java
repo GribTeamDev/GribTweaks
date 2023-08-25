@@ -19,7 +19,8 @@ public class StatueOBJBlockEntity extends BlockEntity {
         if ((GateWayEvents.isWaveStopped || GateWayEvents.isWaveCompleted) && state.getValue(StatueOBJ.ACTIVE) == Boolean.TRUE) {
             level.setBlockAndUpdate(pos, state.setValue(StatueOBJ.ACTIVE, false));
 
-            GateWayEvents.isCatalystRightClick = false;
+            GateWayEvents.isHopeCatalystRightClick = false;
+            GateWayEvents.isForestCatalystRightClick = false;
 
         }
 

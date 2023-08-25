@@ -5,6 +5,7 @@ import com.rumaruka.gribtweaks.common.recipe.PrimitiveBrushRecipe;
 import com.simibubi.create.AllSoundEvents;
 
 
+
 import com.simibubi.create.foundation.item.CustomUseEffectsItem;
 import com.simibubi.create.foundation.item.render.SimpleCustomRenderer;
 import com.simibubi.create.foundation.mixin.accessor.LivingEntityAccessor;
@@ -43,191 +44,212 @@ import java.util.Iterator;
 import java.util.function.Consumer;
 
 public class PrimitiveBrushItem extends Item implements CustomUseEffectsItem {
-    public PrimitiveBrushItem( ) {
-        super(new Properties().defaultDurability(8).tab(GribTweaks.GRIBTWEAKS_TABS));
+
+    public PrimitiveBrushItem(Properties properties) {
+        super(properties.defaultDurability(8));
     }
 
+    @Override
     public InteractionResultHolder<ItemStack> use(Level worldIn, Player playerIn, InteractionHand handIn) {
         ItemStack itemstack = playerIn.getItemInHand(handIn);
-        InteractionResultHolder<ItemStack> FAIL = new InteractionResultHolder(InteractionResult.FAIL, itemstack);
-        if (itemstack.getOrCreateTag().contains("Polishing")) {
+        InteractionResultHolder<ItemStack> FAIL = new InteractionResultHolder<>(InteractionResult.FAIL, itemstack);
+
+        if (itemstack.getOrCreateTag()
+                .contains("Polishing")) {
             playerIn.startUsingItem(handIn);
-            return new InteractionResultHolder(InteractionResult.PASS, itemstack);
-        } else {
-            InteractionHand otherHand = handIn == InteractionHand.MAIN_HAND ? InteractionHand.OFF_HAND : InteractionHand.MAIN_HAND;
-            ItemStack itemInOtherHand = playerIn.getItemInHand(otherHand);
-            if (PrimitiveBrushRecipe.canPolish(worldIn, itemInOtherHand)) {
-                ItemStack item = itemInOtherHand.copy();
-                ItemStack toPolish = item.split(1);
-                playerIn.startUsingItem(handIn);
-                itemstack.getOrCreateTag().put("Polishing", toPolish.serializeNBT());
-                playerIn.setItemInHand(otherHand, item);
-                return new InteractionResultHolder(InteractionResult.SUCCESS, itemstack);
-            } else {
-                HitResult raytraceresult = getPlayerPOVHitResult(worldIn, playerIn, ClipContext.Fluid.NONE);
-                if (!(raytraceresult instanceof BlockHitResult)) {
-                    return FAIL;
-                } else {
-                    BlockHitResult ray = (BlockHitResult)raytraceresult;
-                    Vec3 hitVec = ray.getLocation();
-                    AABB bb = (new AABB(hitVec, hitVec)).inflate(1.0);
-                    ItemEntity pickUp = null;
-                    Iterator var13 = worldIn.getEntitiesOfClass(ItemEntity.class, bb).iterator();
-
-                    while(var13.hasNext()) {
-                        ItemEntity itemEntity = (ItemEntity)var13.next();
-                        if (itemEntity.isAlive() && !(itemEntity.position().distanceTo(playerIn.position()) > 3.0)) {
-                            ItemStack stack = itemEntity.getItem();
-                            if (PrimitiveBrushRecipe.canPolish(worldIn, stack)) {
-                                pickUp = itemEntity;
-                                break;
-                            }
-                        }
-                    }
-
-                    if (pickUp == null) {
-                        return FAIL;
-                    } else {
-                        ItemStack item = pickUp.getItem().copy();
-                        ItemStack toPolish = item.split(1);
-                        playerIn.startUsingItem(handIn);
-                        if (!worldIn.isClientSide) {
-                            itemstack.getOrCreateTag().put("Polishing", toPolish.serializeNBT());
-                            if (item.isEmpty()) {
-                                pickUp.discard();
-                            } else {
-                                pickUp.setItem(item);
-                            }
-                        }
-
-                        return new InteractionResultHolder(InteractionResult.SUCCESS, itemstack);
-                    }
-                }
-            }
+            return new InteractionResultHolder<>(InteractionResult.PASS, itemstack);
         }
+
+        InteractionHand otherHand =
+                handIn == InteractionHand.MAIN_HAND ? InteractionHand.OFF_HAND : InteractionHand.MAIN_HAND;
+        ItemStack itemInOtherHand = playerIn.getItemInHand(otherHand);
+        if (PrimitiveBrushRecipe.canPolish(worldIn, itemInOtherHand)) {
+            ItemStack item = itemInOtherHand.copy();
+            ItemStack toPolish = item.split(1);
+            playerIn.startUsingItem(handIn);
+            itemstack.getOrCreateTag()
+                    .put("Polishing", toPolish.serializeNBT());
+            playerIn.setItemInHand(otherHand, item);
+            return new InteractionResultHolder<>(InteractionResult.SUCCESS, itemstack);
+        }
+
+        HitResult raytraceresult = getPlayerPOVHitResult(worldIn, playerIn, ClipContext.Fluid.NONE);
+        if (!(raytraceresult instanceof BlockHitResult))
+            return FAIL;
+        BlockHitResult ray = (BlockHitResult) raytraceresult;
+        Vec3 hitVec = ray.getLocation();
+
+        AABB bb = new AABB(hitVec, hitVec).inflate(1f);
+        ItemEntity pickUp = null;
+        for (ItemEntity itemEntity : worldIn.getEntitiesOfClass(ItemEntity.class, bb)) {
+            if (!itemEntity.isAlive())
+                continue;
+            if (itemEntity.position()
+                    .distanceTo(playerIn.position()) > 3)
+                continue;
+            ItemStack stack = itemEntity.getItem();
+            if (!PrimitiveBrushRecipe.canPolish(worldIn, stack))
+                continue;
+            pickUp = itemEntity;
+            break;
+        }
+
+        if (pickUp == null)
+            return FAIL;
+
+        ItemStack item = pickUp.getItem()
+                .copy();
+        ItemStack toPolish = item.split(1);
+
+        playerIn.startUsingItem(handIn);
+
+        if (!worldIn.isClientSide) {
+            itemstack.getOrCreateTag()
+                    .put("Polishing", toPolish.serializeNBT());
+            if (item.isEmpty())
+                pickUp.discard();
+            else
+                pickUp.setItem(item);
+        }
+
+        return new InteractionResultHolder<>(InteractionResult.SUCCESS, itemstack);
     }
 
+    @Override
     public ItemStack finishUsingItem(ItemStack stack, Level worldIn, LivingEntity entityLiving) {
-        if (!(entityLiving instanceof Player player)) {
+        if (!(entityLiving instanceof Player))
             return stack;
-        } else {
-            CompoundTag tag = stack.getOrCreateTag();
-            if (tag.contains("Polishing")) {
-                ItemStack toPolish = ItemStack.of(tag.getCompound("Polishing"));
-                ItemStack polished = PrimitiveBrushRecipe.applyPolish(worldIn, entityLiving.position(), toPolish, stack);
-                if (worldIn.isClientSide) {
-                    spawnParticles(entityLiving.getEyePosition(1.0F).add(entityLiving.getLookAngle().scale(0.5)), toPolish, worldIn);
-                    return stack;
-                }
+        Player player = (Player) entityLiving;
+        CompoundTag tag = stack.getOrCreateTag();
+        if (tag.contains("Polishing")) {
+            ItemStack toPolish = ItemStack.of(tag.getCompound("Polishing"));
+            ItemStack polished =
+                    PrimitiveBrushRecipe.applyPolish(worldIn, entityLiving.position(), toPolish, stack);
 
-                if (!polished.isEmpty()) {
-                    if (player instanceof FakePlayer) {
-                        player.drop(polished, false, false);
-                    } else {
-                        player.getInventory().placeItemBackInInventory(polished);
-                    }
-                }
-
-                tag.remove("Polishing");
-                stack.hurtAndBreak(1, entityLiving, (p) -> {
-                    p.broadcastBreakEvent(p.getUsedItemHand());
-                });
+            if (worldIn.isClientSide) {
+                spawnParticles(entityLiving.getEyePosition(1)
+                                .add(entityLiving.getLookAngle()
+                                        .scale(.5f)),
+                        toPolish, worldIn);
+                return stack;
             }
 
-            return stack;
+            if (!polished.isEmpty()) {
+                if (player instanceof FakePlayer) {
+                    player.drop(polished, false, false);
+                } else {
+                    player.getInventory()
+                            .placeItemBackInInventory(polished);
+                }
+            }
+            tag.remove("Polishing");
+            stack.hurtAndBreak(1, entityLiving, p -> p.broadcastBreakEvent(p.getUsedItemHand()));
         }
+
+        return stack;
     }
 
     public static void spawnParticles(Vec3 location, ItemStack polishedStack, Level world) {
-        for(int i = 0; i < 20; ++i) {
-            Vec3 motion = VecHelper.offsetRandomly(Vec3.ZERO, world.random, 0.125F);
-            world.addParticle(new ItemParticleOption(ParticleTypes.ITEM, polishedStack), location.x, location.y, location.z, motion.x, motion.y, motion.z);
+        for (int i = 0; i < 20; i++) {
+            Vec3 motion = VecHelper.offsetRandomly(Vec3.ZERO, world.random, 1 / 8f);
+            world.addParticle(new ItemParticleOption(ParticleTypes.ITEM, polishedStack), location.x, location.y,
+                    location.z, motion.x, motion.y, motion.z);
         }
-
     }
 
+    @Override
     public void releaseUsing(ItemStack stack, Level worldIn, LivingEntity entityLiving, int timeLeft) {
-        if (entityLiving instanceof Player player) {
-            CompoundTag tag = stack.getOrCreateTag();
-            if (tag.contains("Polishing")) {
-                ItemStack toPolish = ItemStack.of(tag.getCompound("Polishing"));
-                player.getInventory().placeItemBackInInventory(toPolish);
-                tag.remove("Polishing");
-            }
-
+        if (!(entityLiving instanceof Player))
+            return;
+        Player player = (Player) entityLiving;
+        CompoundTag tag = stack.getOrCreateTag();
+        if (tag.contains("Polishing")) {
+            ItemStack toPolish = ItemStack.of(tag.getCompound("Polishing"));
+            player.getInventory()
+                    .placeItemBackInInventory(toPolish);
+            tag.remove("Polishing");
         }
     }
 
+    @Override
     public InteractionResult useOn(UseOnContext context) {
         Player player = context.getPlayer();
         ItemStack stack = context.getItemInHand();
         Level level = context.getLevel();
         BlockPos pos = context.getClickedPos();
         BlockState state = level.getBlockState(pos);
+
         BlockState newState = state.getToolModifiedState(context, ToolActions.AXE_SCRAPE, false);
         if (newState != null) {
-            AllSoundEvents.SANDING_LONG.play(level, player, pos, 1.0F, 1.0F + (level.random.nextFloat() * 0.5F - 1.0F) / 5.0F);
-            level.levelEvent(player, 3005, pos, 0);
+            AllSoundEvents.SANDING_LONG.play(level, player, pos, 1, 1 + (level.random.nextFloat() * 0.5f - 1f) / 5f);
+            level.levelEvent(player, 3005, pos, 0); // Spawn particles
         } else {
             newState = state.getToolModifiedState(context, ToolActions.AXE_WAX_OFF, false);
             if (newState != null) {
-                AllSoundEvents.SANDING_LONG.play(level, player, pos, 1.0F, 1.0F + (level.random.nextFloat() * 0.5F - 1.0F) / 5.0F);
-                level.levelEvent(player, 3004, pos, 0);
+                AllSoundEvents.SANDING_LONG.play(level, player, pos, 1,
+                        1 + (level.random.nextFloat() * 0.5f - 1f) / 5f);
+                level.levelEvent(player, 3004, pos, 0); // Spawn particles
             }
         }
 
         if (newState != null) {
             level.setBlockAndUpdate(pos, newState);
-            if (player != null) {
-                stack.hurtAndBreak(1, player, (p) -> {
-                    p.broadcastBreakEvent(p.getUsedItemHand());
-                });
-            }
-
+            if (player != null)
+                stack.hurtAndBreak(1, player, p -> p.broadcastBreakEvent(p.getUsedItemHand()));
             return InteractionResult.sidedSuccess(level.isClientSide);
-        } else {
-            return InteractionResult.PASS;
         }
+
+        return InteractionResult.PASS;
     }
 
+    @Override
     public boolean canPerformAction(ItemStack stack, ToolAction toolAction) {
         return toolAction == ToolActions.AXE_SCRAPE || toolAction == ToolActions.AXE_WAX_OFF;
     }
 
+    @Override
     public Boolean shouldTriggerUseEffects(ItemStack stack, LivingEntity entity) {
+        // Trigger every tick so that we have more fine grain control over the animation
         return true;
     }
 
+    @Override
     public boolean triggerUseEffects(ItemStack stack, LivingEntity entity, int count, RandomSource random) {
         CompoundTag tag = stack.getOrCreateTag();
         if (tag.contains("Polishing")) {
             ItemStack polishing = ItemStack.of(tag.getCompound("Polishing"));
-            ((LivingEntityAccessor)entity).create$callSpawnItemParticles(polishing, 1);
+            ((LivingEntityAccessor) entity).create$callSpawnItemParticles(polishing, 1);
         }
 
-        if ((entity.getTicksUsingItem() - 6) % 7 == 0) {
-            entity.playSound(entity.getEatingSound(stack), 0.9F + 0.2F * random.nextFloat(), random.nextFloat() * 0.2F + 0.9F);
-        }
+        // After 6 ticks play the sound every 7th
+        if ((entity.getTicksUsingItem() - 6) % 7 == 0)
+            entity.playSound(entity.getEatingSound(stack), 0.9F + 0.2F * random.nextFloat(),
+                    random.nextFloat() * 0.2F + 0.9F);
 
         return true;
     }
 
+    @Override
     public SoundEvent getEatingSound() {
         return AllSoundEvents.SANDING_SHORT.getMainEvent();
     }
 
+    @Override
     public UseAnim getUseAnimation(ItemStack stack) {
         return UseAnim.EAT;
     }
 
+    @Override
     public int getUseDuration(ItemStack stack) {
         return 32;
     }
 
+    @Override
     public int getEnchantmentValue() {
         return 1;
     }
 
+    @Override
     @OnlyIn(Dist.CLIENT)
     public void initializeClient(Consumer<IClientItemExtensions> consumer) {
         consumer.accept(SimpleCustomRenderer.create(this, new PrimitiveBrushItemRenderer()));

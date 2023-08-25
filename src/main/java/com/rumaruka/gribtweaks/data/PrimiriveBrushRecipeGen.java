@@ -2,7 +2,7 @@ package com.rumaruka.gribtweaks.data;
 
 import com.rumaruka.gribtweaks.init.GTItems;
 import com.rumaruka.gribtweaks.init.GTRecipeType;
-import com.simibubi.create.AllContainerTypes;
+
 import com.simibubi.create.AllItems;
 import com.simibubi.create.foundation.data.recipe.ProcessingRecipeGen;
 import net.minecraft.data.DataGenerator;

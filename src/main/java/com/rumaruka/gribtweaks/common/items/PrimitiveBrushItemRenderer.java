@@ -1,6 +1,7 @@
 package com.rumaruka.gribtweaks.common.items;
 
-import com.simibubi.create.foundation.item.render.CreateCustomRenderedItemModel;
+
+import com.simibubi.create.foundation.item.render.CustomRenderedItemModel;
 import com.simibubi.create.foundation.item.render.CustomRenderedItemModelRenderer;
 import com.simibubi.create.foundation.item.render.PartialItemModelRenderer;
 import com.simibubi.create.foundation.utility.AnimationTickHolder;
@@ -15,10 +16,10 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.Mth;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Vector3f;
-public class PrimitiveBrushItemRenderer extends CustomRenderedItemModelRenderer<PrimitiveBrushItemRenderer.PrimitiveBrushModel> {
+public class PrimitiveBrushItemRenderer extends CustomRenderedItemModelRenderer {
 
     @Override
-    protected void render(ItemStack stack, PrimitiveBrushModel model, PartialItemModelRenderer renderer,
+    protected void render(ItemStack stack, CustomRenderedItemModel model, PartialItemModelRenderer renderer,
                           TransformType transformType, PoseStack ms, MultiBufferSource buffer, int light, int overlay) {
         ItemRenderer itemRenderer = Minecraft.getInstance().getItemRenderer();
         LocalPlayer player = Minecraft.getInstance().player;
@@ -75,19 +76,6 @@ public class PrimitiveBrushItemRenderer extends CustomRenderedItemModelRenderer<
         itemRenderer.render(stack, TransformType.NONE, false, ms, buffer, light, overlay, model.getOriginalModel());
 
         ms.popPose();
-    }
-
-    @Override
-    public PrimitiveBrushModel createModel(BakedModel originalModel) {
-        return new PrimitiveBrushModel(originalModel);
-    }
-
-    public static class PrimitiveBrushModel extends CreateCustomRenderedItemModel {
-
-        public PrimitiveBrushModel(BakedModel template) {
-            super(template, "");
-        }
-
     }
 
 }
