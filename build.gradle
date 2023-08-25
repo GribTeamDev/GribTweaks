@@ -21,7 +21,7 @@ plugins {
 apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'org.spongepowered.mixin'
 apply plugin: 'org.parchmentmc.librarian.forgegradle'
-version = '1.2'
+version = '1.3-b'
 group = 'com.rumaruka.gribtweaks' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = 'gribtweaks'
 
